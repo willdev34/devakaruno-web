@@ -1,91 +1,64 @@
 "use client"
-import { useContext } from "react";
-import { Test } from "./Test";
-import DonationFormContext from "@/app/context/donationContext";
-import { HerosectionData } from "./data";
+import Link from "next/link";
 import Slider from "react-slick";
+import { HerosectionData } from "./data";
 
 const Hero = () => {
-  const donationInfo = useContext(DonationFormContext);
   const settings = {
     autoplay: true,
+    autoplaySpeed: 6000,
     dots: true,
     arrows: false,
     infinite: true,
-    speed: 1500,
+    speed: 1200,
     slidesToShow: 1,
     slidesToScroll: 1,
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 2,
-          autoplay: true,
-        },
-      },
-      {
-        breakpoint: 576,
-        settings: {
-          slidesToShow: 1,
-        },
-      },
-    ],
+    fade: true,
   }
 
   return (
-    <>
-      <section>
-        <Slider {...settings}>
-          {HerosectionData.map((value, index) => {
-            return (
-              <div
-                key={index}
-                className={`relative h-[700px] bg-cover text-white md:pt-40 md:pb-28 py-20 bg-no-repeat ${index == 0 ? 'bg-[url("/images/hero/banner-bg-2.jpg")]' : 'bg-[url("/images/hero/banner-bg-1.jpg")]'} lg:mt-40 sm:mt-44 mt-20`}>
-                <div className="container mx-auto lg:max-w-(--breakpoint-xl) px-4 grid grid-cols-12">
-                  <div className="bg-white rounded-md p-5 lg:col-span-4 md:col-span-7 sm:col-span-10 col-span-12 dark:bg-dark" data-aos="fade-right">
-                    <div className="flex justify-between items-center mb-6">
-                      <div className="px-4 py-2 bg-midnight_text rounded-full">
-                        <p className=" text-white text-sm font-semibold">
-                          {value?.tag_name}
-                        </p>
-                      </div>
-                      <p className="text-black/70 dark:text-white/60 text-base font-medium">{value?.left_days} days left</p>
-                    </div>
-                    <h3 className="text-black dark:text-white text-4xl font-bold mb-6">
-                      {value?.title}
-                    </h3>
-                    <p className="text-dustGray dark:text-white/60 text-sm font-normal mb-5">
-                      {value?.descp}
-                    </p>
-                    <div className="grid grid-cols-2 rounded-md border border-border dark:border-dark_border mb-5">
-                      <div className="col-span-1 border-r border-border dark:border-dark_border px-3 py-3">
-                        <p className="text-base font-medium text-black dark:text-white/60 ">Raised</p>
-                        <h4 className="text-2xl text-secondary">${value?.raised}</h4>
-                      </div>
-                      <div className="col-span-1 px-3 py-3">
-                        <p className="text-base font-medium text-black dark:text-white/60">Goal</p>
-                        <h4 className="text-2xl text-midnight_text dark:text-white">${value?.goal}</h4>
-                      </div>
-                    </div>
-                    <div className="flex justify-center">
-                      <button
-                        onClick={() => donationInfo?.setIsDonationOpen(true)}
-                        className="text-white text-base bg-error px-7 py-4 border font-semibold border-error hover:border-error hover:bg-transparent hover:text-error rounded-md cursor-pointer"
-                      >
-                        Donate now
-                      </button>
-                      <Test />
-                    </div>
+    <section className="relative">
+      <Slider {...settings}>
+        {HerosectionData.map((value) => (
+          <div key={value.id} className="relative h-screen min-h-[600px]">
+            <div
+              className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+              style={{ backgroundImage: `url(${value.image})` }}
+            />
+            <div className="absolute inset-0 flex items-center pt-20">
+              <div className="container mx-auto lg:max-w-(--breakpoint-xl) px-4">
+                <div className="max-w-xl" data-aos="fade-up">
+                  <p className="text-secondary text-sm font-semibold tracking-widest uppercase mb-4">
+                    Deva Karuno Terapias
+                  </p>
+                  <h1 className="font-heading text-white text-4xl sm:text-5xl lg:text-6xl leading-tight mb-6">
+                    Encontre-se. Conecte-se. Transforme-se.
+                  </h1>
+                  <p className="text-white/80 text-lg mb-8">
+                    Terapia Tântrica e Desenvolvimento Pessoal para quem busca profundidade real.
+                  </p>
+                  <div className="flex flex-wrap gap-4">
+                    <Link
+                      href="https://wa.me/5521984121612"
+                      target="_blank"
+                      className="bg-primary text-white px-7 py-4 rounded-md font-semibold hover:bg-secondary transition-colors duration-300"
+                    >
+                      Agendar Sessão
+                    </Link>
+                    <Link
+                      href="#sobre"
+                      className="border border-white text-white px-7 py-4 rounded-md font-semibold hover:bg-white hover:text-midnight_text transition-colors duration-300"
+                    >
+                      Conhecer Mais
+                    </Link>
                   </div>
                 </div>
               </div>
-            )
-          })}
-        </Slider>
-      </section>
-
-    </>
-
+            </div>
+          </div>
+        ))}
+      </Slider>
+    </section>
   );
 };
 
