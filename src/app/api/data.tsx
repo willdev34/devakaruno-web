@@ -9,19 +9,19 @@ export const menuItems = [
 
 export const helpdata: { icon: string; title: string; text: string }[] = [
   {
-    icon: "/images/help/help-icon-3.svg",
-    title: "Give donation",
-    text: "Your donation supports essential programs and helps communities in need. Every contribution makes a difference!",
+    icon: "/images/help/icon-autoconhecimento.svg",
+    title: "Autoconhecimento emocional",
+    text: "Entenda padrões emocionais e construa uma relação mais consciente com seus sentimentos e desejos.",
   },
   {
-    icon: "/images/help/help-icon-2.svg",
-    title: "Become volunteer",
-    text: "Join us in making a difference! Volunteer and be a part of our community projects—every effort matters!",
+    icon: "/images/help/icon-conexao.svg",
+    title: "Comunicação e conexão genuína",
+    text: "Desenvolva ferramentas pra se expressar com clareza e fortalecer vínculos mais verdadeiros nos seus relacionamentos.",
   },
   {
-    icon: "/images/help/help-icon-1.svg",
-    title: "Provide food supply",
-    text: "Donate food supplies to help us combat hunger and support families in need. Every contribution counts!",
+    icon: "/images/help/icon-presenca-corpo.svg",
+    title: "Presença no próprio corpo",
+    text: "Reconecte-se com o corpo e amplie sua capacidade de viver o presente com mais leveza.",
   },
 ];
 

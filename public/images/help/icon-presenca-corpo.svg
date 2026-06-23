@@ -1,0 +1,11 @@
+<!--
+Caminho: public/images/help/icon-presenca-corpo.svg
+Arquivo: icon-presenca-corpo.svg
+Descricao: Icone de gota, ecoando o teardrop do logo, fundo Rose Petal, usado no card Presenca no proprio corpo.
+-->
+<svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+<rect width="64" height="64" rx="16" fill="#F5EAF0"/>
+<g transform="translate(16,16) scale(1.333)">
+<path d="M12,3 C16,9 19,13 19,16 C19,19.3 15.9,21.5 12,21.5 C8.1,21.5 5,19.3 5,16 C5,13 8,9 12,3 Z" fill="none" stroke="#26A88C" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+</svg>
