@@ -25,6 +25,27 @@ export const helpdata: { icon: string; title: string; text: string }[] = [
   },
 ];
 
+export const ServicesData: { icon: string; title: string; text: string; whatsappLink: string }[] = [
+  {
+    icon: "/images/services/icon-individual.svg",
+    title: "Individual",
+    text: "Sessões 1:1 de terapia profunda e autoconhecimento.",
+    whatsappLink: "https://wa.me/5521984121612?text=Ol%C3%A1%21%20Vi%20o%20site%20da%20Deva%20Karuno%20Terapias%20e%20gostaria%20de%20agendar%20uma%20sess%C3%A3o%20individual.",
+  },
+  {
+    icon: "/images/services/icon-casais.svg",
+    title: "Casais",
+    text: "Trabalho relacional para reconectar e aprofundar vínculos.",
+    whatsappLink: "https://wa.me/5521984121612?text=Ol%C3%A1%21%20Vi%20o%20site%20da%20Deva%20Karuno%20Terapias%20e%20gostaria%20de%20agendar%20uma%20sess%C3%A3o%20para%20casais.",
+  },
+  {
+    icon: "/images/services/icon-cursos.svg",
+    title: "Cursos",
+    text: "Programas de imersão em desenvolvimento pessoal.",
+    whatsappLink: "https://wa.me/5521984121612?text=Ol%C3%A1%21%20Vi%20o%20site%20da%20Deva%20Karuno%20Terapias%20e%20gostaria%20de%20saber%20mais%20sobre%20os%20cursos%20e%20viv%C3%AAncias.",
+  },
+];
+
 export const CauseData: {
   image: string;
   title: string;
