@@ -46,6 +46,23 @@ export const ServicesData: { icon: string; title: string; text: string; whatsapp
   },
 ];
 
+export const CursosData: { icon: string; title: string; text: string; price: string; whatsappLink: string }[] = [
+  {
+    icon: "/images/services/icon-individual.svg",
+    title: "Curso Privativo Individual: Massagem Tântrica",
+    text: "Curso individual e privativo, com teoria e prática guiada, duração de até 4 horas. Indicado para quem busca aprofundar o autoconhecimento corporal. Aos sábados, por agendamento.",
+    price: "R$ 1.100",
+    whatsappLink: "https://wa.me/5521984121612?text=Ol%C3%A1%21%20Vi%20o%20site%20da%20Deva%20Karuno%20Terapias%20e%20gostaria%20de%20saber%20mais%20sobre%20o%20Curso%20Privativo%20Individual%20de%20Massagem%20T%C3%A2ntrica.",
+  },
+  {
+    icon: "/images/services/icon-casais.svg",
+    title: "Curso Privativo para Casais: Massagem Tântrica",
+    text: "Curso privativo para casais, com teoria e prática guiada, duração de até 4 horas. Indicado para quem busca fortalecer a conexão com o parceiro. Aos sábados, por agendamento.",
+    price: "R$ 1.600",
+    whatsappLink: "https://wa.me/5521984121612?text=Ol%C3%A1%21%20Vi%20o%20site%20da%20Deva%20Karuno%20Terapias%20e%20gostaria%20de%20saber%20mais%20sobre%20o%20Curso%20Privativo%20para%20Casais%20de%20Massagem%20T%C3%A2ntrica.",
+  },
+];
+
 export const CauseData: {
   image: string;
   title: string;
