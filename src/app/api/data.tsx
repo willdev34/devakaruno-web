@@ -308,33 +308,31 @@ export const footerLinks: { link: string,href: string }[] = [
 ];
 
 export const Reviews: {
-  clientImg: string;
   clientName: string;
   review: string;
-  post: string;
 }[] = [
   {
-    clientImg: "/images/testimonial/customer-img-1.jpg",
-    clientName: "Michelle Anderson",
-    review: "I'm honored to support child welfare and contribute to a better future for children. Every child deserves the chance to thrive.",
-    post: "CEO, Theme Designer",
+    clientName: "Bianca Silva",
+    review: "É impressionante como a massagem que recebi de você ainda faz efeito mesmo depois de alguns dias, foi tudo como me havia dito, maravilhoso. Até a água do chuveiro parece um toque de seda. Gratidão pela jornada avassaladora em que tem me acompanhado, não tem sido fácil. Você realmente me banhou de amor. Obrigada pela energia e força que você me deu. Sucesso sempre!",
   },
   {
-    clientImg: "/images/testimonial/customer-img-2.jpg",
-    clientName: "Michelle Anderson",
-    review:"His generous donation supports cancer research and patient care, making a meaningful impact in the fight against cancer.",
-    post: "MD, Theme Designer",
+    clientName: "Manuela M.",
+    review: "Não foi fácil marcar uma consulta com você, foram vários adiamentos, mas a longa espera valeu a pena. Sua paciência e tranquilidade me passou muita confiança e tornou mais fácil para mim ir ao seu encontro. Eu não poderia imaginar que um trabalho tão íntimo com um desconhecido fosse possível. A partir de agora, preciso levar isso pra minha vida, graças a você.",
   },
   {
-    clientImg: "/images/testimonial/customer-img-3.jpg",
-    clientName: "Nilmark Smith",
-    review:"I'm honored to support child welfare and contribute to a better future for children. Every child deserves the chance to thrive.",
-    post: "Manager, Theme Designer",
+    clientName: "Fernanda Barboza",
+    review: "O Karuno me atendeu com excelência! Primeiro conversamos sobre o que me fez procurá-lo, neste momento foi criado um vínculo de confiança e não julgamento! Adorei a massagem e me fez sair mais leve, empoderada e confiante! Minha energia saiu renovada!",
   },
-   {
-    clientImg: "/images/testimonial/customer-img-4.jpg",
-    clientName: "Sharan Shah",
-    review:"I'm honored to support child welfare and contribute to a better future for children. Every child deserves the chance to thrive.",
-    post: "Manager, Theme Designer",
+  {
+    clientName: "Valmici Brito",
+    review: "Estava em um momento de total desequilíbrio, as massagens possibilitaram um processo de conhecimento e sensação de bem-estar incrível. Uma das melhores coisas que aconteceu foi ter conhecido esse profissional. Suas mãos são como seda! Indico a todos e aproveito para desejar-lhe ainda mais sucesso!",
+  },
+  {
+    clientName: "Renan",
+    review: "Foi uma experiência incrível ter esse conhecimento do corpo humano. Foi meu primeiro contato com a técnica e fiquei surpreso com o resultado. O terapeuta explicou muito bem com boa didática e ajudou passo a passo até o final. A modelo foi super simpática e profissional, me deixando à vontade a todo momento.",
+  },
+  {
+    clientName: "Carlos",
+    review: "Experiência inigualável. A sensação de bem-estar e leveza é indescritível, uma explosão de energia acumulada. O acolhimento e profissionalismo do Terapeuta Deva Karuno potencializa os benefícios da Massagem Tântrica. Gratidão.",
   },
 ];
