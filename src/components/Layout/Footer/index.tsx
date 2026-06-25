@@ -50,6 +50,7 @@ const Footer: FC = () => {
               <li><Link href="/#cursos" className="text-base text-dustGray dark:text-white/60 hover:text-primary">Cursos e Vivências</Link></li>
               <li><Link href="/blog" className="text-base text-dustGray dark:text-white/60 hover:text-primary">Blog</Link></li>
               <li><Link href="/quem-e-o-karuno" className="text-base text-dustGray dark:text-white/60 hover:text-primary">Quem é o Karuno</Link></li>
+              <li><Link href="/contato" className="text-base text-dustGray dark:text-white/60 hover:text-primary">Contato</Link></li>
             </ul>
           </div>
         </div>

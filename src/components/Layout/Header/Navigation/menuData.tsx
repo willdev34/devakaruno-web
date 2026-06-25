@@ -11,4 +11,5 @@ export const headerData: HeaderItem[] = [
   { label: "Cursos e Vivências", href: "/#cursos" },
   { label: "Blog", href: "/blog" },
   { label: "Quem é o Karuno", href: "/quem-e-o-karuno" },
+  { label: "Contato", href: "/contato" },
 ];

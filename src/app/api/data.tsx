@@ -256,48 +256,6 @@ export const Eventdata: {
   },
 ];
 
-export const footerLinks: { link: string,href: string }[] = [
-  {
-    link: "Medical crowdfunding",
-    href:"/cause/cause-4"
-  },
-  {
-    link: "Cancer Crowdfunding",
-    href:"/cause/cause-2"
-  },
-  {
-    link: "Transplant Crowdfunding",
-    href:"/cause/cause-8"
-  },
-  {
-    link: "Education Crowdfunding",
-    href: "/cause/cause-3"
-  },
-  {
-    link: "Child Welfare",
-    href:"/cause/cause-7"
-  },
-  {
-    link: "Causes",
-    href:"/cause"
-  },
-  {
-    link: "Events",
-    href:"/events"
-  },
-  {
-    link: "Blogs",
-    href:"/blog"
-  },
-  {
-    link: "Contact",
-    href:"/contact"
-  },
-  {
-    link: "Error 404",
-    href:"/not-found"
-  },
-];
 
 export const Reviews: {
   clientName: string;
