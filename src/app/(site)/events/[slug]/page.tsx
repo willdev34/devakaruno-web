@@ -1,7 +1,7 @@
 import EventDetail from "@/components/Events/EventDetail/EventDetail";
 import { Metadata } from "next";
 export const metadata: Metadata = {
-    title: "Event Detail | Endeavor",
+    title: "Curso | Deva Karuno Terapias",
 };
 
 const Page = () => {

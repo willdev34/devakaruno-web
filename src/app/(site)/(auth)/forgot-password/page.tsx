@@ -3,7 +3,7 @@ import Signin from '@/components/Auth/SignIn'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Forgot password | Endeavor',
+  title: 'Esqueci minha senha | Deva Karuno Terapias',
 }
 
 const SigninPage = () => {

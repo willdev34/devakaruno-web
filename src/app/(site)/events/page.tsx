@@ -3,7 +3,7 @@ import EventList from "@/components/Events/EventList";
 import Volunteer from "@/components/SharedComponent/Volunteer";
 import { Metadata } from "next";
 export const metadata: Metadata = {
-    title: "Event List | Endeavor",
+    title: "Cursos e Vivências | Deva Karuno Terapias",
 };
 
 const Page = () => {

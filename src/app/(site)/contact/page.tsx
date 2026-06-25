@@ -6,7 +6,7 @@ import React from "react";
 import HeroSub from "@/components/SharedComponent/HeroSub";
 import { Metadata } from "next";
 export const metadata: Metadata = {
-  title: "Contact | Endeavor",
+  title: "Contato | Deva Karuno Terapias",
 };
 
 const page = () => {

@@ -8,7 +8,7 @@ import Newsletter from '@/components/Home/NewsLetter';
 import Testimonial from '@/components/Home/Testimonial';
 import WhatsAppCTA from '@/components/Home/WhatsAppCTA';
 export const metadata: Metadata = {
-  title: "Endeavor",
+  title: "Deva Karuno Terapias | Terapia Tântrica e Desenvolvimento Pessoal",
 };
 export default function Home() {
   return (
