@@ -28,9 +28,6 @@ const Hero = () => {
             <div className="absolute inset-0 flex items-center pt-20">
               <div className="container mx-auto lg:max-w-(--breakpoint-xl) px-4">
                 <div className="max-w-xl" data-aos="fade-up">
-                  <p className="text-secondary text-sm font-semibold tracking-widest uppercase mb-4">
-                    Deva Karuno Terapias
-                  </p>
                   <h1 className="font-heading text-white text-4xl sm:text-5xl lg:text-6xl leading-tight mb-6">
                     Encontre-se. Conecte-se. Transforme-se.
                   </h1>

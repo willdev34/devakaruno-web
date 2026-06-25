@@ -28,6 +28,7 @@ const Header: React.FC = () => {
   const [isSignInOpen, setIsSignInOpen] = useState(false)
   const [isSignUpOpen, setIsSignUpOpen] = useState(false)
   const pathname = usePathname();
+  const isHomePage = pathname === '/';
 
   const navbarRef = useRef<HTMLDivElement>(null)
   const signInRef = useRef<HTMLDivElement>(null)
@@ -106,12 +107,12 @@ const Header: React.FC = () => {
   return (
     <header
       className={`fixed top-0 z-50 w-full transition-all duration-300 bg-white dark:bg-dark ${sticky ? 'shadow-lg dark:shadow-darkmd' : 'shadow-none'}`}
-      style={!sticky && mounted ? { backgroundColor: theme === 'dark' ? 'rgba(24,15,46,0.3)' : 'rgba(255,255,255,0.3)' } : undefined}
+      style={!sticky && mounted && isHomePage ? { backgroundColor: theme === 'dark' ? 'rgba(24,15,46,0.3)' : 'rgba(255,255,255,0.3)' } : undefined}
     >
       <div className='bg-primary lg:py-0 py-2 dark:bg-primary'>
         <div className='container mx-auto lg:max-w-(--breakpoint-xl) md:max-w-(--breakpoint-md) flex items-center justify-between px-4'>
           <div className='lg:hidden block'>
-            <Logo forceWhite={!sticky} />
+            <Logo forceWhite={isHomePage && !sticky} />
           </div>
           <nav className='hidden lg:flex grow items-center justify-start'>
             {headerData.map((item, index) => (
@@ -261,13 +262,13 @@ const Header: React.FC = () => {
       <div>
         <div className='px-4 container mx-auto lg:max-w-(--breakpoint-xl) md:max-w-(--breakpoint-md) sm:flex lg:justify-between justify-center py-5 hidden'>
           <div className='lg:block hidden'>
-            <Logo forceWhite={!sticky} />
+            <Logo forceWhite={isHomePage && !sticky} />
           </div>
           <div className="flex items-center">
             <Link
               href="https://wa.me/5521984121612?text=Ol%C3%A1%21%20Vi%20o%20site%20do%20Deva%20Karuno%20Terapias%20e%20gostaria%20de%20agendar%20uma%20sess%C3%A3o."
               target="_blank"
-              className="text-white bg-secondary text-base font-semibold py-4 px-7 rounded-md hover:bg-secondary/90 transition-colors cursor-pointer"
+              className="text-white bg-primary text-base font-semibold py-4 px-7 rounded-md hover:bg-primary/90 transition-colors cursor-pointer"
             >
               Agendar Sessão
             </Link>
