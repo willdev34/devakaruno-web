@@ -8,7 +8,7 @@ import Image from 'next/image'
 
 const FutureEvents = () => {
   return (
-    <section className="lg:py-28 py-16 dark:bg-dark">
+    <section id="cursos" className="lg:py-28 py-16 dark:bg-dark">
       <div className="container mx-auto lg:max-w-(--breakpoint-xl) px-4">
         <div className="text-center">
           <h2 className="text-3xl font-semibold mb-3">Cursos e Vivências</h2>

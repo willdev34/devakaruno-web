@@ -8,7 +8,7 @@ import Image from 'next/image'
 
 const Causes = () => {
   return (
-    <section className='lg:py-28 py-16 bg-grey dark:bg-darkmode'>
+    <section id="servicos" className='lg:py-28 py-16 bg-grey dark:bg-darkmode'>
       <div className='container mx-auto lg:max-w-(--breakpoint-xl) px-4'>
         <h2 className='text-center text-3xl font-semibold mb-3'>
           Como podemos trabalhar juntos
