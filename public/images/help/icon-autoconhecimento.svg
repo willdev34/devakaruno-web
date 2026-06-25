@@ -1,8 +1,3 @@
-<!--
-Caminho: public/images/help/icon-autoconhecimento.svg
-Arquivo: icon-autoconhecimento.svg
-Descricao: Icone de coracao em traco fino, fundo Lavender Mist, usado no card Autoconhecimento emocional.
--->
 <svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
 <rect width="64" height="64" rx="16" fill="#EDE8F2"/>
 <g transform="translate(16,16) scale(1.333)">
