@@ -4,7 +4,7 @@
 
 # Deva Karuno Terapias — Site institucional
 
-Site institucional da Deva Karuno Terapias, prática de terapia tântrica e desenvolvimento pessoal. Construído sobre o template Endeavor Next.js Pro, sendo transformado de forma sistemática de conteúdo placeholder pra conteúdo real da marca, em português.
+Site institucional do Deva Karuno Terapias, prática de terapia tântrica e desenvolvimento pessoal. Construído sobre o template Endeavor Next.js Pro, sendo transformado de forma sistemática de conteúdo placeholder pra conteúdo real da marca, em português.
 
 Objetivo do site: converter visita em agendamento, com o WhatsApp como canal principal, não formulários.
 
