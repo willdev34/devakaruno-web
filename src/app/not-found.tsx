@@ -11,6 +11,7 @@ const ErrorPage = () => {
     <>
       <HeroSub
         title="404"
+        bgImage="/images/background/hero-maos.jpg"
       />
       <NotFound />
     </>
