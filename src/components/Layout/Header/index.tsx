@@ -8,9 +8,6 @@ import Image from 'next/image'
 import HeaderLink from '../Header/Navigation/HeaderLink'
 import MobileHeaderLink from '../Header/Navigation/MobileHeaderLink'
 import { useTheme } from 'next-themes'
-import { Icon } from '@iconify/react/dist/iconify.js'
-import DonationFormContext from '@/app/context/donationContext'
-import { Donation } from '@/components/Home/Hero/Donation'
 import { SuccessfullLogin } from '@/components/Auth/AuthDialog/SuccessfulLogin'
 import AuthDialogContext from '@/app/context/AuthDialogContext'
 import { FailedLogin } from '@/components/Auth/AuthDialog/FailedLogin'
@@ -95,13 +92,10 @@ const Header: React.FC = () => {
     }
   }, [isSignInOpen, isSignUpOpen, navbarOpen])
 
-  const info = useContext(DonationFormContext)
-
   useEffect(() => {
     setMounted(true)
   }, [])
 
-  const donationInfo = useContext(DonationFormContext)
   const authDialog = useContext(AuthDialogContext)
 
   return (
@@ -275,23 +269,7 @@ const Header: React.FC = () => {
           </div>
         </div>
       </div>
-      {/* Donation Popup */}
-      {donationInfo?.isDonationOpen && (
-        <div className='fixed top-0 left-0 w-full h-full bg-black/50 flex items-center justify-center z-50 m-0!'>
-          <div className='relative mx-auto w-full max-w-md overflow-hidden rounded-lg bg-white px-8 py-14 text-center dark:bg-dark'>
-            <button
-              onClick={() => donationInfo?.setIsDonationOpen(false)}
-              className=' hover:bg-gray-200 dark:hover:bg-gray-700 p-1 rounded-full absolute -top-5 -right-3 mr-8 mt-8 cursor-pointer'
-              aria-label='Close Sign In Modal'>
-              <Icon
-                icon='ic:round-close'
-                className='text-2xl dark:text-white'
-              />
-            </button>
-            <Donation />
-          </div>
-        </div>
-      )}
+
       {/* Successsful Login Alert */}
       <div
         className={`fixed top-6 end-1/2 translate-x-1/2 z-50 ${authDialog?.isSuccessDialogOpen == true ? 'block' : 'hidden'
