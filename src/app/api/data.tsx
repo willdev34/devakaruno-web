@@ -38,22 +38,6 @@ export const ServicesData: { icon: string; title: string; text: string; whatsapp
   },
 ];
 
-export const CursosData: { icon: string; title: string; text: string; price: string; whatsappLink: string }[] = [
-  {
-    icon: "/images/services/icon-individual.svg",
-    title: "Curso Privativo Individual: Massagem Tântrica",
-    text: "Curso individual e privativo, com teoria e prática guiada, duração de até 4 horas. Indicado para quem busca aprofundar o autoconhecimento corporal. Aos sábados, por agendamento.",
-    price: "R$ 1.100",
-    whatsappLink: "https://wa.me/5521984121612?text=Ol%C3%A1%21%20Vi%20o%20site%20da%20Deva%20Karuno%20Terapias%20e%20gostaria%20de%20saber%20mais%20sobre%20o%20Curso%20Privativo%20Individual%20de%20Massagem%20T%C3%A2ntrica.",
-  },
-  {
-    icon: "/images/services/icon-casais.svg",
-    title: "Curso Privativo para Casais: Massagem Tântrica",
-    text: "Curso privativo para casais, com teoria e prática guiada, duração de até 4 horas. Indicado para quem busca fortalecer a conexão com o parceiro. Aos sábados, por agendamento.",
-    price: "R$ 1.600",
-    whatsappLink: "https://wa.me/5521984121612?text=Ol%C3%A1%21%20Vi%20o%20site%20da%20Deva%20Karuno%20Terapias%20e%20gostaria%20de%20saber%20mais%20sobre%20o%20Curso%20Privativo%20para%20Casais%20de%20Massagem%20T%C3%A2ntrica.",
-  },
-];
 
 export const CauseData: {
   image: string;
@@ -157,104 +141,6 @@ export const CauseData: {
   },
 ];
 
-export const Eventdata: {
-  image: string;
-  title: string;
-  text: string;
-  date: string;
-  location: string;
-  type: string;
-  entrants: string;
-  duration: string;
-  category: string;
-  detail: string;
-  slug: string;
-}[] = [
-  {
-    image: "/images/event/event-img-1.jpg",
-    title: "Define each stage of work to see whats important for you",
-    slug: "event-1",
-    text: "Outline each stage of work to identify what matters most to you.",
-    date: "May 10, 2025",
-    location: "San Marcos",
-    type: "Open",
-    entrants: "Unlimited",
-    duration: "1655 Days",
-    category: "Calendar, Dontaions",
-    detail:
-      "Donec hendrerit, dui quis ultricies eleifend, ipsum sapien auctor ligula, vitae interdum augue metus nec sem. Pellentesque mollis ex risus, eget dignissim nibh fermentum in. Cras eu ipsum eget ante ullamcorper vehicula. Suspendisse non blandit mi.Mauris eu sapien urna. Fusce eu luctus augue, non vestibulum felis. Fusce sollicitudin porta augue non porta. Vivamus ullamcorper tristique nisi, in mattis elit porta vitae. Curabitur euismod lectus non maximus dictum. Vivamus luctus, eros at posuere",
-  },
-  {
-    image: "/images/event/event-img-2.jpg",
-    title: "Drive growth and achieve your business objectives effectively",
-    slug: "event-2",
-    text: "Accelerate growth and successfully achieve your business goals.",
-    date: "May 10, 2025",
-    location: "San Marcos",
-    type: "Open",
-    entrants: "Unlimited",
-    duration: "1655 Days",
-    category: "Calendar, Dontaions",
-    detail:
-      "Donec hendrerit, dui quis ultricies eleifend, ipsum sapien auctor ligula, vitae interdum augue metus nec sem. Pellentesque mollis ex risus, eget dignissim nibh fermentum in. Cras eu ipsum eget ante ullamcorper vehicula. Suspendisse non blandit mi.Mauris eu sapien urna. Fusce eu luctus augue, non vestibulum felis. Fusce sollicitudin porta augue non porta. Vivamus ullamcorper tristique nisi, in mattis elit porta vitae. Curabitur euismod lectus non maximus dictum. Vivamus luctus, eros at posuere",
-  },
-  {
-    image: "/images/event/event-img-3.jpg",
-    title: "The work is top-notch and I consistently outrank all my",
-    slug: "event-3",
-    text: "The work is exceptional, and I consistently outperform all my competitors.",
-    date: "May 10, 2025",
-    location: "San Marcos",
-    type: "Open",
-    entrants: "Unlimited",
-    duration: "1655 Days",
-    category: "Calendar, Dontaions",
-    detail:
-      "Donec hendrerit, dui quis ultricies eleifend, ipsum sapien auctor ligula, vitae interdum augue metus nec sem. Pellentesque mollis ex risus, eget dignissim nibh fermentum in. Cras eu ipsum eget ante ullamcorper vehicula. Suspendisse non blandit mi.Mauris eu sapien urna. Fusce eu luctus augue, non vestibulum felis. Fusce sollicitudin porta augue non porta. Vivamus ullamcorper tristique nisi, in mattis elit porta vitae. Curabitur euismod lectus non maximus dictum. Vivamus luctus, eros at posuere",
-  },
-  {
-    image: "/images/event/event-4.jpg",
-    title: "Literary Escapade Book Reading and Discussion.",
-    slug: "event-4",
-    text: "Business Park, Opp. Corns Sam Restaurant, New Yoark, US",
-    date: "May 10, 2025",
-    location: "San Marcos",
-    type: "Open",
-    entrants: "Unlimited",
-    duration: "1655 Days",
-    category: "Calendar, Dontaions",
-    detail:
-      "Donec hendrerit, dui quis ultricies eleifend, ipsum sapien auctor ligula, vitae interdum augue metus nec sem. Pellentesque mollis ex risus, eget dignissim nibh fermentum in. Cras eu ipsum eget ante ullamcorper vehicula. Suspendisse non blandit mi.Mauris eu sapien urna. Fusce eu luctus augue, non vestibulum felis. Fusce sollicitudin porta augue non porta. Vivamus ullamcorper tristique nisi, in mattis elit porta vitae. Curabitur euismod lectus non maximus dictum. Vivamus luctus, eros at posuere",
-  },
-  {
-    image: "/images/event/event-5.jpg",
-    title: "A Journey Through Time Historical Reenactment Fair.",
-    slug: "event-5",
-    text: "Business Park, Opp. Corns Sam Restaurant, New Yoark, US",
-    date: "May 10, 2025",
-    location: "San Marcos",
-    type: "Open",
-    entrants: "Unlimited",
-    duration: "1655 Days",
-    category: "Calendar, Dontaions",
-    detail:
-      "Donec hendrerit, dui quis ultricies eleifend, ipsum sapien auctor ligula, vitae interdum augue metus nec sem. Pellentesque mollis ex risus, eget dignissim nibh fermentum in. Cras eu ipsum eget ante ullamcorper vehicula. Suspendisse non blandit mi.Mauris eu sapien urna. Fusce eu luctus augue, non vestibulum felis. Fusce sollicitudin porta augue non porta. Vivamus ullamcorper tristique nisi, in mattis elit porta vitae. Curabitur euismod lectus non maximus dictum. Vivamus luctus, eros at posuere",
-  },
-  {
-    image: "/images/event/event-6.jpg",
-    title: "Leadership Summit Empowering Tomorrow's Leaders.",
-    slug: "event-6",
-    text: "Business Park, Opp. Corns Sam Restaurant, New Yoark, US",
-    date: "May 10, 2025",
-    location: "San Marcos",
-    type: "Open",
-    entrants: "Unlimited",
-    duration: "1655 Days",
-    category: "Calendar, Dontaions",
-    detail:
-      "Donec hendrerit, dui quis ultricies eleifend, ipsum sapien auctor ligula, vitae interdum augue metus nec sem. Pellentesque mollis ex risus, eget dignissim nibh fermentum in. Cras eu ipsum eget ante ullamcorper vehicula. Suspendisse non blandit mi.Mauris eu sapien urna. Fusce eu luctus augue, non vestibulum felis. Fusce sollicitudin porta augue non porta. Vivamus ullamcorper tristique nisi, in mattis elit porta vitae. Curabitur euismod lectus non maximus dictum. Vivamus luctus, eros at posuere",
-  },
-];
 
 
 export const Reviews: {
@@ -338,4 +224,58 @@ export const SobreTestimonials: {
     clientName: "Damião",
     review: "Hoje, mais uma sessão de Tantra. Já perdi as contas de quantas já fiz. Só sei que quanto mais eu faço, mais quero fazer! Como diz meu terapeuta Deva Karuno, cada sessão é única! Hoje, como todas as outras, também foi diferente! Senti profundamente o carisma, o aconchego, o bem querer... tudo isso durante a Massagem Sensitive! Foi espetacular! Sem contar a energia circulando pelo corpo! Não tenho mais palavras pra descrever essa maravilha! Só tenho a dizer: Namastê, meu terapeuta!",
   },
+];
+
+export const CursosData: {
+  slug: string;
+  icon: string;
+  bgImage: string;
+  title: string;
+  text: string;
+  detail: string;
+  modalidade: string;
+  duracao: string;
+  local: string;
+  price: string;
+  whatsappLink: string;
+  faq: { question: string; answer: string }[];
+}[] = [
+  {
+    slug: "curso-privativo-individual-massagem-tantrica",
+    icon: "/images/services/icon-individual.svg",
+    bgImage: "/images/background/hero-curso-individual.jpg",
+    title: "Curso Privativo Individual: Massagem Tântrica",
+    text: "Curso individual e privativo, totalmente prático, com minha orientação direta, duração de até 4 horas. Indicado para quem busca aprofundar o autoconhecimento corporal. Aos sábados, por agendamento.",
+    detail: "Esse curso é uma imersão individual e privativa no Método Deva Nishok de massagem tântrica consciente, totalmente prático, com minha orientação direta durante toda a sessão, com duração de até 4 horas. Indicado para quem busca aprofundar o autoconhecimento corporal com privacidade, ou que não dispõe de um fim de semana livre para participar de uma vivência em grupo. É um curso de desenvolvimento pessoal, não profissionalizante.",
+    modalidade: "Individual",
+    duracao: "Até 4 horas",
+    local: "Avenida Rio Branco, 185 - Centro, Rio de Janeiro",
+    price: "R$ 1.100",
+    whatsappLink: "https://wa.me/5521984121612?text=Ol%C3%A1%21%20Vi%20o%20site%20da%20Deva%20Karuno%20Terapias%20e%20gostaria%20de%20saber%20mais%20sobre%20o%20Curso%20Privativo%20Individual%20de%20Massagem%20T%C3%A2ntrica.",
+    faq: [
+      { question: "Preciso ter um parceiro pra fazer o curso?", answer: "Não necessariamente. Eu posso indicar uma pessoa com experiência na técnica pra servir de referência durante a prática." },
+      { question: "Como funciona a parte prática?", answer: "A pessoa que recebe a massagem fica sem roupa durante a aplicação; eu permaneço vestido o tempo todo, conduzindo tudo com respeito e profissionalismo." },
+      { question: "O curso tem caráter erótico ou sexual?", answer: "Não. É estritamente educacional e terapêutico." },
+      { question: "O curso fornece certificado profissional?", answer: "Não um certificado profissional, mas ofereço um certificado de curso livre, de participação. Pra atuação profissional, é necessária uma formação completa separada." }
+    ]
+  },
+  {
+    slug: "curso-privativo-casais-massagem-tantrica",
+    icon: "/images/services/icon-casais.svg",
+    bgImage: "/images/background/hero-curso-casais.jpg",
+    title: "Curso Privativo para Casais: Massagem Tântrica",
+    text: "Curso privativo para casais, totalmente prático, com minha orientação direta, duração de até 4 horas. Indicado para quem busca fortalecer a conexão com o parceiro. Aos sábados, por agendamento.",
+    detail: "Esse curso é uma imersão privativa para casais no Método Deva Nishok de massagem tântrica consciente, totalmente prático, com minha orientação direta durante toda a sessão, com duração de até 4 horas. Indicado para casais que querem aprender uma nova forma de cuidado mútuo e levar técnicas reais pra própria relação. É um curso de desenvolvimento pessoal, não profissionalizante.",
+    modalidade: "Casal",
+    duracao: "Até 4 horas",
+    local: "Avenida Rio Branco, 185 - Centro, Rio de Janeiro",
+    price: "R$ 1.600",
+    whatsappLink: "https://wa.me/5521984121612?text=Ol%C3%A1%21%20Vi%20o%20site%20da%20Deva%20Karuno%20Terapias%20e%20gostaria%20de%20saber%20mais%20sobre%20o%20Curso%20Privativo%20para%20Casais%20de%20Massagem%20T%C3%A2ntrica.",
+    faq: [
+      { question: "Qual a diferença entre o curso individual e o de casal?", answer: "No de casal, o próprio parceiro serve de referência durante a prática. No individual, essa referência é indicada por mim." },
+      { question: "Como funciona a parte prática?", answer: "A pessoa que recebe a massagem fica sem roupa durante a aplicação; eu permaneço vestido o tempo todo." },
+      { question: "O curso tem caráter erótico ou sexual?", answer: "Não. É estritamente educacional e terapêutico." },
+      { question: "O curso fornece certificado profissional?", answer: "Não um certificado profissional, mas ofereço um certificado de curso livre, de participação. É voltado pra desenvolvimento pessoal e conexão do casal." }
+    ]
+  }
 ];
