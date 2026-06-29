@@ -19,7 +19,7 @@ const Bio = () => {
         <div className="flex justify-center mb-16">
           <div className="w-72 h-72 lg:w-80 lg:h-80 rounded-full overflow-hidden border-4 border-grey dark:border-dark_border shadow-lg">
             <Image
-              src="/images/sobre/perfil-deva-karuno.jpg"
+              src="/images/sobre/perfil-deva-karuno-2026.jpg"
               alt="Deva Karuno"
               width={400}
               height={400}

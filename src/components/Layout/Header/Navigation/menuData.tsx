@@ -7,6 +7,7 @@ import { HeaderItem } from "@/types/menu";
 
 export const headerData: HeaderItem[] = [
   { label: "Home", href: "/" },
+  { label: "Terapia Tântrica", href: "/terapia-tantrica" },
   { label: "Serviços", href: "/#servicos" },
   { label: "Cursos e Vivências", href: "/#cursos" },
   { label: "Blog", href: "/blog" },

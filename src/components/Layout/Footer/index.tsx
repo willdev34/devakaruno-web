@@ -46,6 +46,7 @@ const Footer: FC = () => {
             <h4 className="font-body text-sm font-semibold uppercase tracking-wide text-black dark:text-white mb-4">Navegação</h4>
             <ul className="space-y-3">
               <li><Link href="/" className="text-base text-dustGray dark:text-white/60 hover:text-primary">Home</Link></li>
+              <li><Link href="/terapia-tantrica" className="text-base text-dustGray dark:text-white/60 hover:text-primary">Terapia Tântrica</Link></li>
               <li><Link href="/#servicos" className="text-base text-dustGray dark:text-white/60 hover:text-primary">Serviços</Link></li>
               <li><Link href="/#cursos" className="text-base text-dustGray dark:text-white/60 hover:text-primary">Cursos e Vivências</Link></li>
               <li><Link href="/blog" className="text-base text-dustGray dark:text-white/60 hover:text-primary">Blog</Link></li>
