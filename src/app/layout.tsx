@@ -5,7 +5,6 @@ import Footer from "@/components/Layout/Footer";
 import { ThemeProvider } from "next-themes";
 import ScrollToTop from '@/components/ScrollToTop';
 import Aoscompo from "@/utils/aos";
-import { DonationProvider } from "./context/donationContext";
 import SessionProviderComp from "@/components/nextauth/SessionProvider";
 import { AuthDialogProvider } from "./context/AuthDialogContext";
 const cormorant = Cormorant_Garamond({ subsets: ["latin"], weight: ["300", "400", "500", "600", "700"], variable: "--font-heading" });
@@ -14,18 +13,15 @@ import NextTopLoader from 'nextjs-toploader';
 
 export default function RootLayout({
   children,
-  session,
 }: Readonly<{
   children: React.ReactNode;
-  session:any
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${cormorant.variable} ${dmSans.variable} font-body`}>
       <NextTopLoader color="#FF4D7E" />
-      <DonationProvider>
         <AuthDialogProvider>
-      <SessionProviderComp session={session}>
+      <SessionProviderComp>
         <ThemeProvider
           attribute="class"
           enableSystem={true}
@@ -42,7 +38,6 @@ export default function RootLayout({
         </ThemeProvider>
         </SessionProviderComp>
         </AuthDialogProvider>
-        </DonationProvider>
       </body>
     </html>
   );
