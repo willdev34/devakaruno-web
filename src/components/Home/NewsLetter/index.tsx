@@ -1,11 +1,12 @@
 /**
  * Caminho: src/components/Home/NewsLetter/index.tsx
  * Arquivo: index.tsx
- * Descrição: Bloco de Newsletter da Home, com formulário de inscrição (visual, sem captura real ainda) e preview dos últimos posts do blog.
+ * Descrição: Bloco de Newsletter da Home, com formulário de inscrição real (via formsubmit.co, em NewsletterForm.tsx) e preview dos últimos posts do blog.
  */
 import Link from "next/link";
 import { getAllPosts } from "@/utils/markdown";
 import BlogCard from "./blogCard";
+import NewsletterForm from "./NewsletterForm";
 
 const Newsletter = () => {
     const posts = getAllPosts(["title", "date", "excerpt", "coverImage", "slug", "author"]);
@@ -25,19 +26,7 @@ const Newsletter = () => {
                             Inscreva-se para receber reflexões sobre autoconhecimento, relacionamentos e bem-estar direto no seu e-mail.
                             </p>
                         </div>
-                        <form>
-                            <div className="mb-6">
-                                <input type="text" placeholder="Seu nome" className="w-full p-4 border border-border dark:border-dark_border focus:border-primary dark:focus:border-primary dark:bg-dark rounded-sm focus-visible:outline-hidden" />
-                            </div>
-                            <div className="mb-6">
-                                <input type="email" placeholder="Seu e-mail" className="w-full p-4 border border-border dark:border-dark_border focus:border-primary dark:focus:border-primary dark:bg-dark rounded-sm focus-visible:outline-hidden" />
-                            </div>
-                            <div className="flex justify-center mb-6">
-                                <button type="submit" className="text-white  bg-linear-to-r from-primary to-secondary px-7 py-4 dark:hover:from-dark hover:from-white hover:to-white dark:hover:to-dark border border-transparent hover:border-primary hover:text-primary rounded-sm w-full cursor-pointer">
-                                    Inscrever-se
-                                </button>
-                            </div>
-                        </form>
+                        <NewsletterForm />
                     </div>
                     <div className="lg:mt-0 mt-8">
                         <div className="flex justify-between items-center border-b border-border dark:border-dark_border focus:border-primary dark:focus:border-primary dark:bg-dark pb-6 mb-8 focus-visible:outline-none-10">
