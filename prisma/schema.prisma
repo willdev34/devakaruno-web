@@ -46,3 +46,34 @@ model Post {
 
   @@map("posts")
 }
+
+model Course {
+  id           String      @id @default(cuid())
+  slug         String      @unique
+  icon         String
+  bgImage      String
+  title        String
+  text         String
+  detail       String      @db.Text
+  modalidade   String
+  duracao      String
+  local        String
+  price        String
+  whatsappLink String
+  faqs         CourseFaq[]
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+
+  @@map("courses")
+}
+
+model CourseFaq {
+  id       String @id @default(cuid())
+  question String
+  answer   String @db.Text
+  order    Int
+  courseId String
+  course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  @@map("course_faqs")
+}
