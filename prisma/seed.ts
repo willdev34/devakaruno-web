@@ -65,6 +65,27 @@ const testimonialsData = [
   { clientName: "Damião", review: "Hoje, mais uma sessão de Tantra. Já perdi as contas de quantas já fiz. Só sei que quanto mais eu faço, mais quero fazer! Como diz meu terapeuta Deva Karuno, cada sessão é única! Hoje, como todas as outras, também foi diferente! Senti profundamente o carisma, o aconchego, o bem querer... tudo isso durante a Massagem Sensitive! Foi espetacular! Sem contar a energia circulando pelo corpo! Não tenho mais palavras pra descrever essa maravilha! Só tenho a dizer: Namastê, meu terapeuta!" },
 ];
 
+const servicesData = [
+  {
+    icon: "/images/services/icon-individual.svg",
+    title: "Individual",
+    text: "Sessões 1:1 de terapia profunda e autoconhecimento.",
+    whatsappLink: "https://wa.me/5521984121612?text=Ol%C3%A1%21%20Vi%20o%20site%20da%20Deva%20Karuno%20Terapias%20e%20gostaria%20de%20agendar%20uma%20sess%C3%A3o%20individual.",
+  },
+  {
+    icon: "/images/services/icon-casais.svg",
+    title: "Casais",
+    text: "Trabalho relacional para reconectar e aprofundar vínculos.",
+    whatsappLink: "https://wa.me/5521984121612?text=Ol%C3%A1%21%20Vi%20o%20site%20da%20Deva%20Karuno%20Terapias%20e%20gostaria%20de%20agendar%20uma%20sess%C3%A3o%20para%20casais.",
+  },
+  {
+    icon: "/images/services/icon-cursos.svg",
+    title: "Cursos",
+    text: "Programas de imersão em desenvolvimento pessoal.",
+    whatsappLink: "https://wa.me/5521984121612?text=Ol%C3%A1%21%20Vi%20o%20site%20da%20Deva%20Karuno%20Terapias%20e%20gostaria%20de%20saber%20mais%20sobre%20os%20cursos%20e%20viv%C3%AAncias.",
+  },
+];
+
 async function main() {
   const admin = await prisma.user.upsert({
     where: { email: "karunodeva@gmail.com" },
@@ -148,6 +169,22 @@ async function main() {
   }
 
   console.log("Depoimentos garantidos:", testimonialsData.length);
+
+  await prisma.service.deleteMany();
+
+  for (let i = 0; i < servicesData.length; i++) {
+    await prisma.service.create({
+      data: {
+        icon: servicesData[i].icon,
+        title: servicesData[i].title,
+        text: servicesData[i].text,
+        whatsappLink: servicesData[i].whatsappLink,
+        order: i,
+      },
+    });
+  }
+
+  console.log("Serviços garantidos:", servicesData.length);
 }
 
 main()

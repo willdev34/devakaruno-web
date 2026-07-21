@@ -87,3 +87,14 @@ model Testimonial {
 
   @@map("testimonials")
 }
+
+model Service {
+  id           String @id @default(cuid())
+  icon         String
+  title        String
+  text         String
+  whatsappLink String
+  order        Int
+
+  @@map("services")
+}
