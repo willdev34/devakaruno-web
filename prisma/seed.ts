@@ -55,6 +55,16 @@ const coursesData = [
   },
 ];
 
+const testimonialsData = [
+  { clientName: "Luciana", review: "Foi uma experiência excelente! O professor passou os conhecimentos de forma clara e objetiva e se disponibilizou a esclarecer todas as dúvidas. O modelo também foi cooperativo e tudo transcorreu respeitosamente e profissionalmente." },
+  { clientName: "Kira", review: "Foi algo único, diferente de tudo que já vivenciei. O terapeuta Deva Karuno além de super profissional é maravilhoso e te leva a um estado libertador. Recomendo a todas as pessoas que, se ainda não fizeram, experimentem o tantra." },
+  { clientName: "J.G.", review: "Fiz a massagem tântrica com Deva Karuno e foi um momento maravilhoso, onde me senti confortável, acolhida. Suas mãos pareciam uma pena, de tão leves e macias. Foi lindo o processo, só tenho a agradecer por tudo. Deva Karuno, terapeuta super zen, atencioso, ser humano incrível, super indico... namastê 🙏" },
+  { clientName: "Pietro", review: "Uma grande experiência. Os suaves toques das mãos percorrem todo o corpo e dizem que é hora de despertar. Karuno é um terapeuta nato, acolhedor e profundo. Até breve!" },
+  { clientName: "Marília R. V. Pires", review: "Experiência maravilhosa e uma sensação inigualável de bem-estar e felicidade. Seus toques me surpreenderam demais. Foi maravilhoso ter ele como terapeuta." },
+  { clientName: "Rose", review: "Agradeço imensamente pela massagem que pude experimentar com você. Cada pequeno detalhe parecia certo em cada momento. Seja toda a gentileza (aliás nunca conheci homemmais gentil rs) durante todo o tempo, a forma variada dos toques, às vezes suavemente e depois com mais firmeza, ou a maneira como movia meu corpo com a maior sutileza. A música no volume certo, tudo se encaixava perfeitamente. A tensão e a energia que você trouxe para mim também foram ótimas. Uma intensidade que nunca experimentei antes. Sou muito grata." },
+  { clientName: "Damião", review: "Hoje, mais uma sessão de Tantra. Já perdi as contas de quantas já fiz. Só sei que quanto mais eu faço, mais quero fazer! Como diz meu terapeuta Deva Karuno, cada sessão é única! Hoje, como todas as outras, também foi diferente! Senti profundamente o carisma, o aconchego, o bem querer... tudo isso durante a Massagem Sensitive! Foi espetacular! Sem contar a energia circulando pelo corpo! Não tenho mais palavras pra descrever essa maravilha! Só tenho a dizer: Namastê, meu terapeuta!" },
+];
+
 async function main() {
   const admin = await prisma.user.upsert({
     where: { email: "karunodeva@gmail.com" },
@@ -124,6 +134,20 @@ async function main() {
 
     console.log("Curso garantido:", course.slug);
   }
+
+  await prisma.testimonial.deleteMany();
+
+  for (let i = 0; i < testimonialsData.length; i++) {
+    await prisma.testimonial.create({
+      data: {
+        clientName: testimonialsData[i].clientName,
+        review: testimonialsData[i].review,
+        order: i,
+      },
+    });
+  }
+
+  console.log("Depoimentos garantidos:", testimonialsData.length);
 }
 
 main()

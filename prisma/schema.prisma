@@ -77,3 +77,13 @@ model CourseFaq {
 
   @@map("course_faqs")
 }
+
+model Testimonial {
+  id         String   @id @default(cuid())
+  clientName String
+  review     String   @db.Text
+  order      Int
+  createdAt  DateTime @default(now())
+
+  @@map("testimonials")
+}
