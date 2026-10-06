@@ -1,12 +1,14 @@
 /**
  * Caminho: src/components/Home/Causes/index.tsx
  * Arquivo: index.tsx
- * Descrição: Bloco de Serviços da Home, com as 3 modalidades (Individual, Casais, Cursos), cada uma linkando direto para o WhatsApp.
+ * Descrição: Bloco de Serviços da Home (Server Component), com as modalidades lidas do banco via Prisma, cada uma linkando direto para o WhatsApp.
  */
-import { ServicesData } from '@/app/api/data'
+import { prisma } from '@/lib/prisma'
 import Image from 'next/image'
 
-const Causes = () => {
+const Causes = async () => {
+  const services = await prisma.service.findMany({ orderBy: { order: 'asc' } })
+
   return (
     <section id="servicos" className='lg:py-28 py-16 bg-grey dark:bg-darkmode'>
       <div className='container mx-auto lg:max-w-(--breakpoint-xl) px-4'>
@@ -17,7 +19,7 @@ const Causes = () => {
           Cada caminho terapêutico é único.<br className='lg:block hidden' /> Conheça as modalidades disponíveis e escolha a que faz mais sentido para o seu momento.
         </p>
         <div className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 mt-20'>
-          {ServicesData.map((item, index) => (
+          {services.map((item, index) => (
             <a
               href={item.whatsappLink}
               target='_blank'

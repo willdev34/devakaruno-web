@@ -7,6 +7,10 @@ import FutureEvents from '@/components/Home/FutureEvents';
 import Newsletter from '@/components/Home/NewsLetter';
 import Testimonial from '@/components/Home/Testimonial';
 import WhatsAppCTA from '@/components/Home/WhatsAppCTA';
+
+// Home estática com revalidação a cada 60s, pois lê os serviços do banco via Prisma
+export const revalidate = 60
+
 export const metadata: Metadata = {
   title: "Deva Karuno Terapias | Terapia Tântrica e Desenvolvimento Pessoal",
 };
