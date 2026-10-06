@@ -4,14 +4,16 @@ import Hero from '@/components/Home/Hero';
 import Help from '@/components/Home/Help';
 import Causes from '@/components/Home/Causes';
 import FutureEvents from '@/components/Home/FutureEvents';
-import UrgentDonation from '@/components/Home/UrgentDonation';
 import Newsletter from '@/components/Home/NewsLetter';
 import Testimonial from '@/components/Home/Testimonial';
-import Volunteer from '@/components/SharedComponent/Volunteer';
-export const metadata: Metadata = {
-  title: "Endeavor",
-};
+import WhatsAppCTA from '@/components/Home/WhatsAppCTA';
 
+// Home estática com revalidação a cada 60s, pois lê os serviços do banco via Prisma
+export const revalidate = 60
+
+export const metadata: Metadata = {
+  title: "Deva Karuno Terapias | Terapia Tântrica e Desenvolvimento Pessoal",
+};
 export default function Home() {
   return (
     <main>
@@ -19,10 +21,9 @@ export default function Home() {
       <Help />
       <Causes />
       <FutureEvents />
-      <UrgentDonation />
       <Newsletter />
       <Testimonial />
-      <Volunteer />
+      <WhatsAppCTA />
     </main>
   )
 }

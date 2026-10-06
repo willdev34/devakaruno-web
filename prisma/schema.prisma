@@ -1,0 +1,100 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  ADMIN
+  AUTHOR
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  image     String?
+  role      Role     @default(ADMIN)
+  posts     Post[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
+}
+
+model Post {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  title       String
+  excerpt     String
+  content     String   @db.Text
+  coverImage  String
+  published   Boolean  @default(true)
+  publishedAt DateTime @default(now())
+  authorId    String
+  author      User     @relation(fields: [authorId], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("posts")
+}
+
+model Course {
+  id           String      @id @default(cuid())
+  slug         String      @unique
+  icon         String
+  bgImage      String
+  title        String
+  text         String
+  detail       String      @db.Text
+  modalidade   String
+  duracao      String
+  local        String
+  price        String
+  whatsappLink String
+  faqs         CourseFaq[]
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+
+  @@map("courses")
+}
+
+model CourseFaq {
+  id       String @id @default(cuid())
+  question String
+  answer   String @db.Text
+  order    Int
+  courseId String
+  course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  @@map("course_faqs")
+}
+
+model Testimonial {
+  id         String   @id @default(cuid())
+  clientName String
+  review     String   @db.Text
+  order      Int
+  createdAt  DateTime @default(now())
+
+  @@map("testimonials")
+}
+
+model Service {
+  id           String @id @default(cuid())
+  icon         String
+  title        String
+  text         String
+  whatsappLink String
+  order        Int
+
+  @@map("services")
+}

@@ -7,12 +7,12 @@ const Help = () => {
             <div className="container mx-auto lg:max-w-(--breakpoint-xl) px-4">
                 <div className="text-center">
                     <h2 className="text-3xl mb-3 font-semibold">
-                        How can you help us?
+                        Benefícios da Terapia Tântrica
                     </h2>
                     <p className="text-dustGray dark:text-white/60 text-base">
-                        You can support us by donating, volunteering your time, or providing food supplies.<br className="lg:block hidden" /> Every effort makes a difference!
+                        Cada sessão trabalha o corpo, as emoções e a forma como você se relaciona,<br className="lg:block hidden" /> com resultados que se estendem para além do consultório.
                     </p>
-                    <div className="mt-20 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 items-center gap-8">
+                    <div className="mt-20 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 items-start gap-8">
                         {helpdata.map((item, index) => (
                             <div key={index} className="flex flex-col gap-5 items-center xl:px-3">
                                 <div>
