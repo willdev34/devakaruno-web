@@ -83,6 +83,7 @@ model Testimonial {
   clientName String
   review     String   @db.Text
   order      Int
+  featured   Boolean  @default(false)
   createdAt  DateTime @default(now())
 
   @@map("testimonials")

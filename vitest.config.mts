@@ -20,6 +20,8 @@ export default defineConfig({
       // Escopo inicial da cobertura: cresce conforme novos arquivos ganham testes
       include: [
         "src/lib/**/*.ts",
+        "src/components/Home/Testimonial/*.tsx",
+        "src/components/QuemEOKaruno/Depoimentos/index.tsx",
         "src/components/Layout/SiteChrome.tsx",
         "src/components/TerapiaTantrica/AnamneseCTA/index.tsx",
         "src/components/TerapiaTantrica/AnamneseModal/index.tsx",

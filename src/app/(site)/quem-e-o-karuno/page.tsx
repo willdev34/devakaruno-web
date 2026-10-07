@@ -10,6 +10,9 @@ import Depoimentos from "@/components/QuemEOKaruno/Depoimentos";
 import WhatsAppCTA from "@/components/Home/WhatsAppCTA";
 import { Metadata } from "next";
 
+// Revalida a cada 60s para refletir mudanças nos depoimentos do banco
+export const revalidate = 60;
+
 export const metadata: Metadata = {
   title: "Quem é o Karuno | Deva Karuno Terapias",
 };
