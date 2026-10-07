@@ -4,7 +4,6 @@
  * Descrição: Página exibida enquanto o site está em construção (MAINTENANCE_MODE=true).
  */
 import type { Metadata } from "next";
-import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "Em construção | Deva Karuno Terapias",
@@ -17,17 +16,8 @@ const WHATSAPP_LINK =
 
 export default function EmConstrucaoPage() {
   return (
-    <main className="min-h-screen bg-dark flex items-center justify-center px-4 py-16">
+    <main className="min-h-[70vh] bg-dark flex items-center justify-center px-4 pt-40 pb-20">
       <div className="max-w-xl text-center">
-        <Image
-          src="/images/logo/logo-full-white.svg"
-          alt="Deva Karuno Terapias"
-          width={180}
-          height={45}
-          priority
-          style={{ width: "auto", height: "88px" }}
-          className="mx-auto mb-10"
-        />
         <h1 className="text-3xl lg:text-5xl font-semibold text-white mb-5">
           Nosso novo site está sendo preparado
         </h1>
