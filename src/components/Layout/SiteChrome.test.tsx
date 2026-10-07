@@ -19,10 +19,16 @@ describe("SiteChrome", () => {
     expect(screen.getByText("cabecalho")).toBeInTheDocument();
   });
 
-  it.each(["/em-construcao", "/admin", "/admin/posts"])("esconde em %s", (path) => {
+  it.each(["/admin", "/admin/posts"])("esconde em %s", (path) => {
     usePathname.mockReturnValue(path);
     render(<SiteChrome><p>cabecalho</p></SiteChrome>);
     expect(screen.queryByText("cabecalho")).not.toBeInTheDocument();
+  });
+
+  it("mantém Header e Footer na página em construção", () => {
+    usePathname.mockReturnValue("/em-construcao");
+    render(<SiteChrome><p>cabecalho</p></SiteChrome>);
+    expect(screen.getByText("cabecalho")).toBeInTheDocument();
   });
 
   it("não esconde rotas com prefixo parecido", () => {
