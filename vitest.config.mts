@@ -21,6 +21,8 @@ export default defineConfig({
       include: [
         "src/lib/**/*.ts",
         "src/components/Layout/SiteChrome.tsx",
+        "src/components/TerapiaTantrica/AnamneseCTA/index.tsx",
+        "src/components/TerapiaTantrica/AnamneseModal/index.tsx",
         "src/components/Home/Causes/index.tsx",
         "src/components/Home/WhatsAppCTA/index.tsx",
         "src/components/Home/NewsLetter/NewsletterForm.tsx",

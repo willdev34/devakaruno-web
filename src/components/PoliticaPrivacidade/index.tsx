@@ -8,7 +8,7 @@ const PoliticaPrivacidade = () => {
     <section className="lg:py-28 py-16 bg-white dark:bg-dark">
       <div className="container mx-auto lg:max-w-(--breakpoint-md) px-4">
         <p className="text-dustGray dark:text-white/60 text-sm mb-10">
-          Última atualização: 25 de junho de 2026
+          Última atualização: 7 de outubro de 2026
         </p>
 
         <div className="space-y-10">
@@ -23,6 +23,7 @@ const PoliticaPrivacidade = () => {
             <h2 className="text-2xl font-medium mb-3">2. Quais dados coletamos</h2>
             <ul className="text-dustGray dark:text-white/70 text-base leading-relaxed list-disc pl-5 space-y-3">
               <li><strong className="text-midnight_text dark:text-white">Formulário de Parceria</strong> (página Contato): nome, empresa/organização, e-mail, WhatsApp, tipo de parceria, mensagem. Usado exclusivamente para responder propostas de colaboração, imprensa ou divulgação.</li>
+              <li><strong className="text-midnight_text dark:text-white">Ficha de anamnese</strong> (página Terapia Tântrica): informações de saúde e bem-estar preenchidas voluntariamente pelo visitante, por meio de um formulário do Google. São dados pessoais sensíveis, usados apenas para preparar o atendimento, e ficam em uma conta Google de acesso restrito ao terapeuta.</li>
               <li><strong className="text-midnight_text dark:text-white">WhatsApp</strong>: ao iniciar uma conversa pelo WhatsApp, a troca de mensagens ocorre dentro da plataforma da Meta, sob a política de privacidade dela, não deste site.</li>
               <li><strong className="text-midnight_text dark:text-white">Área de autenticação</strong>: o site possui uma área técnica de login, reservada à administração interna de conteúdo (blog), não destinada ao público em geral. Caso utilizada, processa apenas nome e e-mail fornecidos pelo provedor de login (Google ou GitHub).</li>
               <li><strong className="text-midnight_text dark:text-white">Newsletter</strong>: o campo de inscrição existe na interface, mas não está em operação no momento. Esta política será atualizada antes de qualquer ativação.</li>
@@ -33,7 +34,7 @@ const PoliticaPrivacidade = () => {
           <div>
             <h2 className="text-2xl font-medium mb-3">3. Base legal e finalidade</h2>
             <p className="text-dustGray dark:text-white/70 text-base leading-relaxed">
-              Tratamos esses dados com base no consentimento (ao preencher voluntariamente um formulário) e no legítimo interesse de responder a contatos recebidos, conforme art. 7º da Lei Geral de Proteção de Dados (Lei 13.709/2018).
+              Tratamos esses dados com base no consentimento (ao preencher voluntariamente um formulário, incluindo, no caso da ficha de anamnese, o consentimento específico para dados de saúde, conforme art. 11 da LGPD) e no legítimo interesse de responder a contatos recebidos, conforme art. 7º da Lei Geral de Proteção de Dados (Lei 13.709/2018).
             </p>
           </div>
 
@@ -45,6 +46,7 @@ const PoliticaPrivacidade = () => {
             <ul className="text-dustGray dark:text-white/70 text-base leading-relaxed list-disc pl-5 space-y-2">
               <li>formsubmit.co (envio do formulário de parceria)</li>
               <li>Google e GitHub (autenticação da área administrativa)</li>
+              <li>Google Forms (recebimento da ficha de anamnese)</li>
             </ul>
             <p className="text-dustGray dark:text-white/70 text-base leading-relaxed mt-3">
               Não vendemos nem compartilhamos dados com terceiros para fins de publicidade.
