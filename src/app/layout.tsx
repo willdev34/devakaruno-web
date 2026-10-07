@@ -2,6 +2,7 @@ import { Cormorant_Garamond, DM_Sans } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Layout/Header";
 import Footer from "@/components/Layout/Footer";
+import SiteChrome from "@/components/Layout/SiteChrome";
 import { ThemeProvider } from "next-themes";
 import ScrollToTop from '@/components/ScrollToTop';
 import Aoscompo from "@/utils/aos";
@@ -28,11 +29,11 @@ export default function RootLayout({
           defaultTheme="system"
         >
           <Aoscompo>
-            <Header />
+            <SiteChrome><Header /></SiteChrome>
             
             {children}
             
-            <Footer />
+            <SiteChrome><Footer /></SiteChrome>
           </Aoscompo>
           <ScrollToTop />
         </ThemeProvider>

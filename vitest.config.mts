@@ -20,6 +20,7 @@ export default defineConfig({
       // Escopo inicial da cobertura: cresce conforme novos arquivos ganham testes
       include: [
         "src/lib/**/*.ts",
+        "src/components/Layout/SiteChrome.tsx",
         "src/components/Home/Causes/index.tsx",
         "src/components/Home/WhatsAppCTA/index.tsx",
         "src/components/Home/NewsLetter/NewsletterForm.tsx",
