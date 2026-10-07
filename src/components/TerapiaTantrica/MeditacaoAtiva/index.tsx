@@ -23,7 +23,7 @@ const MeditacaoAtiva = () => {
         </p>
         <h2 className="text-3xl font-semibold mb-6">Meditação Ativa</h2>
         <p className="text-dustGray dark:text-white/70 text-base leading-relaxed">
-          As meditações ativas foram criadas por Osho, no século 20, pensadas especialmente pra quem vive no mundo ocidental. Osho percebeu que a mente ocidental, acostumada à pressa e ao excesso de estímulo, tinha dificuldade em simplesmente sentar e silenciar, como pede a meditação tradicional. A solução foi criar práticas que usam movimento intenso, som e respiração como primeira etapa, pra descarregar tensão física e mental antes de chegar a um momento de quietude. É uma meditação que começa pelo corpo, não pela mente, mais acessível pra quem nunca conseguiu "ficar parado" meditando do jeito tradicional.
+          As meditações ativas foram criadas por Osho, no século 20, pensadas especialmente pra quem vive no mundo ocidental. Osho percebeu que a mente ocidental, acostumada à pressa e ao excesso de estímulo, tinha dificuldade em simplesmente sentar e silenciar, como pede a meditação tradicional. A solução foi criar práticas que usam movimento intenso, som e respiração como primeira etapa, pra descarregar tensão física e mental antes de chegar a um momento de quietude. É uma meditação que começa pelo corpo, não pela mente, mais acessível pra quem nunca conseguiu &quot;ficar parado&quot; meditando do jeito tradicional.
         </p>
       </div>
     </section>

@@ -18,7 +18,7 @@ const Header: React.FC = () => {
   const { data: session } = useSession();
   const pathUrl = usePathname()
   const { theme, setTheme } = useTheme()
-  const [user, setUser] = useState<{ user: any } | null>(null);
+  const [user, setUser] = useState<{ user: string } | null>(null);
   const [navbarOpen, setNavbarOpen] = useState(false)
   const [sticky, setSticky] = useState(false)
   const [mounted, setMounted] = useState(false)
@@ -40,6 +40,8 @@ const Header: React.FC = () => {
     window.addEventListener("scroll", handleScroll);
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
+      // Hidrata o usuário salvo no navegador (localStorage só existe no cliente)
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setUser(JSON.parse(storedUser));
     }
     return () => {
@@ -93,6 +95,8 @@ const Header: React.FC = () => {
   }, [isSignInOpen, isSignUpOpen, navbarOpen])
 
   useEffect(() => {
+    // Marca montagem no cliente para evitar divergência de hidratação
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true)
   }, [])
 

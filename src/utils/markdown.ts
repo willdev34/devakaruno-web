@@ -19,6 +19,8 @@ export function getPostBySlug(slug: string, fields: string[] = []) {
     [key: string]: string | object;
   };
 
+  // Os campos variam por chamada; consumidores tipam o resultado (Blog)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const items: any = {};
 
   function processImages(content: string) {

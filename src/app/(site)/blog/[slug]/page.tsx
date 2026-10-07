@@ -12,7 +12,7 @@ import { ptBR } from "date-fns/locale";
 import Image from "next/image";
 import Link from "next/link";
 
-export async function generateMetadata({ params }: any) {
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const data = await params;
   const post = getPostBySlug(data.slug, ["title"]);
 
@@ -27,7 +27,7 @@ export async function generateMetadata({ params }: any) {
   };
 }
 
-export default async function Post({ params }: any) {
+export default async function Post({ params }: { params: Promise<{ slug: string }> }) {
   const data = await params;
   const post = getPostBySlug(data.slug, [
     "title",
