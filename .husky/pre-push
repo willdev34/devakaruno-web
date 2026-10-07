@@ -1,0 +1,2 @@
+# Mesmo gate do CI: só sobe se lint, tipos e testes passarem
+npm run lint && npm run typecheck && npm run test:coverage
