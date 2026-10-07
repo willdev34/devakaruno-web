@@ -32,7 +32,7 @@ const Bio = () => {
           <div>
             <h3 className="text-2xl font-medium mb-4">Um caminho que eu não esperava</h3>
             <p className="text-dustGray dark:text-white/70 text-base leading-relaxed mb-4">
-              Sou natural do Rio de Janeiro, e por muito tempo fui extremamente cético em relação a espiritualidade, energia e qualquer coisa que soasse "alternativa". Não por mente fechada, mas porque vinha de uma área completamente diferente: passei boa parte da minha vida profissional em tecnologia, e não me imaginava trabalhando com outra coisa.
+              Sou natural do Rio de Janeiro, e por muito tempo fui extremamente cético em relação a espiritualidade, energia e qualquer coisa que soasse &quot;alternativa&quot;. Não por mente fechada, mas porque vinha de uma área completamente diferente: passei boa parte da minha vida profissional em tecnologia, e não me imaginava trabalhando com outra coisa.
             </p>
             <p className="text-dustGray dark:text-white/70 text-base leading-relaxed">
               Isso mudou depois de um período pessoal difícil, num momento sem trabalho em que cheguei perto de um quadro depressivo. Foi nessa fase que assisti a um filme sobre uma mulher que descobria, durante um processo terapêutico, um trauma de infância que ela nem sabia que carregava. Aquela história despertou em mim uma pergunta simples: que tipo de terapia tem essa força de revelar e curar uma dor tão antiga?

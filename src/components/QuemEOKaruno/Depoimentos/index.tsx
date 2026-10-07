@@ -23,7 +23,7 @@ const Depoimentos = () => {
               className="bg-grey dark:bg-darkmode p-10 rounded-md h-full"
             >
               <p className="font-heading italic text-lg text-dustGray dark:text-white/70 leading-relaxed">
-                "{item.review}"
+                &quot;{item.review}&quot;
               </p>
               <h5 className="text-base font-medium mt-6 pt-5 relative before:content-[''] before:absolute before:w-12 before:h-px before:bg-border dark:before:bg-dark_border before:top-0 before:left-0">
                 {item.clientName}
