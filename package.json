@@ -15,10 +15,17 @@
     "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.9.1",
     "@iconify/icons-ion": "^1.2.10",
     "@iconify/react": "^5.0.1",
     "@prisma/adapter-pg": "^7.9.0",
     "@prisma/client": "^7.9.0",
+    "@tiptap/extension-image": "^2.27.3",
+    "@tiptap/extension-link": "^2.27.3",
+    "@tiptap/extension-placeholder": "^2.27.3",
+    "@tiptap/pm": "^2.27.3",
+    "@tiptap/react": "^2.27.3",
+    "@tiptap/starter-kit": "^2.27.3",
     "aos": "^2.3.4",
     "axios": "^1.18.0",
     "date-fns": "^3.4.0",
@@ -30,11 +37,14 @@
     "pg": "^8.22.0",
     "react": "19.2.7",
     "react-dom": "19.2.7",
+    "react-hook-form": "^7.89.0",
     "react-hot-toast": "^2.4.1",
     "react-slick": "^0.30.2",
     "remark": "^15.0.1",
     "remark-html": "^16.0.1",
-    "slick-carousel": "^1.8.1"
+    "slick-carousel": "^1.8.1",
+    "tiptap-markdown": "^0.9.0",
+    "zod": "^4.6.5"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.2",

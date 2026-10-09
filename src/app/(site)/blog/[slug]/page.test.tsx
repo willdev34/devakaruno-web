@@ -27,6 +27,8 @@ const post = {
   date: "2026-06-10T12:00:00.000Z",
   author: "Deva Karuno",
   content: "Olá **mundo**",
+  subtitle: "Um subtítulo",
+  tags: ["autoconhecimento"],
 };
 const params = (slug: string) => Promise.resolve({ slug });
 
@@ -45,6 +47,25 @@ describe("blog/[slug]/page", () => {
     expect(screen.getByText("Deva Karuno")).toBeInTheDocument();
     expect(screen.getByText("10 de junho, 2026")).toBeInTheDocument();
     expect(screen.getByText("mundo").tagName).toBe("STRONG");
+  });
+
+  it("mostra subtítulo, tags e tempo de leitura", async () => {
+    getPostBySlug.mockResolvedValue(post);
+
+    render(await Post({ params: params("a") }));
+
+    expect(screen.getByText("Um subtítulo")).toBeInTheDocument();
+    expect(screen.getByText("autoconhecimento")).toBeInTheDocument();
+    expect(screen.getByText("1 min de leitura")).toBeInTheDocument();
+  });
+
+  it("não mostra subtítulo nem tags quando não existem", async () => {
+    getPostBySlug.mockResolvedValue({ ...post, subtitle: null, tags: [] });
+
+    render(await Post({ params: params("a") }));
+
+    expect(screen.queryByText("Um subtítulo")).not.toBeInTheDocument();
+    expect(screen.queryByRole("list")).not.toBeInTheDocument();
   });
 
   it("chama notFound quando o artigo não existe", async () => {

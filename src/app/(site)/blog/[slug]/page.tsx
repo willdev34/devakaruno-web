@@ -7,6 +7,7 @@ import LatestBlog from "@/components/Blog/LatestBlog";
 import WhatsAppCTA from "@/components/Home/WhatsAppCTA";
 import { getPostBySlug } from "@/lib/repositories/posts";
 import markdownToHtml from "@/utils/markdownToHtml";
+import { readingMinutes } from "@/lib/posts/utils";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import Image from "next/image";
@@ -76,15 +77,29 @@ export default async function Post({ params }: { params: Promise<{ slug: string 
                   className="h-full w-full object-cover object-center rounded-md"
                 />
               </div>
-              <h1 className="text-black dark:text-white text-[40px] leading-tight font-bold py-7">
+              <h1 className="text-black dark:text-white text-[40px] leading-tight font-bold pt-7 pb-3">
                 {post.title}
               </h1>
+              {post.subtitle && (
+                <p className="text-xl text-dustGray dark:text-white/70 pb-6">{post.subtitle}</p>
+              )}
 
               <div className="flex items-center gap-3 mb-8 text-base text-dustGray dark:text-white/60">
                 <span>{post.author}</span>
                 <span>·</span>
                 <span>{format(new Date(post.date), "d 'de' MMMM, yyyy", { locale: ptBR })}</span>
+                <span>·</span>
+                <span>{readingMinutes(post.content)} min de leitura</span>
               </div>
+              {post.tags.length > 0 && (
+                <ul className="flex flex-wrap gap-2 mb-8">
+                  {post.tags.map((tag) => (
+                    <li key={tag} className="rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
+                      {tag}
+                    </li>
+                  ))}
+                </ul>
+              )}
 
               <div className="-mx-4 flex flex-wrap">
                 <div className="w-full px-4">

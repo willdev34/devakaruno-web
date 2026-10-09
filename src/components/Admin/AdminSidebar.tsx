@@ -9,6 +9,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { signOut } from "next-auth/react";
 import { Icon } from "@iconify/react";
+import Logo from "@/components/Layout/Header/Logo";
 import { ADMIN_NAV, isNavActive } from "./nav";
 
 const linkBase = "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors";
@@ -21,7 +22,7 @@ export default function AdminSidebar() {
     <>
       {/* Barra superior (celular) */}
       <div className="fixed inset-x-0 top-0 z-40 flex items-center justify-between bg-[#0f1c27] px-4 py-3 lg:hidden">
-        <span className="font-heading text-lg text-white">Deva Karuno · Admin</span>
+        <span className="text-sm font-medium text-white">Meu painel administrativo</span>
         <button type="button" aria-label="Abrir menu" onClick={() => setOpen((v) => !v)} className="text-white">
           <Icon icon={open ? "solar:close-circle-linear" : "solar:hamburger-menu-linear"} width={28} />
         </button>
@@ -33,8 +34,8 @@ export default function AdminSidebar() {
         }`}
       >
         <div className="hidden border-b border-white/10 px-6 py-6 lg:block">
-          <p className="font-heading text-2xl text-white">Deva Karuno</p>
-          <p className="mt-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-white/50">Admin</p>
+          <Logo forceWhite height={52} />
+          <p className="mt-2 text-xs font-medium text-white/50">Meu painel administrativo</p>
         </div>
 
         <nav aria-label="Menu do admin" className="flex-1 space-y-1 px-3 py-5">

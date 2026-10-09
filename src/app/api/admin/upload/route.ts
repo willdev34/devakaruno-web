@@ -1,0 +1,30 @@
+/**
+ * Caminho: src/app/api/admin/upload/route.ts
+ * Arquivo: route.ts
+ * Descrição: Recebe uma imagem do editor do admin e envia ao Cloudinary. Só o admin acessa.
+ */
+import { NextResponse } from "next/server";
+import { isAdminRequest } from "@/lib/admin-session";
+import { UploadError, uploadImage } from "@/lib/cloudinary-upload";
+
+export async function POST(request: Request) {
+  if (!(await isAdminRequest())) {
+    return NextResponse.json({ error: "Não autorizado" }, { status: 401 });
+  }
+
+  const form = await request.formData();
+  const file = form.get("file");
+  if (!(file instanceof File)) {
+    return NextResponse.json({ error: "Envie uma imagem." }, { status: 400 });
+  }
+
+  try {
+    const url = await uploadImage(file);
+    return NextResponse.json({ url });
+  } catch (error) {
+    if (error instanceof UploadError) {
+      return NextResponse.json({ error: error.message }, { status: error.status });
+    }
+    return NextResponse.json({ error: "Erro ao enviar a imagem." }, { status: 500 });
+  }
+}

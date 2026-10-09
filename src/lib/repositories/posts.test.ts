@@ -16,6 +16,8 @@ const row = {
   excerpt: "Resumo A",
   coverImage: "/capa.jpg",
   content: "Texto",
+  subtitle: "Sub",
+  tags: ["t"],
   publishedAt: new Date("2026-06-10T00:00:00.000Z"),
 };
 
@@ -25,7 +27,7 @@ describe("repositories/posts", () => {
     findFirst.mockReset();
   });
 
-  it("lista só posts publicados e já no ar, do mais recente ao mais antigo", async () => {
+  it("lista só posts publicados e já no ar, destaques primeiro", async () => {
     findMany.mockResolvedValue([row]);
 
     const result = await getPublishedPosts();
@@ -33,7 +35,7 @@ describe("repositories/posts", () => {
     const args = findMany.mock.calls[0][0];
     expect(args.where.published).toBe(true);
     expect(args.where.publishedAt.lte).toBeInstanceOf(Date);
-    expect(args.orderBy).toEqual({ publishedAt: "desc" });
+    expect(args.orderBy).toEqual([{ featured: "desc" }, { publishedAt: "desc" }]);
     expect(args.take).toBeUndefined();
     expect(result[0]).toEqual({
       slug: "a",
@@ -59,7 +61,7 @@ describe("repositories/posts", () => {
     const result = await getPostBySlug("a");
 
     expect(findFirst.mock.calls[0][0].where).toMatchObject({ slug: "a", published: true });
-    expect(result).toMatchObject({ slug: "a", content: "Texto" });
+    expect(result).toMatchObject({ slug: "a", content: "Texto", subtitle: "Sub", tags: ["t"] });
   });
 
   it("devolve null quando o post não existe ou não está no ar", async () => {

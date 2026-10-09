@@ -34,11 +34,11 @@ function toBlog(post: PostRow): Blog {
   };
 }
 
-// Todos os artigos visíveis, do mais recente para o mais antigo (página Blog)
+// Artigos visíveis: destaques primeiro, depois do mais recente para o mais antigo (página Blog)
 export async function getPublishedPosts(limit?: number): Promise<Blog[]> {
   const posts = await prisma.post.findMany({
     where: visiblePosts(),
-    orderBy: { publishedAt: "desc" },
+    orderBy: [{ featured: "desc" }, { publishedAt: "desc" }],
     ...(limit ? { take: limit } : {}),
   });
   return posts.map(toBlog);
@@ -57,6 +57,8 @@ export async function getPostBySlug(slug: string) {
     date: post.publishedAt.toISOString(),
     author: POST_AUTHOR,
     content: post.content,
+    subtitle: post.subtitle,
+    tags: post.tags,
   };
 }
 

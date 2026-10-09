@@ -1,3 +1,6 @@
+// Fuso fixo para os testes de data darem o mesmo resultado na máquina e no CI
+process.env.TZ = "America/Sao_Paulo";
+
 /**
  * Caminho: vitest.setup.ts
  * Arquivo: vitest.setup.ts

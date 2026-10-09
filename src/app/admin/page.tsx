@@ -6,19 +6,8 @@
 import Link from "next/link";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
-import { getDashboardStats, type PostStatus } from "@/lib/repositories/admin-stats";
-
-const STATUS_LABEL: Record<PostStatus, string> = {
-  published: "Publicado",
-  scheduled: "Agendado",
-  draft: "Rascunho",
-};
-
-const STATUS_STYLE: Record<PostStatus, string> = {
-  published: "bg-[#0f1c27] text-white",
-  scheduled: "bg-primary/10 text-primary",
-  draft: "bg-black/5 text-muted",
-};
+import { getDashboardStats } from "@/lib/repositories/admin-stats";
+import StatusBadge from "@/components/Admin/Posts/StatusBadge";
 
 function StatCard({ label, value }: { label: string; value: number }) {
   return (
@@ -59,9 +48,7 @@ export default async function AdminDashboardPage() {
                     Atualizado em {format(post.updatedAt, "d 'de' MMM, yyyy", { locale: ptBR })}
                   </p>
                 </div>
-                <span className={`shrink-0 rounded-full px-3 py-1 text-[11px] font-semibold uppercase ${STATUS_STYLE[post.status]}`}>
-                  {STATUS_LABEL[post.status]}
-                </span>
+                <StatusBadge status={post.status} />
               </li>
             ))}
           </ul>

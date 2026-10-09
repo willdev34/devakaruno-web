@@ -12,6 +12,7 @@ const { usePathname, signOut } = vi.hoisted(() => ({ usePathname: vi.fn(), signO
 vi.mock("next/navigation", () => ({ usePathname }));
 vi.mock("next-auth/react", () => ({ signOut }));
 vi.mock("@iconify/react", () => ({ Icon: () => null }));
+vi.mock("@/components/Layout/Header/Logo", () => ({ default: () => <span>logo</span> }));
 
 describe("AdminSidebar", () => {
   beforeEach(() => {
@@ -28,7 +29,7 @@ describe("AdminSidebar", () => {
   it("mostra itens sem tela como 'em breve', sem link", () => {
     render(<AdminSidebar />);
 
-    expect(screen.queryByRole("link", { name: /Artigos/ })).not.toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: /Depoimentos/ })).not.toBeInTheDocument();
     expect(screen.getAllByText("em breve").length).toBeGreaterThan(0);
   });
 
@@ -47,5 +48,15 @@ describe("AdminSidebar", () => {
     fireEvent.click(screen.getByRole("button", { name: "Sair" }));
 
     expect(signOut).toHaveBeenCalledWith({ callbackUrl: "/" });
+  });
+});
+
+describe("AdminSidebar (marca)", () => {
+  it("mostra o logo e o título do painel", () => {
+    usePathname.mockReturnValue("/admin");
+    render(<AdminSidebar />);
+
+    expect(screen.getByText("logo")).toBeInTheDocument();
+    expect(screen.getAllByText("Meu painel administrativo").length).toBeGreaterThan(0);
   });
 });
