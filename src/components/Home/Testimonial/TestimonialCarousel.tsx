@@ -33,10 +33,11 @@ const settings = {
 
 const TestimonialCarousel = ({ items }: { items: TestimonialItem[] }) => {
     return (
-        // Trilho em flex e slides com altura automática: todos os cards ficam com a altura do maior
+        // Trilho em flex e slides esticados: todos os cards ficam com a altura do maior.
+        // O ! é necessário: o CSS do slick não usa camada e vence classes utilitárias comuns do Tailwind 4
         <Slider
             {...settings}
-            className="[&_.slick-track]:flex [&_.slick-slide]:!h-auto [&_.slick-slide>div]:h-full"
+            className="[&_.slick-track]:!flex [&_.slick-slide]:!h-auto [&_.slick-slide>div]:!h-full"
         >
             {items.map((item, index) => (
                 <div key={index} className="px-3 h-full" data-aos="fade-up" data-aos-delay={`${index * 180}`}>
