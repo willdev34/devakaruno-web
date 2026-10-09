@@ -9,6 +9,8 @@ import HeroSub from "@/components/SharedComponent/HeroSub";
 import WhatsAppCTA from "@/components/Home/WhatsAppCTA";
 import { Metadata } from "next";
 
+export const revalidate = 60;
+
 export const metadata: Metadata = {
   title: "Blog | Deva Karuno Terapias",
 };

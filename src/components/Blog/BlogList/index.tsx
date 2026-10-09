@@ -1,9 +1,18 @@
 import React from 'react';
 import BlogCard from '@/components/SharedComponent/Blog/blogCard';
-import { getAllPosts } from "@/utils/markdown";
+import { getPublishedPosts } from "@/lib/repositories/posts";
 
-const BlogList: React.FC = () => {
-    const posts = getAllPosts(["title", "date", "excerpt", "coverImage", "slug"]);
+// Lista os artigos publicados (página Blog)
+const BlogList = async () => {
+    const posts = await getPublishedPosts();
+
+    if (posts.length === 0) {
+        return (
+            <section className="py-24 text-center dark:bg-dark" id="blog">
+                <p className="text-dustGray dark:text-white/60">Os primeiros artigos estarão disponíveis em breve.</p>
+            </section>
+        );
+    }
 
     return (
         <section className="flex flex-wrap justify-center lg:py-24 py-16 dark:bg-dark" id="blog">

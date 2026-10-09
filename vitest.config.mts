@@ -34,6 +34,9 @@ export default defineConfig({
         "src/components/Home/Causes/index.tsx",
         "src/components/Home/WhatsAppCTA/index.tsx",
         "src/components/Home/NewsLetter/NewsletterForm.tsx",
+        "src/components/Blog/BlogList/index.tsx",
+        "src/components/Blog/LatestBlog/index.tsx",
+        "src/app/*/blog/*/page.tsx",
       ],
       exclude: ["src/generated/**", "**/*.test.*", "**/*.d.ts", "**/*.config.*"],
       thresholds: {

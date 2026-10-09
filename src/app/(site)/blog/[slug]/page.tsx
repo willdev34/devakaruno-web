@@ -1,44 +1,54 @@
 /**
  * Caminho: src/app/(site)/blog/[slug]/page.tsx
  * Arquivo: page.tsx
- * Descrição: Página de post individual do blog. Corrige título de aba, remove selo de categoria de exemplo, exibe autor real, e troca Volunteer por WhatsAppCTA.
+ * Descrição: Página de post individual do blog, lendo do banco. Slug inexistente ou fora do ar retorna 404. Traz metadados (descrição e Open Graph), autor, data e outros artigos no final.
  */
 import LatestBlog from "@/components/Blog/LatestBlog";
 import WhatsAppCTA from "@/components/Home/WhatsAppCTA";
-import { getPostBySlug } from "@/utils/markdown";
+import { getPostBySlug } from "@/lib/repositories/posts";
 import markdownToHtml from "@/utils/markdownToHtml";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import Image from "next/image";
 import Link from "next/link";
+import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
-  const data = await params;
-  const post = getPostBySlug(data.slug, ["title"]);
+export const revalidate = 60;
 
-  if (post?.title) {
+// Metadados do artigo (título, descrição e imagem de compartilhamento)
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const post = await getPostBySlug(slug);
+
+  if (!post) {
     return {
-      title: `${post.title} | Deva Karuno Terapias`,
+      title: "Artigo não encontrado | Deva Karuno Terapias",
+      robots: { index: false, follow: false },
     };
   }
+
   return {
-    title: "Artigo não encontrado | Deva Karuno Terapias",
-    description: "Nenhum artigo foi encontrado.",
+    title: `${post.title} | Deva Karuno Terapias`,
+    description: post.excerpt,
+    openGraph: {
+      title: post.title,
+      description: post.excerpt,
+      type: "article",
+      publishedTime: post.date,
+      images: [post.coverImage],
+    },
   };
 }
 
 export default async function Post({ params }: { params: Promise<{ slug: string }> }) {
-  const data = await params;
-  const post = getPostBySlug(data.slug, [
-    "title",
-    "author",
-    "authorImage",
-    "content",
-    "coverImage",
-    "date",
-  ]);
+  const { slug } = await params;
+  const post = await getPostBySlug(slug);
 
-  const content = await markdownToHtml(post.content || "");
+  // Slug inexistente ou artigo ainda não publicado
+  if (!post) notFound();
+
+  const content = await markdownToHtml(post.content);
 
   return (
     <>
@@ -59,7 +69,7 @@ export default async function Post({ params }: { params: Promise<{ slug: string 
               <div className="z-20 h-[500px] overflow-hidden rounded-md">
                 <Image
                   src={post.coverImage}
-                  alt="image"
+                  alt={post.title}
                   width={1170}
                   height={766}
                   quality={100}
@@ -88,7 +98,7 @@ export default async function Post({ params }: { params: Promise<{ slug: string 
         </div>
       </section>
       <div className="bg-SnowySky dark:bg-darklight">
-        <LatestBlog />
+        <LatestBlog excludeSlug={post.slug} />
         <WhatsAppCTA />
       </div>
     </>
