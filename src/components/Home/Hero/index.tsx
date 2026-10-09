@@ -15,21 +15,36 @@ import { HerosectionData } from "./data";
 // Larguras geradas no Cloudinary; no mobile a foto é mostrada bem mais larga que a tela (recorte lateral)
 const IMAGE_WIDTHS = [1280, 2000, 2800];
 
+// Tempos do carrossel (ms). No mobile o slide fica mais tempo na tela para o movimento da foto ser mais lento
+const TRANSITION_MS = 1200;
+const AUTOPLAY_MS = 6000;
+const MOBILE_AUTOPLAY_MS = 10800;
+const MOBILE_BREAKPOINT = 767;
+
+// O movimento da foto dura até a troca de slide: tempo na tela + transição (usado no CSS via --pan-duration)
+export const MOBILE_PAN_DURATION_S = (MOBILE_AUTOPLAY_MS + TRANSITION_MS) / 1000;
+
 const Hero = () => {
   const settings = {
     autoplay: true,
-    autoplaySpeed: 6000,
+    autoplaySpeed: AUTOPLAY_MS,
+    responsive: [
+      { breakpoint: MOBILE_BREAKPOINT, settings: { autoplaySpeed: MOBILE_AUTOPLAY_MS } },
+    ],
     dots: true,
     arrows: false,
     infinite: true,
-    speed: 1200,
+    speed: TRANSITION_MS,
     slidesToShow: 1,
     slidesToScroll: 1,
     fade: true,
   }
 
   return (
-    <section className="relative">
+    <section
+      className="relative"
+      style={{ "--pan-duration": `${MOBILE_PAN_DURATION_S}s` } as CSSProperties}
+    >
       <Slider {...settings}>
         {HerosectionData.map((value, index) => (
           <div key={value.id} className="relative h-screen min-h-[600px]">

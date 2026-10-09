@@ -144,7 +144,7 @@ body {
 }
 
 /* Hero no mobile: a foto percorre da esquerda para a direita enquanto o slide está ativo.
-   Duração um pouco acima de autoplaySpeed (6s) + transição (1,2s) para o movimento durar até a troca. */
+   A duração (--pan-duration) é definida no Hero: tempo do slide no mobile + transição, para o movimento durar até a troca. */
 @keyframes hero-pan {
   from { object-position: var(--pan-from, 0%) 50%; }
   to { object-position: var(--pan-to, 100%) 50%; }
@@ -154,6 +154,6 @@ body {
     object-position: var(--pan-from, 0%) 50%;
   }
   .slick-active .hero-image {
-    animation: hero-pan 7.2s linear forwards;
+    animation: hero-pan var(--pan-duration, 12s) linear forwards;
   }
 }

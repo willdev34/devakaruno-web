@@ -5,7 +5,7 @@
  */
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
-import Hero from "./index";
+import Hero, { MOBILE_PAN_DURATION_S } from "./index";
 import { HerosectionData } from "./data";
 
 // react-slick depende de matchMedia, que o jsdom não tem: o mock só renderiza os filhos
@@ -41,6 +41,13 @@ describe("Home/Hero", () => {
     expect(first.style.getPropertyValue("--pan-from")).toBe("0%");
     expect(first.style.getPropertyValue("--pan-to")).toBe("100%");
     expect(first).toHaveClass("hero-image");
+  });
+
+  it("define a duração do movimento no mobile a partir do tempo do slide", () => {
+    const { container } = render(<Hero />);
+
+    expect(MOBILE_PAN_DURATION_S).toBe(12);
+    expect(container.querySelector("section")?.style.getPropertyValue("--pan-duration")).toBe("12s");
   });
 
   it("mostra o título e os botões de ação em cada slide", () => {
