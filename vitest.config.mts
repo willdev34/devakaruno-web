@@ -35,6 +35,8 @@ export default defineConfig({
         "src/components/Home/WhatsAppCTA/index.tsx",
         "src/components/Home/NewsLetter/NewsletterForm.tsx",
         "src/components/Blog/BlogList/index.tsx",
+        "src/components/Admin/**/*.{ts,tsx}",
+        "src/app/admin/**/*.tsx",
         "src/components/Blog/LatestBlog/index.tsx",
         "src/app/*/blog/*/page.tsx",
       ],
