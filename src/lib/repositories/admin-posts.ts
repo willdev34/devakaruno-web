@@ -15,6 +15,7 @@ export type PostWriteData = {
   content: string;
   coverImage: string;
   tags: string[];
+  categoryId: string | null;
   featured: boolean;
   published: boolean;
   publishedAt: Date;

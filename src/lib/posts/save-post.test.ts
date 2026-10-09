@@ -13,7 +13,10 @@ const repo = vi.hoisted(() => ({
   ensureAuthor: vi.fn(),
 }));
 
+const categories = vi.hoisted(() => ({ categoryExists: vi.fn() }));
+
 vi.mock("@/lib/repositories/admin-posts", () => repo);
+vi.mock("@/lib/repositories/admin-categories", () => categories);
 
 const author = { email: "dono@site.com", name: "Deva" };
 const valid = {
@@ -32,6 +35,8 @@ describe("savePost", () => {
   beforeEach(() => {
     Object.values(repo).forEach((fn) => fn.mockReset());
     repo.isSlugTaken.mockResolvedValue(false);
+    categories.categoryExists.mockReset();
+    categories.categoryExists.mockResolvedValue(true);
     repo.ensureAuthor.mockResolvedValue({ id: "u1" });
     repo.createAdminPost.mockResolvedValue({ id: "p1", slug: "meu-artigo" });
     repo.updateAdminPost.mockResolvedValue({ id: "p1", slug: "meu-artigo" });
@@ -82,5 +87,36 @@ describe("savePost", () => {
     expect(repo.updateAdminPost).toHaveBeenCalledWith("p1", expect.objectContaining({ slug: "meu-artigo" }));
     expect(repo.isSlugTaken).toHaveBeenCalledWith("meu-artigo", "p1");
     expect(repo.ensureAuthor).not.toHaveBeenCalled();
+  });
+
+  describe("categoria", () => {
+    it("sem categoria grava null e nem consulta o banco", async () => {
+      await savePost(null, { ...valid, categoryId: "" }, author);
+
+      expect(repo.createAdminPost).toHaveBeenCalledWith(expect.objectContaining({ categoryId: null }), "u1");
+      expect(categories.categoryExists).not.toHaveBeenCalled();
+    });
+
+    it("grava a categoria escolhida quando ela existe", async () => {
+      await savePost(null, { ...valid, categoryId: "c1" }, author);
+
+      expect(categories.categoryExists).toHaveBeenCalledWith("c1");
+      expect(repo.createAdminPost).toHaveBeenCalledWith(expect.objectContaining({ categoryId: "c1" }), "u1");
+    });
+
+    it("também grava ao editar", async () => {
+      await savePost("p1", { ...valid, categoryId: "c1" }, author);
+
+      expect(repo.updateAdminPost).toHaveBeenCalledWith("p1", expect.objectContaining({ categoryId: "c1" }));
+    });
+
+    it("recusa categoria que não existe, sem gravar", async () => {
+      categories.categoryExists.mockResolvedValue(false);
+
+      const result = await savePost(null, { ...valid, categoryId: "fantasma" }, author);
+
+      expect(result).toMatchObject({ ok: false, fieldErrors: { categoryId: "Categoria não encontrada" } });
+      expect(repo.createAdminPost).not.toHaveBeenCalled();
+    });
   });
 });

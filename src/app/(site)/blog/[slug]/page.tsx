@@ -77,6 +77,11 @@ export default async function Post({ params }: { params: Promise<{ slug: string 
                   className="h-full w-full object-cover object-center rounded-md"
                 />
               </div>
+              {post.category && (
+                <span className="mt-7 inline-block rounded-full bg-primary/10 px-3 py-1 text-xs font-medium uppercase tracking-wider text-primary">
+                  {post.category.name}
+                </span>
+              )}
               <h1 className="text-black dark:text-white text-[40px] leading-tight font-bold pt-7 pb-3">
                 {post.title}
               </h1>

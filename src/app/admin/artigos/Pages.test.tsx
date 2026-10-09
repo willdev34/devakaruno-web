@@ -12,17 +12,27 @@ import EditPostPage from "./[id]/page";
 const m = vi.hoisted(() => ({
   listAdminPosts: vi.fn(),
   getAdminPost: vi.fn(),
+  listCategoryOptions: vi.fn(),
   notFound: vi.fn(() => {
     throw new Error("NEXT_NOT_FOUND");
   }),
 }));
 
 vi.mock("@/lib/repositories/admin-posts", () => ({ listAdminPosts: m.listAdminPosts, getAdminPost: m.getAdminPost }));
+vi.mock("@/lib/repositories/admin-categories", () => ({ listCategoryOptions: m.listCategoryOptions }));
 vi.mock("next/navigation", () => ({ notFound: m.notFound, useRouter: () => ({}) }));
 vi.mock("./actions", () => ({ deletePostAction: vi.fn() }));
 vi.mock("@/components/Admin/Posts/PostForm", () => ({
-  default: ({ postId, initial }: { postId: string | null; initial: { mode: string; scheduledAt?: string } }) => (
-    <div data-testid="form">{`${postId}|${initial.mode}|${initial.scheduledAt ?? ""}`}</div>
+  default: ({
+    postId,
+    initial,
+    categories,
+  }: {
+    postId: string | null;
+    initial: { mode: string; scheduledAt?: string; categoryId?: string };
+    categories: { id: string }[];
+  }) => (
+    <div data-testid="form">{`${postId}|${initial.mode}|${initial.scheduledAt ?? ""}|${initial.categoryId}|${categories.length}`}</div>
   ),
 }));
 vi.mock("@/components/Admin/Posts/DeleteButton", () => ({ default: ({ name }: { name: string }) => <button>{`Excluir ${name}`}</button> }));
@@ -45,6 +55,7 @@ const post = (over = {}) => ({
 describe("admin/artigos", () => {
   beforeEach(() => {
     Object.values(m).forEach((fn) => fn.mockReset());
+    m.listCategoryOptions.mockResolvedValue([{ id: "c1", name: "Cat" }]);
   });
 
   it("lista artigos com status, tags, leitura e ações", async () => {
@@ -75,10 +86,10 @@ describe("admin/artigos", () => {
     expect(m.listAdminPosts).toHaveBeenLastCalledWith({ status: "all", q: "" });
   });
 
-  it("novo artigo abre o formulário vazio", () => {
-    render(<NewPostPage />);
+  it("novo artigo abre o formulário vazio, sem categoria, com as opções de categoria", async () => {
+    render(await NewPostPage());
 
-    expect(screen.getByTestId("form")).toHaveTextContent("null|now|");
+    expect(screen.getByTestId("form")).toHaveTextContent("null|now|||1");
   });
 
   it("edição carrega o artigo e mostra excluir", async () => {
@@ -86,8 +97,16 @@ describe("admin/artigos", () => {
 
     render(await EditPostPage({ params: Promise.resolve({ id: "1" }) }));
 
-    expect(screen.getByTestId("form")).toHaveTextContent("1|now|");
+    expect(screen.getByTestId("form")).toHaveTextContent("1|now|||1");
     expect(screen.getByRole("button", { name: "Excluir Artigo A" })).toBeInTheDocument();
+  });
+
+  it("edição passa a categoria do artigo para o formulário", async () => {
+    m.getAdminPost.mockResolvedValue(post({ categoryId: "c1" }));
+
+    render(await EditPostPage({ params: Promise.resolve({ id: "1" }) }));
+
+    expect(screen.getByTestId("form")).toHaveTextContent("1|now||c1|1");
   });
 
   it("edição de artigo agendado passa a data para o formulário", async () => {
@@ -96,7 +115,7 @@ describe("admin/artigos", () => {
 
     render(await EditPostPage({ params: Promise.resolve({ id: "1" }) }));
 
-    expect(screen.getByTestId("form")).toHaveTextContent(`1|schedule|${when.toISOString()}`);
+    expect(screen.getByTestId("form")).toHaveTextContent(`1|schedule|${when.toISOString()}|`);
   });
 
   it("edição de artigo inexistente dá 404", async () => {

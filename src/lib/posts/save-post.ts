@@ -5,6 +5,7 @@
  */
 import { postInputSchema } from "@/lib/posts/schema";
 import { resolvePublication } from "@/lib/posts/utils";
+import { categoryExists } from "@/lib/repositories/admin-categories";
 import {
   createAdminPost,
   ensureAuthor,
@@ -35,6 +36,12 @@ export async function savePost(id: string | null, raw: unknown, author: Author):
     return { ok: false, error: "Esse slug já está em uso.", fieldErrors: { slug: "Esse slug já está em uso" } };
   }
 
+  // Categoria opcional: se veio um id, ele precisa existir
+  const categoryId = input.categoryId || null;
+  if (categoryId && !(await categoryExists(categoryId))) {
+    return { ok: false, error: "Revise os campos destacados.", fieldErrors: { categoryId: "Categoria não encontrada" } };
+  }
+
   const scheduledAt = input.scheduledAt ? new Date(input.scheduledAt) : undefined;
   const data: PostWriteData = {
     title: input.title,
@@ -44,6 +51,7 @@ export async function savePost(id: string | null, raw: unknown, author: Author):
     content: input.content,
     coverImage: input.coverImage,
     tags: input.tags,
+    categoryId,
     featured: input.featured,
     ...resolvePublication(input.mode, scheduledAt),
   };

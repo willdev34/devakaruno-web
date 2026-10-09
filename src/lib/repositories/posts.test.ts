@@ -80,4 +80,23 @@ describe("repositories/posts", () => {
     expect(args.take).toBe(2);
     expect(result).toHaveLength(1);
   });
+
+  it("traz a categoria junto e mostra o nome nos cards", async () => {
+    findMany.mockResolvedValue([{ ...row, category: { name: "Autoconhecimento", slug: "autoconhecimento" } }, row]);
+
+    const result = await getPublishedPosts();
+
+    expect(findMany.mock.calls[0][0].include).toEqual({ category: { select: { name: true, slug: true } } });
+    expect(result[0].category).toBe("Autoconhecimento");
+    expect(result[1]).not.toHaveProperty("category");
+  });
+
+  it("o artigo completo devolve nome e slug da categoria, ou null", async () => {
+    findFirst.mockResolvedValueOnce({ ...row, category: { name: "Autoconhecimento", slug: "autoconhecimento" } });
+    findFirst.mockResolvedValueOnce({ ...row, category: null });
+
+    expect((await getPostBySlug("a"))?.category).toEqual({ name: "Autoconhecimento", slug: "autoconhecimento" });
+    expect((await getPostBySlug("a"))?.category).toBeNull();
+    expect(findFirst.mock.calls[0][0].include).toBeDefined();
+  });
 });

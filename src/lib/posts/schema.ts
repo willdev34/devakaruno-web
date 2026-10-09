@@ -24,6 +24,8 @@ export const postInputSchema = z
       .array(z.string().trim().min(1).max(30))
       .max(10, "Máximo de 10 tags")
       .transform((tags) => Array.from(new Set(tags))),
+    // Id da categoria; vazio ou ausente = sem categoria
+    categoryId: z.string().trim().optional(),
     featured: z.boolean(),
     mode: z.enum(["draft", "now", "schedule"]),
     // ISO com fuso, convertido no navegador a partir do campo de data e hora

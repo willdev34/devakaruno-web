@@ -25,6 +25,8 @@ type Props = {
   // Id do artigo ao editar; null ao criar
   postId: string | null;
   initial: FormValues;
+  // Categorias disponíveis para o seletor
+  categories: { id: string; name: string }[];
 };
 
 // "2026-11-01T10:00" (hora local do campo) -> ISO com fuso, e o inverso
@@ -36,7 +38,7 @@ const toLocalInput = (iso?: string) => {
   return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
 };
 
-export default function PostForm({ postId, initial }: Props) {
+export default function PostForm({ postId, initial, categories }: Props) {
   const router = useRouter();
   const [pending, start] = useTransition();
   const [formError, setFormError] = useState("");
@@ -175,6 +177,23 @@ export default function PostForm({ postId, initial }: Props) {
                 </div>
               )}
             </div>
+          </section>
+
+          <section className={card}>
+            <h2 className={cardTitle}>Categoria</h2>
+            <label htmlFor="categoryId" className={label}>Categoria do artigo</label>
+            <select id="categoryId" className={input} {...register("categoryId")}>
+              <option value="">Sem categoria</option>
+              {categories.map((category) => (
+                <option key={category.id} value={category.id}>{category.name}</option>
+              ))}
+            </select>
+            {errors.categoryId && <p className={errorText}>{errors.categoryId.message}</p>}
+            {categories.length === 0 && (
+              <p className="mt-2 text-xs text-muted">
+                Nenhuma categoria ainda. <Link href="/admin/categorias/novo" className="text-primary hover:underline">Criar categoria</Link>
+              </p>
+            )}
           </section>
 
           <section className={card}>

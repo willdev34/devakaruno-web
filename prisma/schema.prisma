@@ -31,23 +31,39 @@ model User {
 }
 
 model Post {
-  id          String   @id @default(cuid())
-  slug        String   @unique
+  id          String    @id @default(cuid())
+  slug        String    @unique
   title       String
   subtitle    String?
   excerpt     String
-  content     String   @db.Text
+  content     String    @db.Text
   coverImage  String
-  tags        String[] @default([])
-  featured    Boolean  @default(false)
-  published   Boolean  @default(true)
-  publishedAt DateTime @default(now())
+  tags        String[]  @default([])
+  featured    Boolean   @default(false)
+  published   Boolean   @default(true)
+  publishedAt DateTime  @default(now())
   authorId    String
-  author      User     @relation(fields: [authorId], references: [id])
+  author      User      @relation(fields: [authorId], references: [id])
+  // Categoria opcional: ao excluir a categoria, o artigo fica sem categoria
+  categoryId  String?
+  category    Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@map("posts")
+}
+
+// Categoria dos artigos do blog (um artigo tem no máximo uma)
+model Category {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  description String?
+  posts       Post[]
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  @@map("posts")
+  @@map("categories")
 }
 
 model Course {
@@ -102,6 +118,7 @@ model Service {
 
   @@map("services")
 }
+
 // Agenda de atendimentos em outras cidades
 model AgendaEvent {
   id          String   @id @default(cuid())

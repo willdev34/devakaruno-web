@@ -5,15 +5,19 @@
  */
 import Link from "next/link";
 import PostForm from "@/components/Admin/Posts/PostForm";
+import { listCategoryOptions } from "@/lib/repositories/admin-categories";
 
-export default function NewPostPage() {
+export default async function NewPostPage() {
+  const categories = await listCategoryOptions();
+
   return (
     <>
       <Link href="/admin/artigos" className="text-sm text-muted hover:text-primary">← Artigos</Link>
       <h1 className="mb-6 mt-1 font-heading text-3xl font-bold">Novo artigo</h1>
       <PostForm
         postId={null}
-        initial={{ title: "", subtitle: "", slug: "", excerpt: "", content: "", coverImage: "", tags: [], featured: false, mode: "now" }}
+        categories={categories}
+        initial={{ title: "", subtitle: "", slug: "", excerpt: "", content: "", coverImage: "", tags: [], categoryId: "", featured: false, mode: "now" }}
       />
     </>
   );

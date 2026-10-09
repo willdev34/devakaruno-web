@@ -1,7 +1,7 @@
 /**
  * Caminho: src/components/Admin/Posts/PostForm.test.tsx
  * Arquivo: PostForm.test.tsx
- * Descrição: Testes do formulário de artigo: slug automático, validação, rascunho, publicação, agendamento e erros do servidor.
+ * Descrição: Testes do formulário de artigo: slug automático, validação, categoria, rascunho, publicação, agendamento e erros do servidor.
  */
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
@@ -18,7 +18,8 @@ vi.mock("../Editor/RichEditor", () => ({
   ),
 }));
 
-const empty = { title: "", subtitle: "", slug: "", excerpt: "", content: "", coverImage: "", tags: [], featured: false, mode: "now" as const };
+const categories = [{ id: "c1", name: "Autoconhecimento" }, { id: "c2", name: "Relacionamentos" }];
+const empty = { title: "", subtitle: "", slug: "", excerpt: "", content: "", coverImage: "", tags: [], categoryId: "", featured: false, mode: "now" as const };
 const filled = {
   ...empty,
   title: "Meu artigo",
@@ -35,7 +36,7 @@ describe("PostForm", () => {
   });
 
   it("gera o slug a partir do título até a pessoa editar o slug", () => {
-    render(<PostForm postId={null} initial={empty} />);
+    render(<PostForm postId={null} categories={categories} initial={empty} />);
 
     fireEvent.change(screen.getByLabelText("Título *"), { target: { value: "Terapia Tântrica" } });
     expect(screen.getByLabelText("Slug *")).toHaveValue("terapia-tantrica");
@@ -46,7 +47,7 @@ describe("PostForm", () => {
   });
 
   it("não mexe no slug de artigo existente", () => {
-    render(<PostForm postId="1" initial={filled} />);
+    render(<PostForm postId="1" categories={categories} initial={filled} />);
 
     fireEvent.change(screen.getByLabelText("Título *"), { target: { value: "Novo título" } });
 
@@ -54,7 +55,7 @@ describe("PostForm", () => {
   });
 
   it("mostra erros e não envia quando faltam campos", async () => {
-    render(<PostForm postId={null} initial={empty} />);
+    render(<PostForm postId={null} categories={categories} initial={empty} />);
 
     fireEvent.click(screen.getByRole("button", { name: "Publicar artigo" }));
 
@@ -64,7 +65,7 @@ describe("PostForm", () => {
   });
 
   it("publica e volta para a listagem", async () => {
-    render(<PostForm postId={null} initial={filled} />);
+    render(<PostForm postId={null} categories={categories} initial={filled} />);
 
     fireEvent.click(screen.getByRole("button", { name: "Publicar artigo" }));
 
@@ -73,7 +74,7 @@ describe("PostForm", () => {
   });
 
   it("salva rascunho só com título e slug", async () => {
-    render(<PostForm postId={null} initial={{ ...empty, title: "Rascunho", slug: "rascunho" }} />);
+    render(<PostForm postId={null} categories={categories} initial={{ ...empty, title: "Rascunho", slug: "rascunho" }} />);
 
     fireEvent.click(screen.getByRole("button", { name: "Salvar rascunho" }));
 
@@ -82,7 +83,7 @@ describe("PostForm", () => {
   });
 
   it("agenda com data futura convertida para ISO", async () => {
-    render(<PostForm postId="9" initial={filled} />);
+    render(<PostForm postId="9" categories={categories} initial={filled} />);
 
     fireEvent.click(screen.getByLabelText(/Agendar/));
     const future = new Date(Date.now() + 2 * 86_400_000);
@@ -99,7 +100,7 @@ describe("PostForm", () => {
   });
 
   it("agendar sem data mostra erro", async () => {
-    render(<PostForm postId={null} initial={filled} />);
+    render(<PostForm postId={null} categories={categories} initial={filled} />);
 
     fireEvent.click(screen.getByLabelText(/Agendar/));
     fireEvent.click(screen.getByRole("button", { name: "Agendar artigo" }));
@@ -109,7 +110,7 @@ describe("PostForm", () => {
 
   it("limpa a data quando o campo é apagado e mostra a data de um artigo já agendado", () => {
     const scheduledAt = new Date(Date.now() + 86_400_000).toISOString();
-    render(<PostForm postId="1" initial={{ ...filled, mode: "schedule", scheduledAt }} />);
+    render(<PostForm postId="1" categories={categories} initial={{ ...filled, mode: "schedule", scheduledAt }} />);
 
     const field = screen.getByLabelText("Data e hora") as HTMLInputElement;
     expect(field.value).not.toBe("");
@@ -120,7 +121,7 @@ describe("PostForm", () => {
 
   it("mostra os erros devolvidos pelo servidor", async () => {
     savePostAction.mockResolvedValue({ ok: false, error: "Esse slug já está em uso.", fieldErrors: { slug: "Esse slug já está em uso" } });
-    render(<PostForm postId={null} initial={filled} />);
+    render(<PostForm postId={null} categories={categories} initial={filled} />);
 
     fireEvent.click(screen.getByRole("button", { name: "Publicar artigo" }));
 
@@ -131,10 +132,42 @@ describe("PostForm", () => {
 
   it("erro do servidor sem campos só mostra o aviso", async () => {
     savePostAction.mockResolvedValue({ ok: false, error: "Falhou" });
-    render(<PostForm postId={null} initial={filled} />);
+    render(<PostForm postId={null} categories={categories} initial={filled} />);
 
     fireEvent.click(screen.getByRole("button", { name: "Publicar artigo" }));
 
     expect(await screen.findByRole("alert")).toHaveTextContent("Falhou");
+  });
+
+  it("oferece as categorias e envia a escolhida", async () => {
+    render(<PostForm postId={null} categories={categories} initial={filled} />);
+
+    expect(screen.getAllByRole("option").map((option) => option.textContent)).toEqual(["Sem categoria", "Autoconhecimento", "Relacionamentos"]);
+
+    fireEvent.change(screen.getByLabelText("Categoria do artigo"), { target: { value: "c2" } });
+    fireEvent.click(screen.getByRole("button", { name: "Publicar artigo" }));
+
+    await waitFor(() => expect(savePostAction).toHaveBeenCalledWith(null, expect.objectContaining({ categoryId: "c2" })));
+  });
+
+  it("mantém a categoria de um artigo existente", () => {
+    render(<PostForm postId="1" categories={categories} initial={{ ...filled, categoryId: "c1" }} />);
+
+    expect(screen.getByLabelText("Categoria do artigo")).toHaveValue("c1");
+  });
+
+  it("sem categorias cadastradas, convida a criar uma", () => {
+    render(<PostForm postId={null} categories={[]} initial={filled} />);
+
+    expect(screen.getByRole("link", { name: "Criar categoria" })).toHaveAttribute("href", "/admin/categorias/novo");
+  });
+
+  it("mostra o erro de categoria devolvido pelo servidor", async () => {
+    savePostAction.mockResolvedValue({ ok: false, error: "Revise.", fieldErrors: { categoryId: "Categoria não encontrada" } });
+    render(<PostForm postId={null} categories={categories} initial={filled} />);
+
+    fireEvent.click(screen.getByRole("button", { name: "Publicar artigo" }));
+
+    expect(await screen.findByText("Categoria não encontrada")).toBeInTheDocument();
   });
 });

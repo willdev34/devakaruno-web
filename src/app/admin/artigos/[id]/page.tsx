@@ -8,12 +8,13 @@ import { notFound } from "next/navigation";
 import PostForm from "@/components/Admin/Posts/PostForm";
 import DeleteButton from "@/components/Admin/Posts/DeleteButton";
 import { getAdminPost } from "@/lib/repositories/admin-posts";
+import { listCategoryOptions } from "@/lib/repositories/admin-categories";
 import { modeFromPost } from "@/lib/posts/utils";
 import { deletePostAction } from "../actions";
 
 export default async function EditPostPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const post = await getAdminPost(id);
+  const [post, categories] = await Promise.all([getAdminPost(id), listCategoryOptions()]);
   if (!post) notFound();
 
   const mode = modeFromPost(post);
@@ -27,6 +28,7 @@ export default async function EditPostPage({ params }: { params: Promise<{ id: s
       </div>
       <PostForm
         postId={post.id}
+        categories={categories}
         initial={{
           title: post.title,
           subtitle: post.subtitle ?? "",
@@ -35,6 +37,7 @@ export default async function EditPostPage({ params }: { params: Promise<{ id: s
           content: post.content,
           coverImage: post.coverImage,
           tags: post.tags,
+          categoryId: post.categoryId ?? "",
           featured: post.featured,
           mode,
           scheduledAt: mode === "schedule" ? post.publishedAt.toISOString() : undefined,

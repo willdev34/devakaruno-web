@@ -6,7 +6,7 @@ import { ptBR } from "date-fns/locale";
 import Link from "next/link";
 
 const BlogCard = ({ blog }: { blog: Blog }) => {
-    const { title, coverImage, excerpt, date, slug } = blog;
+    const { title, coverImage, date, slug, category } = blog;
     return (
         <>
             <Link href={`/blog/${slug}`} className="group mb-0 grid grid-cols-12 lg:gap-9 gap-6">
@@ -22,6 +22,7 @@ const BlogCard = ({ blog }: { blog: Blog }) => {
                 <div className="flex flex-col gap-3 justify-center lg:col-span-7 col-span-12">
                     <span className="text-base text-gray-400">
                         {format(new Date(date), "d 'de' MMMM, yyyy", { locale: ptBR })}
+                        {category && <span className="ml-3 rounded-full bg-primary/10 px-3 py-0.5 text-xs font-medium text-primary">{category}</span>}
                     </span>
                     <h5 className="text-[22px] leading-tight font-medium group-hover:text-primary">
                         {title}

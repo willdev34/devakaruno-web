@@ -6,4 +6,6 @@ export type Blog = {
   coverImage: string;
   date: string;
   author?: string;
+  // Nome da categoria, quando o artigo tem uma
+  category?: string;
 };
