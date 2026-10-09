@@ -1,18 +1,20 @@
 /**
  * Caminho: src/components/Cursos/CursosList/index.tsx
  * Arquivo: index.tsx
- * Descrição: Listagem completa de Cursos e Vivências, cada card linkando para a página de detalhe.
+ * Descrição: Listagem completa de Cursos e Vivências (Server Component, lida do banco), cada card linkando para a página de detalhe.
  */
 import Image from "next/image";
 import Link from "next/link";
-import { CursosData } from "@/app/api/data";
+import { getCourses } from "@/lib/repositories/courses";
 
-const CursosList = () => {
+const CursosList = async () => {
+  const cursos = await getCourses();
+
   return (
     <section className="lg:py-28 py-16 dark:bg-dark">
       <div className="container mx-auto lg:max-w-(--breakpoint-md) px-4">
         <div className="grid sm:grid-cols-2 grid-cols-1 gap-8">
-          {CursosData.map((item, index) => (
+          {cursos.map((item, index) => (
             <Link href={`/cursos-e-vivencias/${item.slug}`} key={index}>
               <div className="bg-white group dark:bg-darkmode border border-border dark:border-dark_border rounded-md h-full flex flex-col items-center text-center p-8 hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
                 <Image src={item.icon} alt="icon" width={60} height={60} />

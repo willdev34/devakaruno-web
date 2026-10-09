@@ -7,6 +7,9 @@ import HeroSub from "@/components/SharedComponent/HeroSub";
 import CursosList from "@/components/Cursos/CursosList";
 import { Metadata } from "next";
 
+// Revalida a cada 60s para refletir mudanças nos cursos do banco
+export const revalidate = 60;
+
 export const metadata: Metadata = {
   title: "Cursos e Vivências | Deva Karuno Terapias",
 };

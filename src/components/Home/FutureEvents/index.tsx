@@ -1,12 +1,14 @@
 /**
  * Caminho: src/components/Home/FutureEvents/index.tsx
  * Arquivo: index.tsx
- * Descrição: Bloco de Cursos e Vivências da Home, com os cursos privativos disponíveis, cada um linkando direto para o WhatsApp.
+ * Descrição: Bloco de Cursos e Vivências da Home (Server Component, lido do banco), com os cursos privativos disponíveis, cada um linkando direto para o WhatsApp.
  */
-import { CursosData } from '@/app/api/data'
+import { getCourses } from '@/lib/repositories/courses'
 import Image from 'next/image'
 
-const FutureEvents = () => {
+const FutureEvents = async () => {
+  const cursos = await getCourses()
+
   return (
     <section id="cursos" className="lg:py-28 py-16 dark:bg-dark">
       <div className="container mx-auto lg:max-w-(--breakpoint-xl) px-4">
@@ -17,7 +19,7 @@ const FutureEvents = () => {
           </p>
         </div>
         <div className="mt-20 grid sm:grid-cols-2 grid-cols-1 gap-8 max-w-(--breakpoint-md) mx-auto">
-          {CursosData.map((item, index) => (
+          {cursos.map((item, index) => (
             <a href={`/cursos-e-vivencias/${item.slug}`} key={index}>
               <div
                 className="bg-white group dark:bg-darkmode border border-border dark:border-dark_border rounded-md h-full flex flex-col items-center text-center p-8 hover:-translate-y-1 hover:shadow-lg transition-all duration-300"
