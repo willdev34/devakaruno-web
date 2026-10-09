@@ -28,6 +28,7 @@ export default defineConfig({
         "src/components/Home/Testimonial/*.tsx",
         "src/components/QuemEOKaruno/Depoimentos/index.tsx",
         "src/components/Layout/SiteChrome.tsx",
+        "src/components/Layout/Footer/index.tsx",
         "src/components/TerapiaTantrica/AnamneseCTA/index.tsx",
         "src/components/TerapiaTantrica/AnamneseModal/index.tsx",
         "src/components/Home/Causes/index.tsx",
