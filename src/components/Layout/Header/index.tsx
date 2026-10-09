@@ -160,17 +160,10 @@ const Header: React.FC = () => {
                   onClick={() => handleSignOut()}
                   className='hidden lg:block bg-error text-sm hover:bg-error/90 text-white px-4 py-3.5 leading-none rounded-lg font-medium text-nowrap cursor-pointer'
                 >
-                  Sign Out
+                  Sair
                 </button>
               </>
-            ) : (
-              <Link
-                href={'./signin'}
-                className='hidden lg:block bg-error text-sm hover:bg-error/90 text-white px-4 py-3.5 leading-none rounded-lg font-medium text-nowrap'
-              >
-                Sign In
-              </Link>
-            )}
+            ) : null}
             <button
               onClick={() => setNavbarOpen(!navbarOpen)}
               className='block lg:hidden p-2 rounded-lg'
@@ -225,19 +218,10 @@ const Header: React.FC = () => {
                       setNavbarOpen(false)
                       handleSignOut()
                     }}>
-                    Sign Out
+                    Sair
                   </button>
                 </>
-              ) : (
-                <Link
-                  href={'./signin'}
-                  className='bg-transparent border border-primary text-primary px-4 py-2 text-nowrap rounded-lg hover:bg-darkprimary hover:text-white'
-                  onClick={() => {
-                    setNavbarOpen(false)
-                  }}>
-                  Sign In
-                </Link>
-              )}
+              ) : null}
             </div>
           </nav>
         </div>
