@@ -11,6 +11,14 @@ const { usePathname, signOut } = vi.hoisted(() => ({ usePathname: vi.fn(), signO
 
 vi.mock("next/navigation", () => ({ usePathname }));
 vi.mock("next-auth/react", () => ({ signOut }));
+// Menu simulado: o real já não tem itens "em breve", mas o componente ainda precisa tratá-los
+vi.mock("./nav", async (original) => ({
+  ...(await original<typeof import("./nav")>()),
+  ADMIN_NAV: [
+    { label: "Dashboard", href: "/admin", icon: "i", ready: true },
+    { label: "Banners", href: "/admin/banners", icon: "i", ready: false },
+  ],
+}));
 vi.mock("@iconify/react", () => ({ Icon: () => null }));
 vi.mock("@/components/Layout/Header/Logo", () => ({ default: () => <span>logo</span> }));
 
@@ -29,7 +37,7 @@ describe("AdminSidebar", () => {
   it("mostra itens sem tela como 'em breve', sem link", () => {
     render(<AdminSidebar />);
 
-    expect(screen.queryByRole("link", { name: /Serviços/ })).not.toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: /Banners/ })).not.toBeInTheDocument();
     expect(screen.getAllByText("em breve").length).toBeGreaterThan(0);
   });
 

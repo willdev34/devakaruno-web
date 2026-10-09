@@ -11,7 +11,7 @@ export const ADMIN_NAV: AdminNavItem[] = [
   { label: "Agenda", href: "/admin/agenda", icon: "solar:calendar-linear", ready: true },
   { label: "Depoimentos", href: "/admin/depoimentos", icon: "solar:chat-round-like-linear", ready: true },
   { label: "Cursos", href: "/admin/cursos", icon: "solar:book-2-linear", ready: true },
-  { label: "Serviços", href: "/admin/servicos", icon: "solar:heart-linear", ready: false },
+  { label: "Serviços", href: "/admin/servicos", icon: "solar:heart-linear", ready: true },
 ];
 
 // Marca o item ativo: o Dashboard só na raiz, os demais também nas subrotas

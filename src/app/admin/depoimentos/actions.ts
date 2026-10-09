@@ -7,7 +7,8 @@
 import { revalidatePath } from "next/cache";
 import { requireAdmin } from "@/lib/admin-session";
 import { saveTestimonial, type SaveTestimonialResult } from "@/lib/testimonials/save-testimonial";
-import { deleteTestimonial, moveTestimonial, type MoveDirection } from "@/lib/repositories/admin-testimonials";
+import type { MoveDirection } from "@/lib/ordering";
+import { deleteTestimonial, moveTestimonial } from "@/lib/repositories/admin-testimonials";
 
 // Home (carrossel de destaques) e Quem é o Karuno (demais depoimentos)
 function revalidateTestimonials() {

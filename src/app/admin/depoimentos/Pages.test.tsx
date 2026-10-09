@@ -22,8 +22,8 @@ vi.mock("@/lib/repositories/admin-testimonials", () => ({
   getTestimonial: m.getTestimonial,
 }));
 vi.mock("next/navigation", () => ({ notFound: m.notFound }));
-vi.mock("./actions", () => ({ deleteTestimonialAction: vi.fn() }));
-vi.mock("@/components/Admin/Testimonials/MoveButtons", () => ({
+vi.mock("./actions", () => ({ deleteTestimonialAction: vi.fn(), moveTestimonialAction: vi.fn() }));
+vi.mock("@/components/Admin/MoveButtons", () => ({
   default: ({ name, isFirst, isLast }: { name: string; isFirst: boolean; isLast: boolean }) => (
     <div data-testid="move">{`${name}|${isFirst}|${isLast}`}</div>
   ),

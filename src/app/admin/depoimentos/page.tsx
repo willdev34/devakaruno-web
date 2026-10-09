@@ -6,9 +6,9 @@
 import Link from "next/link";
 import { listAdminTestimonials } from "@/lib/repositories/admin-testimonials";
 import DeleteButton from "@/components/Admin/Posts/DeleteButton";
-import MoveButtons from "@/components/Admin/Testimonials/MoveButtons";
+import MoveButtons from "@/components/Admin/MoveButtons";
 import { btnPrimary } from "@/components/Admin/styles";
-import { deleteTestimonialAction } from "./actions";
+import { deleteTestimonialAction, moveTestimonialAction } from "./actions";
 
 // Trecho curto do texto para a tabela
 const excerpt = (text: string, max = 90) => (text.length > max ? `${text.slice(0, max).trimEnd()}...` : text);
@@ -44,7 +44,13 @@ export default async function AdminTestimonialsPage() {
               {items.map((item, index) => (
                 <tr key={item.id}>
                   <td className="px-5 py-4">
-                    <MoveButtons id={item.id} name={item.clientName} isFirst={index === 0} isLast={index === items.length - 1} />
+                    <MoveButtons
+                      id={item.id}
+                      name={item.clientName}
+                      isFirst={index === 0}
+                      isLast={index === items.length - 1}
+                      action={moveTestimonialAction}
+                    />
                   </td>
                   <td className="px-3 py-4 font-medium">{item.clientName}</td>
                   <td className="px-3 py-4 text-muted">{excerpt(item.review)}</td>

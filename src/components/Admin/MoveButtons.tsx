@@ -1,24 +1,30 @@
 /**
- * Caminho: src/components/Admin/Testimonials/MoveButtons.tsx
+ * Caminho: src/components/Admin/MoveButtons.tsx
  * Arquivo: MoveButtons.tsx
- * Descrição: Botões de subir e descer um depoimento na fila. Desabilita o que não faz sentido na primeira e na última posição.
+ * Descrição: Botões de subir e descer um item numa fila ordenada (depoimentos, serviços). A ação de mover vem por props. Desabilita o que não faz sentido nas pontas.
  */
 "use client";
 import { useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { moveTestimonialAction } from "@/app/admin/depoimentos/actions";
+import type { MoveDirection } from "@/lib/ordering";
 
-type Props = { id: string; name: string; isFirst: boolean; isLast: boolean };
+type Props = {
+  id: string;
+  name: string;
+  isFirst: boolean;
+  isLast: boolean;
+  action: (id: string, direction: MoveDirection) => Promise<unknown>;
+};
 
 const btn = "rounded-md border border-black/10 px-2 py-1 text-xs leading-none hover:bg-black/5 disabled:cursor-not-allowed disabled:opacity-30";
 
-export default function MoveButtons({ id, name, isFirst, isLast }: Props) {
+export default function MoveButtons({ id, name, isFirst, isLast, action }: Props) {
   const router = useRouter();
   const [pending, start] = useTransition();
 
-  const move = (direction: "up" | "down") =>
+  const move = (direction: MoveDirection) =>
     start(async () => {
-      await moveTestimonialAction(id, direction);
+      await action(id, direction);
       router.refresh();
     });
 

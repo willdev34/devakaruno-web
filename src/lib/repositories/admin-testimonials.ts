@@ -4,14 +4,13 @@
  * Descrição: Acesso do painel admin aos depoimentos: listagem na ordem do site, leitura, criação (vai para o fim), edição, exclusão e troca de posição.
  */
 import { prisma } from "@/lib/prisma";
+import { moveInList, type MoveDirection } from "@/lib/ordering";
 
 export type TestimonialWriteData = {
   clientName: string;
   review: string;
   featured: boolean;
 };
-
-export type MoveDirection = "up" | "down";
 
 // Mesma ordem usada no site; createdAt desempata valores iguais de "order"
 const BY_ORDER = [{ order: "asc" as const }, { createdAt: "asc" as const }];
@@ -41,12 +40,8 @@ export function deleteTestimonial(id: string) {
 // Troca de lugar com o vizinho e renumera a fila inteira, o que também desfaz empates
 export async function moveTestimonial(id: string, direction: MoveDirection) {
   const items = await prisma.testimonial.findMany({ orderBy: BY_ORDER, select: { id: true } });
-  const from = items.findIndex((item) => item.id === id);
-  const to = direction === "up" ? from - 1 : from + 1;
-  if (from === -1 || to < 0 || to >= items.length) return false;
-
-  const ids = items.map((item) => item.id);
-  [ids[from], ids[to]] = [ids[to], ids[from]];
+  const ids = moveInList(items.map((item) => item.id), id, direction);
+  if (!ids) return false;
 
   await prisma.$transaction(
     ids.map((itemId, index) => prisma.testimonial.update({ where: { id: itemId }, data: { order: index + 1 } })),
