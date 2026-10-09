@@ -33,9 +33,13 @@ const settings = {
 
 const TestimonialCarousel = ({ items }: { items: TestimonialItem[] }) => {
     return (
-        <Slider {...settings}>
+        // Trilho em flex e slides com altura automática: todos os cards ficam com a altura do maior
+        <Slider
+            {...settings}
+            className="[&_.slick-track]:flex [&_.slick-slide]:!h-auto [&_.slick-slide>div]:h-full"
+        >
             {items.map((item, index) => (
-                <div key={index} className="px-3" data-aos="fade-up" data-aos-delay={`${index * 180}`}>
+                <div key={index} className="px-3 h-full" data-aos="fade-up" data-aos-delay={`${index * 180}`}>
                     <div className="bg-white dark:bg-dark p-10 rounded-md h-full flex flex-col justify-between min-h-[260px]">
                         <p className="font-heading italic text-lg text-dustGray dark:text-white/70 leading-relaxed">
                             &quot;{item.review}&quot;
