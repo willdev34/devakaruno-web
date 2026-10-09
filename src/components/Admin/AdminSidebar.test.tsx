@@ -29,7 +29,7 @@ describe("AdminSidebar", () => {
   it("mostra itens sem tela como 'em breve', sem link", () => {
     render(<AdminSidebar />);
 
-    expect(screen.queryByRole("link", { name: /Depoimentos/ })).not.toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: /Cursos/ })).not.toBeInTheDocument();
     expect(screen.getAllByText("em breve").length).toBeGreaterThan(0);
   });
 

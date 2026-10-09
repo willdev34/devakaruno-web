@@ -9,7 +9,7 @@ export const ADMIN_NAV: AdminNavItem[] = [
   { label: "Dashboard", href: "/admin", icon: "solar:widget-2-linear", ready: true },
   { label: "Artigos", href: "/admin/artigos", icon: "solar:document-text-linear", ready: true },
   { label: "Agenda", href: "/admin/agenda", icon: "solar:calendar-linear", ready: true },
-  { label: "Depoimentos", href: "/admin/depoimentos", icon: "solar:chat-round-like-linear", ready: false },
+  { label: "Depoimentos", href: "/admin/depoimentos", icon: "solar:chat-round-like-linear", ready: true },
   { label: "Cursos", href: "/admin/cursos", icon: "solar:book-2-linear", ready: false },
 ];
 
