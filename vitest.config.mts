@@ -22,7 +22,7 @@ export default defineConfig({
         "src/lib/**/*.ts",
         "src/components/Cursos/**/index.tsx",
         "src/components/Home/FutureEvents/index.tsx",
-        "src/app/(site)/cursos-e-vivencias/[[]slug]/page.tsx",
+        "src/app/*/cursos-e-vivencias/*/page.tsx",
         "src/components/Home/Testimonial/*.tsx",
         "src/components/QuemEOKaruno/Depoimentos/index.tsx",
         "src/components/Layout/SiteChrome.tsx",
