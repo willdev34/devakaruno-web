@@ -1,11 +1,18 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
+/**
+ * Caminho: src/components/Layout/Header/Logo/index.tsx
+ * Arquivo: index.tsx
+ * Descrição: Logo da marca (versão clara/escura ou sempre branca). A altura é configurável, com 88px como padrão.
+ */
 interface LogoProps {
   forceWhite?: boolean;
+  // Altura em px; a largura acompanha a proporção
+  height?: number;
 }
 
-const Logo: React.FC<LogoProps> = ({ forceWhite = false }) => {
+const Logo: React.FC<LogoProps> = ({ forceWhite = false, height = 88 }) => {
 
   if (forceWhite) {
     return (
@@ -15,7 +22,7 @@ const Logo: React.FC<LogoProps> = ({ forceWhite = false }) => {
           alt="Deva Karuno Terapias"
           width={180}
           height={45}
-          style={{ width: 'auto', height: '88px' }}
+          style={{ width: 'auto', height: `${height}px` }}
           quality={100}
         />
       </Link>
@@ -29,7 +36,7 @@ const Logo: React.FC<LogoProps> = ({ forceWhite = false }) => {
         alt="Deva Karuno Terapias"
         width={180}
         height={45}
-        style={{ width: 'auto', height: '88px' }}
+        style={{ width: 'auto', height: `${height}px` }}
         quality={100}
         className="dark:hidden"
       />
@@ -38,7 +45,7 @@ const Logo: React.FC<LogoProps> = ({ forceWhite = false }) => {
         alt="Deva Karuno Terapias"
         width={180}
         height={45}
-        style={{ width: 'auto', height: '88px' }}
+        style={{ width: 'auto', height: `${height}px` }}
         quality={100}
         className="dark:block hidden"
       />

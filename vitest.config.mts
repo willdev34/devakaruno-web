@@ -20,6 +20,8 @@ export default defineConfig({
       // Escopo inicial da cobertura: cresce conforme novos arquivos ganham testes
       include: [
         "src/lib/**/*.ts",
+        "src/components/Home/Hero/index.tsx",
+        "src/components/Layout/Header/Logo/index.tsx",
         "src/components/Cursos/**/index.tsx",
         "src/components/Home/FutureEvents/index.tsx",
         "src/app/*/cursos-e-vivencias/*/page.tsx",

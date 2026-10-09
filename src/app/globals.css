@@ -142,3 +142,18 @@ body {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-3px); }
 }
+
+/* Hero no mobile: a foto percorre da esquerda para a direita enquanto o slide está ativo.
+   Duração um pouco acima de autoplaySpeed (6s) + transição (1,2s) para o movimento durar até a troca. */
+@keyframes hero-pan {
+  from { object-position: var(--pan-from, 0%) 50%; }
+  to { object-position: var(--pan-to, 100%) 50%; }
+}
+@media (max-width: 767px) and (prefers-reduced-motion: no-preference) {
+  .hero-image {
+    object-position: var(--pan-from, 0%) 50%;
+  }
+  .slick-active .hero-image {
+    animation: hero-pan 7.2s linear forwards;
+  }
+}

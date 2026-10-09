@@ -17,7 +17,7 @@ const Footer: FC = () => {
       <div className="container mx-auto lg:max-w-(--breakpoint-xl) md:max-w-(--breakpoint-md) px-4">
         <div className="grid grid-cols-1 sm:grid-cols-12 gap-8 pb-10">
           <div className="lg:col-span-4 col-span-12">
-            <Logo />
+            <Logo height={44} />
             <p className="text-base font-normal text-dustGray dark:text-white/60 mt-6">
               Encontre-se. Conecte-se. Transforme-se.
             </p>
