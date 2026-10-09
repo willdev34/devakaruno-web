@@ -16,9 +16,10 @@ vi.mock("@/lib/cloudinary-upload", async (original) => ({
   uploadImage,
 }));
 
-function requestWith(file?: File) {
+function requestWith(file?: File, folder?: string) {
   const form = new FormData();
   if (file) form.set("file", file);
+  if (folder) form.set("folder", folder);
   return new Request("http://localhost/api/admin/upload", { method: "POST", body: form });
 }
 
@@ -44,6 +45,17 @@ describe("POST /api/admin/upload", () => {
     const response = await POST(requestWith(new File(["a"], "a.png", { type: "image/png" })));
 
     expect(await response.json()).toEqual({ url: "https://res.cloudinary.com/x.png" });
+  });
+
+  it("envia para a subpasta cursos só quando pedida; qualquer outro valor cai em blog", async () => {
+    uploadImage.mockResolvedValue("https://x/a.png");
+    const file = new File(["a"], "a.png", { type: "image/png" });
+
+    await POST(requestWith(file, "cursos"));
+    await POST(requestWith(file, "qualquer-coisa"));
+
+    expect(uploadImage.mock.calls[0][1]).toMatch(/\/cursos$/);
+    expect(uploadImage.mock.calls[1][1]).toMatch(/\/blog$/);
   });
 
   it("repassa o status do erro de upload e trata erro inesperado", async () => {

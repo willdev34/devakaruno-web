@@ -5,7 +5,7 @@
  */
 import { NextResponse } from "next/server";
 import { isAdminRequest } from "@/lib/admin-session";
-import { UploadError, uploadImage } from "@/lib/cloudinary-upload";
+import { UploadError, uploadFolder, uploadImage } from "@/lib/cloudinary-upload";
 
 export async function POST(request: Request) {
   if (!(await isAdminRequest())) {
@@ -18,8 +18,11 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Envie uma imagem." }, { status: 400 });
   }
 
+  // Subpasta no Cloudinary: só "cursos" é aceita além do padrão "blog"
+  const sub = form.get("folder") === "cursos" ? "cursos" : "blog";
+
   try {
-    const url = await uploadImage(file);
+    const url = await uploadImage(file, uploadFolder(sub));
     return NextResponse.json({ url });
   } catch (error) {
     if (error instanceof UploadError) {

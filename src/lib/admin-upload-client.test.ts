@@ -19,6 +19,17 @@ describe("uploadImageClient", () => {
     expect(fetchMock.mock.calls[0][0]).toBe("/api/admin/upload");
   });
 
+  it("envia a subpasta escolhida e não envia quando omitida", async () => {
+    const fetchMock = vi.fn().mockResolvedValue({ ok: true, json: async () => ({ url: "https://x/a.png" }) });
+    vi.stubGlobal("fetch", fetchMock);
+
+    await uploadImageClient(file, "cursos");
+    await uploadImageClient(file);
+
+    expect((fetchMock.mock.calls[0][1].body as FormData).get("folder")).toBe("cursos");
+    expect((fetchMock.mock.calls[1][1].body as FormData).get("folder")).toBeNull();
+  });
+
   it("lança a mensagem do servidor", async () => {
     vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ ok: false, json: async () => ({ error: "grande demais" }) }));
 
