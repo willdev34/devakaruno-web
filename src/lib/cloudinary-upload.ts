@@ -6,6 +6,10 @@
 import { createHash } from "node:crypto";
 
 export const MAX_UPLOAD_BYTES = 10 * 1024 * 1024;
+// Pasta base no Cloudinary (CLOUDINARY_FOLDER) e subpasta do artigo: devakaruno-web/blog
+export const DEFAULT_FOLDER = "devakaruno-web";
+export const uploadFolder = (sub = "blog") => `${process.env.CLOUDINARY_FOLDER || DEFAULT_FOLDER}/${sub}`;
+
 export const ALLOWED_IMAGE_TYPES = ["image/png", "image/jpeg", "image/webp"];
 
 export class UploadError extends Error {
@@ -24,7 +28,7 @@ export function signParams(params: Record<string, string>, secret: string): stri
 }
 
 // Envia a imagem e devolve a URL segura
-export async function uploadImage(file: File, folder = "deva-karuno/blog"): Promise<string> {
+export async function uploadImage(file: File, folder = uploadFolder()): Promise<string> {
   const cloud = process.env.CLOUDINARY_CLOUD_NAME;
   const key = process.env.CLOUDINARY_API_KEY;
   const secret = process.env.CLOUDINARY_API_SECRET;

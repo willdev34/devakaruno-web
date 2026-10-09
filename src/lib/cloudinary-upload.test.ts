@@ -5,7 +5,7 @@
  * Descrição: Testes do upload ao Cloudinary: assinatura, validações e respostas de sucesso e erro (fetch mockado).
  */
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { UploadError, signParams, uploadImage } from "./cloudinary-upload";
+import { UploadError, signParams, uploadFolder, uploadImage } from "./cloudinary-upload";
 
 const png = (size = 10, type = "image/png") => new File([new Uint8Array(size)], "a.png", { type });
 
@@ -17,6 +17,17 @@ describe("signParams", () => {
     expect(a).toBe(b);
     expect(a).toMatch(/^[0-9a-f]{40}$/);
     expect(signParams({ folder: "x", timestamp: "1" }, "outro")).not.toBe(a);
+  });
+});
+
+describe("uploadFolder", () => {
+  it("usa devakaruno-web/blog por padrão e respeita CLOUDINARY_FOLDER", () => {
+    delete process.env.CLOUDINARY_FOLDER;
+    expect(uploadFolder()).toBe("devakaruno-web/blog");
+
+    process.env.CLOUDINARY_FOLDER = "outra-pasta";
+    expect(uploadFolder("agenda")).toBe("outra-pasta/agenda");
+    delete process.env.CLOUDINARY_FOLDER;
   });
 });
 
@@ -53,6 +64,7 @@ describe("uploadImage", () => {
     const [endpoint, init] = fetchMock.mock.calls[0];
     expect(endpoint).toBe("https://api.cloudinary.com/v1_1/nuvem/image/upload");
     expect((init.body as FormData).get("signature")).toMatch(/^[0-9a-f]{40}$/);
+    expect((init.body as FormData).get("folder")).toBe("devakaruno-web/blog");
   });
 
   it("trata erro e resposta sem URL", async () => {
