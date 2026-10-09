@@ -53,7 +53,7 @@ export default async function Post({ params }: { params: Promise<{ slug: string 
 
   return (
     <>
-      <section className="lg:pt-44 sm:pt-48 pt-36 lg:pb-20 pb-10 dark:bg-dark px-4">
+      <section className="pt-[calc(var(--header-h,12rem)+2rem)] lg:pb-20 pb-10 dark:bg-dark px-4">
         <div className="container lg:max-w-(--breakpoint-xl) md:max-w-(--breakpoint-md) mx-auto">
           <div className="-mx-4 flex flex-wrap justify-center">
             <div className="w-full px-4 max-w-3xl">

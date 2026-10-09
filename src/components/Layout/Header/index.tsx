@@ -31,6 +31,20 @@ const Header: React.FC = () => {
   const signInRef = useRef<HTMLDivElement>(null)
   const signUpRef = useRef<HTMLDivElement>(null)
   const mobileMenuRef = useRef<HTMLDivElement>(null)
+  const headerRef = useRef<HTMLElement>(null)
+
+  // Publica a altura real do cabeçalho fixo em --header-h
+  // As páginas usam essa variável para não ficarem escondidas atrás dele
+  useEffect(() => {
+    const el = headerRef.current
+    if (!el) return
+    const publish = () =>
+      document.documentElement.style.setProperty('--header-h', `${el.offsetHeight}px`)
+    publish()
+    const observer = new ResizeObserver(publish)
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
 
   const handleScroll = () => {
     setSticky(window.scrollY >= 80)
@@ -104,6 +118,7 @@ const Header: React.FC = () => {
 
   return (
     <header
+      ref={headerRef}
       className={`fixed top-0 z-50 w-full transition-all duration-300 bg-white dark:bg-dark ${sticky ? 'shadow-lg dark:shadow-darkmd' : 'shadow-none'}`}
       style={!sticky && mounted && isHomePage ? { backgroundColor: theme === 'dark' ? 'rgba(24,15,46,0.3)' : 'rgba(255,255,255,0.3)' } : undefined}
     >
