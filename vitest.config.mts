@@ -36,6 +36,8 @@ export default defineConfig({
         "src/components/Home/NewsLetter/NewsletterForm.tsx",
         "src/components/Blog/BlogList/index.tsx",
         "src/components/Admin/**/*.{ts,tsx}",
+        "src/components/Agenda/*.tsx",
+        "src/app/*/agenda/page.tsx",
         "src/app/admin/**/*.{ts,tsx}",
         "src/app/api/admin/**/*.ts",
         "src/components/Blog/LatestBlog/index.tsx",
