@@ -139,14 +139,17 @@ const Header: React.FC = () => {
             {user?.user || session?.user ? (
               <>
                 <div className="relative group flex items-center justify-center">
-                  <Image
-                    src="/images/avatar/avatar_1.jpg"
-                    alt="Image"
-                    width={35}
-                    height={35}
-                    quality={100}
-                    className="rounded-full cursor-pointer"
-                  />
+                  {/* Foto da Deva Karuno, ampliada no rosto para caber no círculo */}
+                  <div className="h-10 w-10 overflow-hidden rounded-full cursor-pointer">
+                    <Image
+                      src="/images/sobre/perfil-deva-karuno-2026.jpg"
+                      alt="Deva Karuno"
+                      width={120}
+                      height={120}
+                      className="h-full w-full scale-[1.9] object-cover"
+                      style={{ transformOrigin: "52% 24%" }}
+                    />
+                  </div>
                   <p
                     className="absolute w-fit text-sm font-medium text-center z-10 invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-opacity duration-200 bg-secondary text-white py-1 px-3 min-w-28 rounded-md shadow-2xl top-full left-1/2 transform -translate-x-1/2 mt-3"
                   >
