@@ -183,3 +183,80 @@ describe("MediaUploader", () => {
     expect(click).toHaveBeenCalled();
   });
 });
+
+describe("MediaPicker", () => {
+  const picker = async () => (await import("./MediaPicker")).default;
+  const page = (names: string[], nextCursor: string | null = null) => ({
+    ok: true,
+    json: async () => ({ items: names.map((n) => ({ publicId: `pasta/${n}`, url: `https://res.cloudinary.com/c/image/upload/v1/pasta/${n}.jpg` })), nextCursor }),
+  });
+
+  beforeEach(() => vi.unstubAllGlobals());
+
+  it("carrega a primeira página e devolve a URL da imagem escolhida", async () => {
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue(page(["foto_a", "foto_b"])));
+    const MediaPicker = await picker();
+    const onSelect = vi.fn();
+    render(<MediaPicker onSelect={onSelect} onClose={vi.fn()} />);
+
+    fireEvent.click(await screen.findByRole("button", { name: "Usar foto_b" }));
+
+    expect(onSelect).toHaveBeenCalledWith("https://res.cloudinary.com/c/image/upload/v1/pasta/foto_b.jpg");
+    expect(screen.queryByRole("button", { name: "Carregar mais" })).not.toBeInTheDocument();
+  });
+
+  it("carrega mais páginas, somando às anteriores", async () => {
+    const fetchMock = vi.fn().mockResolvedValueOnce(page(["foto_a"], "prox")).mockResolvedValueOnce(page(["foto_b"]));
+    vi.stubGlobal("fetch", fetchMock);
+    const MediaPicker = await picker();
+    render(<MediaPicker onSelect={vi.fn()} onClose={vi.fn()} />);
+
+    fireEvent.click(await screen.findByRole("button", { name: "Carregar mais" }));
+
+    expect(await screen.findByRole("button", { name: "Usar foto_b" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Usar foto_a" })).toBeInTheDocument();
+    expect(fetchMock.mock.calls[1][0]).toBe("/api/admin/media?cursor=prox");
+  });
+
+  it("biblioteca vazia", async () => {
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue(page([])));
+    const MediaPicker = await picker();
+    render(<MediaPicker onSelect={vi.fn()} onClose={vi.fn()} />);
+
+    expect(await screen.findByText("Nenhuma imagem enviada ainda.")).toBeInTheDocument();
+  });
+
+  it("mostra a mensagem do servidor quando a listagem falha", async () => {
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ ok: false, json: async () => ({ error: "Cloudinary não configurado no servidor." }) }));
+    const MediaPicker = await picker();
+    render(<MediaPicker onSelect={vi.fn()} onClose={vi.fn()} />);
+
+    expect(await screen.findByRole("alert")).toHaveTextContent("Cloudinary não configurado");
+  });
+
+  it("mensagem genérica quando a resposta não tem corpo ou a rede cai", async () => {
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValueOnce({ ok: false, json: async () => { throw new Error("x"); } }));
+    const MediaPicker = await picker();
+    const first = render(<MediaPicker onSelect={vi.fn()} onClose={vi.fn()} />);
+    expect(await screen.findByRole("alert")).toHaveTextContent("Não foi possível carregar as imagens.");
+    first.unmount();
+
+    vi.stubGlobal("fetch", vi.fn().mockRejectedValue("queda"));
+    render(<MediaPicker onSelect={vi.fn()} onClose={vi.fn()} />);
+    expect(await screen.findByRole("alert")).toHaveTextContent("Não foi possível carregar as imagens.");
+  });
+
+  it("fecha pelo botão e pela tecla Esc", async () => {
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue(page([])));
+    const MediaPicker = await picker();
+    const onClose = vi.fn();
+    render(<MediaPicker onSelect={vi.fn()} onClose={onClose} />);
+    await screen.findByText("Nenhuma imagem enviada ainda.");
+
+    fireEvent.click(screen.getByRole("button", { name: "Fechar" }));
+    fireEvent.keyDown(window, { key: "Escape" });
+    fireEvent.keyDown(window, { key: "a" });
+
+    expect(onClose).toHaveBeenCalledTimes(2);
+  });
+});

@@ -10,6 +10,15 @@ import CoverUpload from "./CoverUpload";
 import StatusBadge from "./StatusBadge";
 import DeleteButton from "./DeleteButton";
 
+vi.mock("../Media/MediaPicker", () => ({
+  default: ({ onSelect, onClose }: { onSelect: (url: string) => void; onClose: () => void }) => (
+    <div data-testid="picker">
+      <button onClick={() => onSelect("https://x/da-biblioteca.jpg")}>escolher</button>
+      <button onClick={onClose}>fechar</button>
+    </div>
+  ),
+}));
+
 const { push, refresh } = vi.hoisted(() => ({ push: vi.fn(), refresh: vi.fn() }));
 vi.mock("next/navigation", () => ({ useRouter: () => ({ push, refresh }) }));
 
@@ -82,6 +91,30 @@ describe("CoverUpload", () => {
 
     fireEvent.change(screen.getByLabelText("URL da capa"), { target: { value: "https://novo" } });
     expect(onChange).toHaveBeenCalledWith("https://novo");
+  });
+
+  it("escolhe uma imagem da biblioteca e fecha a janela", () => {
+    const onChange = vi.fn();
+    render(<CoverUpload value="" onChange={onChange} onUpload={vi.fn()} />);
+
+    fireEvent.click(screen.getByRole("button", { name: "Escolher da biblioteca" }));
+    expect(screen.getByTestId("picker")).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole("button", { name: "escolher" }));
+
+    expect(onChange).toHaveBeenCalledWith("https://x/da-biblioteca.jpg");
+    expect(screen.queryByTestId("picker")).not.toBeInTheDocument();
+  });
+
+  it("fecha a janela da biblioteca sem escolher nada", () => {
+    const onChange = vi.fn();
+    render(<CoverUpload value="" onChange={onChange} onUpload={vi.fn()} />);
+
+    fireEvent.click(screen.getByRole("button", { name: "Escolher da biblioteca" }));
+    fireEvent.click(screen.getByRole("button", { name: "fechar" }));
+
+    expect(onChange).not.toHaveBeenCalled();
+    expect(screen.queryByTestId("picker")).not.toBeInTheDocument();
   });
 
   it("ignora seleção vazia e abre o seletor com Enter", () => {

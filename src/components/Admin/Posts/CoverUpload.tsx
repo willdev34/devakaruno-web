@@ -1,10 +1,11 @@
 /**
  * Caminho: src/components/Admin/Posts/CoverUpload.tsx
  * Arquivo: CoverUpload.tsx
- * Descrição: Campo de imagem de capa: clique ou arraste para enviar, ou cole uma URL. Mostra a prévia da imagem.
+ * Descrição: Campo de imagem de capa: clique ou arraste para enviar, escolha da biblioteca ou cole uma URL. Mostra a prévia da imagem.
  */
 "use client";
 import { useRef, useState } from "react";
+import MediaPicker from "../Media/MediaPicker";
 import { input } from "../styles";
 
 // Textos de acessibilidade; por padrão falam de "capa", e outros usos (ex.: banner) podem trocar
@@ -28,6 +29,7 @@ export default function CoverUpload({ value, onChange, onUpload, labels }: Props
   const fileInput = useRef<HTMLInputElement>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
+  const [picking, setPicking] = useState(false);
 
   const send = async (file?: File) => {
     if (!file) return;
@@ -73,6 +75,18 @@ export default function CoverUpload({ value, onChange, onUpload, labels }: Props
         />
       </div>
       {error && <p role="alert" className="mt-1 text-xs text-error">{error}</p>}
+      <button type="button" onClick={() => setPicking(true)} className="mt-3 text-sm font-medium text-primary hover:underline">
+        Escolher da biblioteca
+      </button>
+      {picking && (
+        <MediaPicker
+          onClose={() => setPicking(false)}
+          onSelect={(url) => {
+            onChange(url);
+            setPicking(false);
+          }}
+        />
+      )}
       <div className="mt-3 flex items-center gap-2">
         <span className="text-xs text-muted">ou cole a URL</span>
         <input
