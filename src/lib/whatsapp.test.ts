@@ -4,7 +4,7 @@
  * Descrição: Testes do gerador de link do WhatsApp.
  */
 import { describe, expect, it } from "vitest";
-import { messageFromLink, whatsappLink } from "./whatsapp";
+import { messageFromLink, whatsappLink, withWhatsappNumber } from "./whatsapp";
 
 describe("whatsappLink", () => {
   it("devolve o link simples sem mensagem", () => {
@@ -13,6 +13,25 @@ describe("whatsappLink", () => {
 
   it("codifica a mensagem", () => {
     expect(whatsappLink("Olá! Quero agendar")).toBe("https://wa.me/5521984121612?text=Ol%C3%A1!%20Quero%20agendar");
+  });
+});
+
+describe("whatsappLink com número das configurações", () => {
+  it("usa o número informado no lugar do padrão", () => {
+    expect(whatsappLink("Oi", "5511999999999")).toBe("https://wa.me/5511999999999?text=Oi");
+    expect(whatsappLink(undefined, "5511999999999")).toBe("https://wa.me/5511999999999");
+  });
+});
+
+describe("withWhatsappNumber", () => {
+  it("troca o número e mantém a mensagem", () => {
+    expect(withWhatsappNumber("https://wa.me/5521984121612?text=Ol%C3%A1", "5511999999999")).toBe("https://wa.me/5511999999999?text=Ol%C3%A1");
+    expect(withWhatsappNumber("https://wa.me/5521984121612", "5511999999999")).toBe("https://wa.me/5511999999999");
+  });
+
+  it("não mexe em links que não são do wa.me", () => {
+    expect(withWhatsappNumber("https://exemplo.com/5521984121612", "5511999999999")).toBe("https://exemplo.com/5521984121612");
+    expect(withWhatsappNumber("", "5511999999999")).toBe("");
   });
 });
 

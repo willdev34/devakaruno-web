@@ -21,7 +21,7 @@ const BY_ORDER = [{ order: "asc" as const }, { createdAt: "asc" as const }];
 
 // Agrupados por posição; dentro de cada posição, na ordem de prioridade
 export function listAdminAds() {
-  return prisma.advertisement.findMany({ orderBy: [{ position: "asc" }, ...BY_ORDER] });
+  return prisma.advertisement.findMany({ orderBy: [{ position: "asc" as const }, ...BY_ORDER] });
 }
 
 export function getAd(id: string) {

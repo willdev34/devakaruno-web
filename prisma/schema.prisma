@@ -157,3 +157,23 @@ model Advertisement {
   @@index([position, active])
   @@map("advertisements")
 }
+
+// Configurações gerais do site: uma única linha (id "main"), criada no primeiro salvamento do admin
+model SiteSettings {
+  id                String   @id @default("main")
+  whatsappNumber    String
+  whatsappMessage   String
+  email             String
+  address           String
+  instagramUrl      String   @default("")
+  facebookUrl       String   @default("")
+  xUrl              String   @default("")
+  tiktokUrl         String   @default("")
+  gtmId             String   @default("")
+  gaId              String   @default("")
+  metaPixelId       String   @default("")
+  searchConsoleCode String   @default("")
+  updatedAt         DateTime @updatedAt
+
+  @@map("site_settings")
+}

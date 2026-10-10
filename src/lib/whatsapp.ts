@@ -5,10 +5,17 @@
  */
 export const WHATSAPP_NUMBER = "5521984121612";
 
-// Link do WhatsApp com a mensagem já preenchida (opcional)
-export function whatsappLink(message?: string): string {
-  const base = `https://wa.me/${WHATSAPP_NUMBER}`;
+// Link do WhatsApp com a mensagem já preenchida (opcional). O número vem das configurações do site;
+// sem ele, vale o número padrão.
+export function whatsappLink(message?: string, number: string = WHATSAPP_NUMBER): string {
+  const base = `https://wa.me/${number}`;
   return message ? `${base}?text=${encodeURIComponent(message)}` : base;
+}
+
+// Troca o número de um link wa.me já pronto (como os guardados em cursos e serviços),
+// mantendo a mensagem. Links de outros endereços passam sem mudança.
+export function withWhatsappNumber(link: string, number: string): string {
+  return link.replace(/^(https?:\/\/wa\.me\/)\d+/, `$1${number}`);
 }
 
 // Mensagem pronta de um link wa.me ("" se não houver ou se o link for inválido)
