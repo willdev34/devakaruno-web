@@ -15,6 +15,7 @@ export const ADMIN_NAV: AdminNavItem[] = [
   { label: "Cursos", href: "/admin/cursos", icon: "solar:book-2-linear", ready: true },
   { label: "Serviços", href: "/admin/servicos", icon: "solar:heart-linear", ready: true },
   { label: "Banners", href: "/admin/banners", icon: "solar:gallery-wide-linear", ready: true },
+  { label: "Imagens", href: "/admin/imagens", icon: "solar:gallery-linear", ready: true },
   { label: "Configurações", href: "/admin/configuracoes", icon: "solar:settings-linear", ready: true },
 ];
 

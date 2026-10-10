@@ -4,7 +4,7 @@
  * Descrição: Envia uma imagem do navegador para /api/admin/upload e devolve a URL. Lança erro com a mensagem do servidor.
  */
 // folder escolhe a subpasta no Cloudinary (padrão: blog)
-export async function uploadImageClient(file: File, folder?: "blog" | "cursos" | "banners"): Promise<string> {
+export async function uploadImageClient(file: File, folder?: "blog" | "cursos" | "banners" | "biblioteca"): Promise<string> {
   const body = new FormData();
   body.set("file", file);
   if (folder) body.set("folder", folder);
