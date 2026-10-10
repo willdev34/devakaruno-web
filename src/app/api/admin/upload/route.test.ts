@@ -58,6 +58,14 @@ describe("POST /api/admin/upload", () => {
     expect(uploadImage.mock.calls[1][1]).toMatch(/\/blog$/);
   });
 
+  it("aceita também a subpasta banners", async () => {
+    uploadImage.mockResolvedValue("https://x/a.png");
+
+    await POST(requestWith(new File(["a"], "a.png", { type: "image/png" }), "banners"));
+
+    expect(uploadImage.mock.calls[0][1]).toMatch(/\/banners$/);
+  });
+
   it("repassa o status do erro de upload e trata erro inesperado", async () => {
     const file = new File(["a"], "a.png", { type: "image/png" });
 

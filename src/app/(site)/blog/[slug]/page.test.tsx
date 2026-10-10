@@ -16,6 +16,7 @@ const { getPostBySlug, notFound } = vi.hoisted(() => ({
 
 vi.mock("@/lib/repositories/posts", () => ({ getPostBySlug }));
 vi.mock("next/navigation", () => ({ notFound }));
+vi.mock("@/components/Ads/AdSlot", () => ({ default: () => <div>ad</div> }));
 vi.mock("@/components/Blog/LatestBlog", () => ({ default: () => <div>latest</div> }));
 vi.mock("@/components/Home/WhatsAppCTA", () => ({ default: () => <div>cta</div> }));
 

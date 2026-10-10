@@ -135,3 +135,25 @@ model AgendaEvent {
 
   @@map("agenda_events")
 }
+
+// Banners publicitários exibidos no blog (um por posição, o primeiro ativo na ordem)
+model Advertisement {
+  id        String    @id @default(cuid())
+  // Nome interno, só para identificar o banner no painel
+  name      String
+  // Onde aparece: BLOG_LIST ou POST_END (ver src/lib/ads/positions.ts)
+  position  String
+  imageUrl  String
+  linkUrl   String
+  altText   String
+  active    Boolean   @default(true)
+  // Janela opcional de exibição
+  startsAt  DateTime?
+  endsAt    DateTime?
+  order     Int
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@index([position, active])
+  @@map("advertisements")
+}

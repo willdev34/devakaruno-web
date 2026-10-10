@@ -18,8 +18,9 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Envie uma imagem." }, { status: 400 });
   }
 
-  // Subpasta no Cloudinary: só "cursos" é aceita além do padrão "blog"
-  const sub = form.get("folder") === "cursos" ? "cursos" : "blog";
+  // Subpasta no Cloudinary: "cursos" e "banners" são aceitas além do padrão "blog"
+  const requested = form.get("folder");
+  const sub = requested === "cursos" || requested === "banners" ? requested : "blog";
 
   try {
     const url = await uploadImage(file, uploadFolder(sub));

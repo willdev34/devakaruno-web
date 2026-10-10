@@ -7,13 +7,24 @@
 import { useRef, useState } from "react";
 import { input } from "../styles";
 
+// Textos de acessibilidade; por padrão falam de "capa", e outros usos (ex.: banner) podem trocar
+type Labels = { upload: string; file: string; url: string; preview: string };
+const COVER_LABELS: Labels = {
+  upload: "Enviar imagem de capa",
+  file: "Arquivo da capa",
+  url: "URL da capa",
+  preview: "Prévia da capa",
+};
+
 type Props = {
   value: string;
   onChange: (url: string) => void;
   onUpload: (file: File) => Promise<string>;
+  labels?: Partial<Labels>;
 };
 
-export default function CoverUpload({ value, onChange, onUpload }: Props) {
+export default function CoverUpload({ value, onChange, onUpload, labels }: Props) {
+  const text = { ...COVER_LABELS, ...labels };
   const fileInput = useRef<HTMLInputElement>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
@@ -36,7 +47,7 @@ export default function CoverUpload({ value, onChange, onUpload }: Props) {
       <div
         role="button"
         tabIndex={0}
-        aria-label="Enviar imagem de capa"
+        aria-label={text.upload}
         onClick={() => fileInput.current?.click()}
         onKeyDown={(event) => event.key === "Enter" && fileInput.current?.click()}
         onDragOver={(event) => event.preventDefault()}
@@ -48,7 +59,7 @@ export default function CoverUpload({ value, onChange, onUpload }: Props) {
       >
         {value ? (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={value} alt="Prévia da capa" className="mx-auto mb-3 max-h-40 rounded-md object-cover" />
+          <img src={value} alt={text.preview} className="mx-auto mb-3 max-h-40 rounded-md object-cover" />
         ) : null}
         <p className="font-semibold">{busy ? "Enviando..." : "Clique ou arraste uma imagem"}</p>
         <p className="mt-1 text-xs text-muted">PNG, JPG, WebP até 10MB</p>
@@ -57,7 +68,7 @@ export default function CoverUpload({ value, onChange, onUpload }: Props) {
           type="file"
           accept="image/png,image/jpeg,image/webp"
           className="hidden"
-          aria-label="Arquivo da capa"
+          aria-label={text.file}
           onChange={(event) => send(event.target.files?.[0])}
         />
       </div>
@@ -65,7 +76,7 @@ export default function CoverUpload({ value, onChange, onUpload }: Props) {
       <div className="mt-3 flex items-center gap-2">
         <span className="text-xs text-muted">ou cole a URL</span>
         <input
-          aria-label="URL da capa"
+          aria-label={text.url}
           value={value}
           placeholder="https://..."
           className={input}

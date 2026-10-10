@@ -10,6 +10,7 @@ import BlogList from "./index";
 const { getPublishedPosts } = vi.hoisted(() => ({ getPublishedPosts: vi.fn() }));
 
 vi.mock("@/lib/repositories/posts", () => ({ getPublishedPosts }));
+vi.mock("@/components/Ads/AdSlot", () => ({ default: () => <div>ad</div> }));
 
 describe("BlogList", () => {
   it("renderiza um card por artigo com link para o post", async () => {

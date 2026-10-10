@@ -3,6 +3,7 @@
  * Arquivo: page.tsx
  * Descrição: Página de post individual do blog, lendo do banco. Slug inexistente ou fora do ar retorna 404. Traz metadados (descrição e Open Graph), autor, data e outros artigos no final.
  */
+import AdSlot from "@/components/Ads/AdSlot";
 import LatestBlog from "@/components/Blog/LatestBlog";
 import WhatsAppCTA from "@/components/Home/WhatsAppCTA";
 import { getPostBySlug } from "@/lib/repositories/posts";
@@ -118,6 +119,7 @@ export default async function Post({ params }: { params: Promise<{ slug: string 
         </div>
       </section>
       <div className="bg-SnowySky dark:bg-darklight">
+        <AdSlot position="POST_END" />
         <LatestBlog excludeSlug={post.slug} />
         <WhatsAppCTA />
       </div>
