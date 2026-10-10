@@ -5,9 +5,13 @@
  */
 import { prisma } from '@/lib/prisma'
 import Image from 'next/image'
+import { getSiteSettings } from '@/lib/repositories/site-settings'
+import { withWhatsappNumber } from '@/lib/whatsapp'
 
 const Causes = async () => {
   const services = await prisma.service.findMany({ orderBy: { order: 'asc' } })
+  // O número vem das configurações do site; os links guardados em cada serviço só trazem a mensagem
+  const { whatsappNumber } = await getSiteSettings()
 
   return (
     <section id="servicos" className='lg:py-28 py-16 bg-grey dark:bg-darkmode'>
@@ -21,7 +25,7 @@ const Causes = async () => {
         <div className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 mt-20'>
           {services.map((item, index) => (
             <a
-              href={item.whatsappLink}
+              href={withWhatsappNumber(item.whatsappLink, whatsappNumber)}
               target='_blank'
               rel='noopener noreferrer'
               key={index}

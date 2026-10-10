@@ -16,6 +16,7 @@ const { getCourseBySlug, notFound } = vi.hoisted(() => ({
 }));
 
 vi.mock("@/lib/repositories/courses", () => ({ getCourseBySlug }));
+vi.mock("@/lib/repositories/site-settings", () => ({ getSiteSettings: async () => ({ whatsappNumber: "5511999999999" }) }));
 vi.mock("next/navigation", () => ({ notFound }));
 vi.mock("@/components/SharedComponent/HeroSub", () => ({
   default: ({ title }: { title: string }) => <h1>{title}</h1>,
@@ -69,6 +70,14 @@ describe("cursos-e-vivencias/[slug]/page", () => {
     expect(screen.getByRole("heading", { name: "Curso A" })).toBeInTheDocument();
     expect(screen.getByText("Detalhe do curso.")).toBeInTheDocument();
     expect(screen.getByText("Pergunta?")).toBeInTheDocument();
+  });
+
+  it("o botão de WhatsApp usa o número das configurações, mantendo a mensagem do curso", async () => {
+    getCourseBySlug.mockResolvedValue({ ...curso, whatsappLink: "https://wa.me/5500000000001?text=Quero%20o%20curso" });
+
+    render(await Page({ params: params("curso-a") }));
+
+    expect(screen.getByRole("link", { name: /Agendar pelo WhatsApp/ })).toHaveAttribute("href", "https://wa.me/5511999999999?text=Quero%20o%20curso");
   });
 
   it("chama notFound quando o curso não existe", async () => {

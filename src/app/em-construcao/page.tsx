@@ -4,6 +4,8 @@
  * Descrição: Página exibida enquanto o site está em construção (MAINTENANCE_MODE=true).
  */
 import type { Metadata } from "next";
+import { getSiteSettings } from "@/lib/repositories/site-settings";
+import { whatsappLink } from "@/lib/whatsapp";
 
 export const metadata: Metadata = {
   title: "Em construção | Deva Karuno Terapias",
@@ -11,10 +13,13 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-const WHATSAPP_LINK =
-  "https://wa.me/5521984121612?text=Ol%C3%A1%21%20Gostaria%20de%20saber%20mais%20sobre%20as%20sess%C3%B5es%20da%20Deva%20Karuno%20Terapias.";
+const WHATSAPP_MESSAGE = "Olá! Gostaria de saber mais sobre as sessões da Deva Karuno Terapias.";
 
-export default function EmConstrucaoPage() {
+export default async function EmConstrucaoPage() {
+  // O número vem das configurações do site
+  const { whatsappNumber } = await getSiteSettings();
+  const whatsappHref = whatsappLink(WHATSAPP_MESSAGE, whatsappNumber);
+
   return (
     <main className="min-h-[70vh] bg-dark flex items-center justify-center px-4 pt-40 pb-20">
       <div className="max-w-xl text-center">
@@ -27,7 +32,7 @@ export default function EmConstrucaoPage() {
           WhatsApp.
         </p>
         <a
-          href={WHATSAPP_LINK}
+          href={whatsappHref}
           target="_blank"
           rel="noopener noreferrer"
           className="inline-block text-white text-base font-semibold bg-linear-to-r from-primary to-secondary px-8 py-4 rounded-md hover:opacity-90 transition-opacity duration-300"

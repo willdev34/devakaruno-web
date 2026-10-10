@@ -8,6 +8,7 @@ import HeroSub from "@/components/SharedComponent/HeroSub";
 import WhatsAppCTA from "@/components/Home/WhatsAppCTA";
 import AgendaSection from "@/components/Agenda/AgendaSection";
 import { getUpcomingAgenda } from "@/lib/repositories/agenda";
+import { getSiteSettings } from "@/lib/repositories/site-settings";
 
 export const revalidate = 60;
 
@@ -17,12 +18,12 @@ export const metadata: Metadata = {
 };
 
 export default async function AgendaPage() {
-  const events = await getUpcomingAgenda();
+  const [events, { whatsappNumber }] = await Promise.all([getUpcomingAgenda(), getSiteSettings()]);
 
   return (
     <>
       <HeroSub title="Agenda" bgImage="/images/background/hero-maos.jpg" />
-      <AgendaSection events={events} />
+      <AgendaSection events={events} whatsappNumber={whatsappNumber} />
       <WhatsAppCTA />
     </>
   );

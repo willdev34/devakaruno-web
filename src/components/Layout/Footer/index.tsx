@@ -3,14 +3,15 @@
  * Arquivo: index.tsx
  * Descrição: Rodapé do site, com dados reais de contato, navegação e redes sociais da Deva Karuno Terapias.
  */
+"use client";
 import React, { FC } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import Logo from "../Header/Logo";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { cloudinaryUrl } from "@/lib/cloudinary";
-
-const WHATSAPP_LINK = "https://wa.me/5521984121612?text=Ol%C3%A1%21%20Vi%20o%20site%20da%20Deva%20Karuno%20Terapias%20e%20gostaria%20de%20agendar%20uma%20sess%C3%A3o.";
+import { siteWhatsappLink } from "@/lib/whatsapp";
+import { useSiteSettings } from "@/components/Providers/SiteSettingsProvider";
 
 // Crédito de desenvolvimento exibido na faixa inferior do rodapé
 const DEV_CREDIT = {
@@ -20,6 +21,16 @@ const DEV_CREDIT = {
 };
 
 const Footer: FC = () => {
+  const settings = useSiteSettings();
+  const whatsappLink = siteWhatsappLink(settings);
+  // Só aparecem as redes preenchidas nas configurações
+  const socials = [
+    { url: settings.facebookUrl, icon: "ri:facebook-fill", size: "text-xl", label: "Facebook" },
+    { url: settings.instagramUrl, icon: "mdi:instagram", size: "text-xl", label: "Instagram" },
+    { url: settings.xUrl, icon: "line-md:twitter-x-alt", size: "text-base", label: "X" },
+    { url: settings.tiktokUrl, icon: "ri:tiktok-fill", size: "text-xl", label: "TikTok" },
+  ].filter((social) => social.url);
+
   return (
     <footer className="pt-16 dark:bg-dark">
       <div className="container mx-auto lg:max-w-(--breakpoint-xl) md:max-w-(--breakpoint-md) px-4">
@@ -36,19 +47,19 @@ const Footer: FC = () => {
             <div className="flex items-start mb-6 gap-4">
               <Image src="/images/icons/icon-pin.svg" alt="icon" width={24} height={24} />
               <p className="text-base text-dustGray dark:text-white/60">
-                Centro, Rio de Janeiro - RJ
+                {settings.address}
               </p>
             </div>
             <div className="flex items-center mb-6 gap-4">
               <Image src="/images/icons/icon-phone.svg" alt="icon" width={24} height={24} />
-              <Link href={WHATSAPP_LINK} target="_blank" rel="noopener noreferrer" className="text-base text-dustGray dark:text-white/60 hover:text-primary">
+              <Link href={whatsappLink} target="_blank" rel="noopener noreferrer" className="text-base text-dustGray dark:text-white/60 hover:text-primary">
                 Agendar pelo WhatsApp
               </Link>
             </div>
             <div className="flex items-center gap-4">
               <Image src="/images/icons/icon-mail.svg" alt="icon" width={24} height={24} />
-              <Link href="mailto:karunodeva@gmail.com" className="text-base text-dustGray dark:text-white/60 hover:text-primary">
-                karunodeva@gmail.com
+              <Link href={`mailto:${settings.email}`} className="text-base text-dustGray dark:text-white/60 hover:text-primary">
+                {settings.email}
               </Link>
             </div>
           </div>
@@ -93,18 +104,11 @@ const Footer: FC = () => {
             </a>
           </div>
           <div className="flex items-center gap-6">
-            <Link href="https://www.facebook.com/devakarunoterapias/" target="_blank" rel="noopener noreferrer">
-              <Icon icon="ri:facebook-fill" className="text-xl text-midnight_text dark:text-white hover:text-primary! cursor-pointer" />
-            </Link>
-            <Link href="https://www.instagram.com/devakarunoterapias/" target="_blank" rel="noopener noreferrer">
-              <Icon icon="mdi:instagram" className="text-xl text-midnight_text dark:text-white hover:text-primary! cursor-pointer" />
-            </Link>
-            <Link href="https://x.com/devakaruno" target="_blank" rel="noopener noreferrer">
-              <Icon icon="line-md:twitter-x-alt" className="text-base text-midnight_text dark:text-white hover:text-primary! cursor-pointer" />
-            </Link>
-            <Link href="https://www.tiktok.com/@deva.karuno" target="_blank" rel="noopener noreferrer">
-              <Icon icon="ri:tiktok-fill" className="text-xl text-midnight_text dark:text-white hover:text-primary! cursor-pointer" />
-            </Link>
+            {socials.map((social) => (
+              <Link key={social.label} href={social.url} target="_blank" rel="noopener noreferrer" aria-label={social.label}>
+                <Icon icon={social.icon} className={`${social.size} text-midnight_text dark:text-white hover:text-primary! cursor-pointer`} />
+              </Link>
+            ))}
           </div>
         </div>
       </div>

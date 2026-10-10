@@ -6,6 +6,7 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import {
   agendaWhatsappLink,
+  cityRequestLink,
   cityLabel,
   formatDateRange,
   getAgendaStatus,
@@ -81,6 +82,13 @@ describe("links e rótulos", () => {
 
     expect(link).toContain("https://wa.me/5521984121612?text=");
     expect(decodeURIComponent(link)).toContain("São Paulo/SP (12 a 15 de novembro)");
+  });
+
+  it("usa o número informado (configurações do site) e cai no padrão sem ele", () => {
+    expect(agendaWhatsappLink(event, 2026, "5511999999999")).toContain("https://wa.me/5511999999999?text=");
+    expect(cityRequestLink("5511999999999")).toContain("https://wa.me/5511999999999?text=");
+    expect(cityRequestLink()).toContain("https://wa.me/5521984121612?text=");
+    expect(decodeURIComponent(cityRequestLink())).toContain("Minha cidade é: ");
   });
 });
 

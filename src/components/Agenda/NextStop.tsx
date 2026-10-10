@@ -13,9 +13,9 @@ import {
   type AgendaLike,
 } from "@/lib/agenda/utils";
 
-type Props = { event: AgendaLike & { description?: string | null } };
+type Props = { event: AgendaLike & { description?: string | null }; whatsappNumber?: string };
 
-export default function NextStop({ event }: Props) {
+export default function NextStop({ event, whatsappNumber }: Props) {
   const ongoing = getAgendaStatus(event) === "ongoing";
 
   return (
@@ -45,7 +45,7 @@ export default function NextStop({ event }: Props) {
 
       <div className="mt-8 flex flex-wrap items-center gap-4">
         <a
-          href={agendaWhatsappLink(event)}
+          href={agendaWhatsappLink(event, undefined, whatsappNumber)}
           target="_blank"
           rel="noopener noreferrer"
           className="rounded-lg bg-white px-7 py-4 font-semibold text-darkprimary transition hover:bg-white/90"

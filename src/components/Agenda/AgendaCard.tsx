@@ -13,9 +13,9 @@ import {
   type AgendaLike,
 } from "@/lib/agenda/utils";
 
-type Props = { event: AgendaLike & { description?: string | null } };
+type Props = { event: AgendaLike & { description?: string | null }; whatsappNumber?: string };
 
-export default function AgendaCard({ event }: Props) {
+export default function AgendaCard({ event, whatsappNumber }: Props) {
   const startDay = event.startDate.getUTCDate();
   const endDay = event.endDate.getUTCDate();
   const sameDay = event.startDate.getTime() === event.endDate.getTime();
@@ -47,7 +47,7 @@ export default function AgendaCard({ event }: Props) {
       </div>
 
       <a
-        href={agendaWhatsappLink(event)}
+        href={agendaWhatsappLink(event, undefined, whatsappNumber)}
         target="_blank"
         rel="noopener noreferrer"
         className="shrink-0 rounded-lg bg-linear-to-r from-primary to-secondary px-5 py-3 text-center text-sm font-semibold text-white transition hover:opacity-90"

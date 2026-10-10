@@ -5,7 +5,9 @@
  */
 "use client";
 import { useEffect, useRef } from "react";
-import { ANAMNESE_FORM_URL, ANAMNESE_WHATSAPP_URL } from "@/lib/anamnese";
+import { ANAMNESE_FORM_URL, ANAMNESE_WHATSAPP_MESSAGE } from "@/lib/anamnese";
+import { whatsappLink } from "@/lib/whatsapp";
+import { useSiteSettings } from "@/components/Providers/SiteSettingsProvider";
 
 interface AnamneseModalProps {
   open: boolean;
@@ -14,6 +16,7 @@ interface AnamneseModalProps {
 
 const AnamneseModal = ({ open, onClose }: AnamneseModalProps) => {
   const dialogRef = useRef<HTMLDialogElement>(null);
+  const settings = useSiteSettings();
 
   // Sincroniza o estado "open" com o <dialog> nativo (Esc e foco ficam por conta do navegador)
   useEffect(() => {
@@ -80,7 +83,7 @@ const AnamneseModal = ({ open, onClose }: AnamneseModalProps) => {
       <div className="flex flex-col items-center justify-between gap-2 border-t border-black/10 px-5 py-3 text-sm sm:flex-row dark:border-white/10">
         <span className="text-dustGray dark:text-white/60">Prefere conversar antes de preencher?</span>
         <a
-          href={ANAMNESE_WHATSAPP_URL}
+          href={whatsappLink(ANAMNESE_WHATSAPP_MESSAGE, settings.whatsappNumber)}
           target="_blank"
           rel="noopener noreferrer"
           className="font-semibold text-primary hover:text-secondary"

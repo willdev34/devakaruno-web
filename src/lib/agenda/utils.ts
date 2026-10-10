@@ -56,11 +56,12 @@ export function mapsLink(event: AgendaLike): string {
 }
 
 // Mensagem pronta para reservar horário na cidade
-export function agendaWhatsappLink(event: AgendaLike, currentYear?: number): string {
+export function agendaWhatsappLink(event: AgendaLike, currentYear?: number, number?: string): string {
   const when = formatDateRange(event.startDate, event.endDate, currentYear);
-  return whatsappLink(`Olá! Vi na agenda que você estará em ${cityLabel(event)} (${when}) e gostaria de reservar uma sessão.`);
+  return whatsappLink(`Olá! Vi na agenda que você estará em ${cityLabel(event)} (${when}) e gostaria de reservar uma sessão.`, number);
 }
 
-export const CITY_REQUEST_LINK = whatsappLink(
-  "Olá! Gostaria de saber se você pode atender na minha cidade. Minha cidade é: ",
-);
+// Pedido de atendimento para quem não encontrou a própria cidade
+export function cityRequestLink(number?: string): string {
+  return whatsappLink("Olá! Gostaria de saber se você pode atender na minha cidade. Minha cidade é: ", number);
+}

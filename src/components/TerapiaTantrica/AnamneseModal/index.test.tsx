@@ -7,6 +7,8 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import AnamneseModal from "./index";
 import { ANAMNESE_FORM_URL } from "@/lib/anamnese";
+import { SiteSettingsProvider } from "@/components/Providers/SiteSettingsProvider";
+import { DEFAULT_SETTINGS } from "@/lib/settings/defaults";
 
 describe("TerapiaTantrica/AnamneseModal", () => {
   it("não carrega o formulário com o modal fechado", () => {
@@ -39,6 +41,16 @@ describe("TerapiaTantrica/AnamneseModal", () => {
     expect(link).toHaveAttribute("href", expect.stringMatching(/^https:\/\/wa\.me\/5521984121612\?text=/));
     expect(link).toHaveAttribute("target", "_blank");
     expect(link).toHaveAttribute("rel", "noopener noreferrer");
+  });
+
+  it("usa o número do WhatsApp das configurações do site", () => {
+    render(
+      <SiteSettingsProvider value={{ ...DEFAULT_SETTINGS, whatsappNumber: "5511999999999" }}>
+        <AnamneseModal open onClose={vi.fn()} />
+      </SiteSettingsProvider>,
+    );
+
+    expect(screen.getByRole("link", { name: "Falar no WhatsApp" })).toHaveAttribute("href", expect.stringMatching(/^https:\/\/wa\.me\/5511999999999\?text=/));
   });
 
   it("fecha pelo botão X", () => {

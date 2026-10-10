@@ -6,6 +6,8 @@
 import HeroSub from "@/components/SharedComponent/HeroSub";
 import CursosDetail from "@/components/Cursos/CursosDetail";
 import { getCourseBySlug } from "@/lib/repositories/courses";
+import { getSiteSettings } from "@/lib/repositories/site-settings";
+import { withWhatsappNumber } from "@/lib/whatsapp";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
 
@@ -28,10 +30,13 @@ const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
     notFound();
   }
 
+  // O número vem das configurações do site; o link do curso só guarda a mensagem
+  const { whatsappNumber } = await getSiteSettings();
+
   return (
     <>
       <HeroSub title={curso.title} bgImage={curso.bgImage} />
-      <CursosDetail curso={curso} />
+      <CursosDetail curso={{ ...curso, whatsappLink: withWhatsappNumber(curso.whatsappLink, whatsappNumber) }} />
     </>
   );
 };

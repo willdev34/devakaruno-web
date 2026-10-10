@@ -11,6 +11,7 @@ import NextStop from "./NextStop";
 import AgendaPage from "@/app/(site)/agenda/page";
 
 const { getUpcomingAgenda } = vi.hoisted(() => ({ getUpcomingAgenda: vi.fn() }));
+vi.mock("@/lib/repositories/site-settings", () => ({ getSiteSettings: async () => ({ whatsappNumber: "5511999999999" }) }));
 
 vi.mock("@iconify/react", () => ({ Icon: () => null }));
 vi.mock("@/lib/repositories/agenda", () => ({ getUpcomingAgenda }));
@@ -100,10 +101,21 @@ describe("Agenda", () => {
     expect(screen.getByRole("link", { name: "Quero atendimento na minha cidade" })).toBeInTheDocument();
   });
 
+  it("o número do WhatsApp das configurações chega aos botões de reserva e ao convite", () => {
+    render(<AgendaSection events={[event(), event({ id: "2", city: "Niterói", state: "RJ", startDate: d("2026-11-20"), endDate: d("2026-11-21") })]} whatsappNumber="5511999999999" />);
+
+    expect(screen.getByRole("link", { name: "Reservar horário em São Paulo" })).toHaveAttribute("href", expect.stringContaining("wa.me/5511999999999"));
+    expect(screen.getByRole("link", { name: "Reservar em Niterói" })).toHaveAttribute("href", expect.stringContaining("wa.me/5511999999999"));
+    expect(screen.getByRole("link", { name: "Quero atendimento na minha cidade" })).toHaveAttribute("href", expect.stringContaining("wa.me/5511999999999"));
+  });
+
   it("a página busca a agenda e monta título, lista e CTA final", async () => {
     getUpcomingAgenda.mockResolvedValue([event()]);
 
     render(await AgendaPage());
+
+    // A página lê o número nas configurações e repassa
+    expect(screen.getByRole("link", { name: "Reservar horário em São Paulo" })).toHaveAttribute("href", expect.stringContaining("wa.me/5511999999999"));
 
     expect(screen.getByRole("heading", { name: "Agenda" })).toBeInTheDocument();
     expect(screen.getByText("Próxima parada")).toBeInTheDocument();

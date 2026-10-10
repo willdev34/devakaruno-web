@@ -12,6 +12,11 @@ export function whatsappLink(message?: string, number: string = WHATSAPP_NUMBER)
   return message ? `${base}?text=${encodeURIComponent(message)}` : base;
 }
 
+// Link dos botões gerais de agendamento (topo, rodapé, chamadas), com número e mensagem das configurações
+export function siteWhatsappLink(settings: { whatsappNumber: string; whatsappMessage: string }): string {
+  return whatsappLink(settings.whatsappMessage, settings.whatsappNumber);
+}
+
 // Troca o número de um link wa.me já pronto (como os guardados em cursos e serviços),
 // mantendo a mensagem. Links de outros endereços passam sem mudança.
 export function withWhatsappNumber(link: string, number: string): string {

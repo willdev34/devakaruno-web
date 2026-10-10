@@ -3,6 +3,8 @@
  * Arquivo: index.test.tsx
  * Descrição: Testes do Hero da Home: imagens do Cloudinary otimizadas, parâmetros do movimento no mobile e botões de ação.
  */
+import { DEFAULT_SETTINGS } from "@/lib/settings/defaults";
+import { siteWhatsappLink } from "@/lib/whatsapp";
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import Hero, { MOBILE_PAN_DURATION_S } from "./index";
@@ -58,7 +60,7 @@ describe("Home/Hero", () => {
     );
     expect(screen.getAllByRole("link", { name: "Agendar Sessão" })[0]).toHaveAttribute(
       "href",
-      "https://wa.me/5521984121612"
+      siteWhatsappLink(DEFAULT_SETTINGS)
     );
     expect(screen.getAllByRole("link", { name: "Conhecer Mais" })[0]).toHaveAttribute("href", "#sobre");
   });

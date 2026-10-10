@@ -13,9 +13,12 @@ import AuthDialogContext from '@/app/context/AuthDialogContext'
 import { FailedLogin } from '@/components/Auth/AuthDialog/FailedLogin'
 import { UserRegistered } from '@/components/Auth/AuthDialog/UserRegistered'
 import { signOut, useSession } from 'next-auth/react'
+import { useSiteSettings } from '@/components/Providers/SiteSettingsProvider'
+import { siteWhatsappLink } from '@/lib/whatsapp'
 
 const Header: React.FC = () => {
   const { data: session } = useSession();
+  const siteSettings = useSiteSettings()
   const pathUrl = usePathname()
   const { theme, setTheme } = useTheme()
   const [user, setUser] = useState<{ user: string } | null>(null);
@@ -248,7 +251,7 @@ const Header: React.FC = () => {
           </div>
           <div className="flex items-center">
             <Link
-              href="https://wa.me/5521984121612?text=Ol%C3%A1%21%20Vi%20o%20site%20do%20Deva%20Karuno%20Terapias%20e%20gostaria%20de%20agendar%20uma%20sess%C3%A3o."
+              href={siteWhatsappLink(siteSettings)}
               target="_blank"
               className="text-white bg-primary text-base font-semibold py-4 px-7 rounded-md hover:bg-primary/90 transition-colors cursor-pointer"
             >

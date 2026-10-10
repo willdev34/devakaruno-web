@@ -4,7 +4,7 @@
  * Descrição: Conteúdo da página Agenda: destaque da próxima parada, demais datas agrupadas por mês e convite para quem não encontrou a própria cidade.
  */
 import { Icon } from "@iconify/react";
-import { CITY_REQUEST_LINK, type AgendaLike } from "@/lib/agenda/utils";
+import { cityRequestLink, type AgendaLike } from "@/lib/agenda/utils";
 import AgendaCard from "./AgendaCard";
 import NextStop from "./NextStop";
 
@@ -26,7 +26,8 @@ function groupByMonth(events: Event[]) {
   return groups;
 }
 
-export default function AgendaSection({ events }: { events: Event[] }) {
+// whatsappNumber vem das configurações do site (a página lê e repassa); sem ele vale o número padrão
+export default function AgendaSection({ events, whatsappNumber }: { events: Event[]; whatsappNumber?: string }) {
   const [next, ...others] = events;
 
   return (
@@ -39,7 +40,7 @@ export default function AgendaSection({ events }: { events: Event[] }) {
 
         {next ? (
           <>
-            <NextStop event={next} />
+            <NextStop event={next} whatsappNumber={whatsappNumber} />
 
             {others.length > 0 && (
               <div className="mt-14">
@@ -49,7 +50,7 @@ export default function AgendaSection({ events }: { events: Event[] }) {
                     <h3 className="mb-4 text-sm font-semibold uppercase tracking-widest text-primary">{group.title}</h3>
                     <div className="space-y-4">
                       {group.events.map((event) => (
-                        <AgendaCard key={event.id} event={event} />
+                        <AgendaCard key={event.id} event={event} whatsappNumber={whatsappNumber} />
                       ))}
                     </div>
                   </div>
@@ -73,7 +74,7 @@ export default function AgendaSection({ events }: { events: Event[] }) {
             Conte onde você mora. Quando houver interesse suficiente em uma região, eu organizo uma nova data.
           </p>
           <a
-            href={CITY_REQUEST_LINK}
+            href={cityRequestLink(whatsappNumber)}
             target="_blank"
             rel="noopener noreferrer"
             className="mt-6 inline-block rounded-lg bg-primary px-6 py-3 font-semibold text-white transition hover:bg-darkprimary"

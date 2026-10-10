@@ -11,6 +11,8 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { cloudinarySrcSet, cloudinaryUrl } from "@/lib/cloudinary";
 import { HerosectionData } from "./data";
+import { siteWhatsappLink } from "@/lib/whatsapp";
+import { useSiteSettings } from "@/components/Providers/SiteSettingsProvider";
 
 // Larguras geradas no Cloudinary; no mobile a foto é mostrada bem mais larga que a tela (recorte lateral)
 const IMAGE_WIDTHS = [1280, 2000, 2800];
@@ -25,6 +27,7 @@ const MOBILE_BREAKPOINT = 767;
 export const MOBILE_PAN_DURATION_S = (MOBILE_AUTOPLAY_MS + TRANSITION_MS) / 1000;
 
 const Hero = () => {
+  const siteSettings = useSiteSettings();
   const settings = {
     autoplay: true,
     autoplaySpeed: AUTOPLAY_MS,
@@ -76,7 +79,7 @@ const Hero = () => {
                   </p>
                   <div className="flex flex-wrap gap-4">
                     <Link
-                      href="https://wa.me/5521984121612"
+                      href={siteWhatsappLink(siteSettings)}
                       target="_blank"
                       className="bg-primary text-white px-7 py-4 rounded-md font-semibold hover:bg-secondary transition-colors duration-300"
                     >
