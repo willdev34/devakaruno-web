@@ -11,7 +11,6 @@ import { useTheme } from 'next-themes'
 import { SuccessfullLogin } from '@/components/Auth/AuthDialog/SuccessfulLogin'
 import AuthDialogContext from '@/app/context/AuthDialogContext'
 import { FailedLogin } from '@/components/Auth/AuthDialog/FailedLogin'
-import { UserRegistered } from '@/components/Auth/AuthDialog/UserRegistered'
 import { signOut, useSession } from 'next-auth/react'
 import { useSiteSettings } from '@/components/Providers/SiteSettingsProvider'
 import { siteWhatsappLink } from '@/lib/whatsapp'
@@ -272,12 +271,6 @@ const Header: React.FC = () => {
         className={`fixed top-6 end-1/2 translate-x-1/2 z-50 ${authDialog?.isFailedDialogOpen == true ? 'block' : 'hidden'
           }`}>
         <FailedLogin />
-      </div>
-      {/* User registration Alert */}
-      <div
-        className={`fixed top-6 end-1/2 translate-x-1/2 z-50 ${authDialog?.isUserRegistered == true ? 'block' : 'hidden'
-          }`}>
-        <UserRegistered />
       </div>
     </header>
   )
