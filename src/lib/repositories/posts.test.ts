@@ -4,7 +4,7 @@
  * Descrição: Testes do repositório de posts, com o Prisma mockado: filtro de visibilidade, ordenação, limite, busca por slug e relacionados.
  */
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { getPostBySlug, getPublishedPosts, getRelatedPosts, POST_AUTHOR } from "./posts";
+import { getPostBySlug, getPublishedPosts, getRelatedPosts, getSitemapPosts, POST_AUTHOR } from "./posts";
 
 const { findMany, findFirst } = vi.hoisted(() => ({ findMany: vi.fn(), findFirst: vi.fn() }));
 
@@ -19,6 +19,7 @@ const row = {
   subtitle: "Sub",
   tags: ["t"],
   publishedAt: new Date("2026-06-10T00:00:00.000Z"),
+  updatedAt: new Date("2026-06-12T00:00:00.000Z"),
 };
 
 describe("repositories/posts", () => {
@@ -62,7 +63,7 @@ describe("repositories/posts", () => {
     const result = await getPostBySlug("a");
 
     expect(findFirst.mock.calls[0][0].where).toMatchObject({ slug: "a", published: true });
-    expect(result).toMatchObject({ slug: "a", content: "Texto", subtitle: "Sub", tags: ["t"] });
+    expect(result).toMatchObject({ slug: "a", content: "Texto", subtitle: "Sub", tags: ["t"], updatedAt: "2026-06-12T00:00:00.000Z" });
   });
 
   it("devolve null quando o post não existe ou não está no ar", async () => {
@@ -130,5 +131,16 @@ describe("repositories/posts", () => {
     expect((await getPostBySlug("a"))?.category).toEqual({ name: "Autoconhecimento", slug: "autoconhecimento" });
     expect((await getPostBySlug("a"))?.category).toBeNull();
     expect(findFirst.mock.calls[0][0].include).toBeDefined();
+  });
+
+  it("o sitemap lê só slug e última alteração dos artigos no ar", async () => {
+    findMany.mockResolvedValue([{ slug: "a", updatedAt: new Date() }]);
+
+    const result = await getSitemapPosts();
+
+    const args = findMany.mock.calls[0][0];
+    expect(args.where.published).toBe(true);
+    expect(args.select).toEqual({ slug: true, updatedAt: true });
+    expect(result).toHaveLength(1);
   });
 });

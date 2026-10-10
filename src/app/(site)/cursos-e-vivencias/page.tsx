@@ -3,6 +3,7 @@
  * Arquivo: page.tsx
  * Descrição: Página de listagem de Cursos e Vivências.
  */
+import { pageMetadata } from "@/lib/seo/metadata";
 import HeroSub from "@/components/SharedComponent/HeroSub";
 import CursosList from "@/components/Cursos/CursosList";
 import { Metadata } from "next";
@@ -10,9 +11,11 @@ import { Metadata } from "next";
 // Revalida a cada 60s para refletir mudanças nos cursos do banco
 export const revalidate = 60;
 
-export const metadata: Metadata = {
-  title: "Cursos e Vivências | Deva Karuno Terapias",
-};
+export const metadata: Metadata = pageMetadata({
+  title: "Cursos e Vivências de Autoconhecimento",
+  description: "Cursos e vivências de autoconhecimento, respiração, meditação e relacionamentos com Deva Karuno. Veja os temas e fale pelo WhatsApp.",
+  path: "/cursos-e-vivencias",
+});
 
 const Page = () => {
   return (

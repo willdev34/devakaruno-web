@@ -3,6 +3,7 @@
  * Arquivo: page.tsx
  * Descrição: Página de detalhe de um curso específico, buscado no banco pelo slug (404 se não existir).
  */
+import { pageMetadata } from "@/lib/seo/metadata";
 import HeroSub from "@/components/SharedComponent/HeroSub";
 import CursosDetail from "@/components/Cursos/CursosDetail";
 import { getCourseBySlug } from "@/lib/repositories/courses";
@@ -17,9 +18,14 @@ export const revalidate = 60;
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const curso = await getCourseBySlug(slug);
-  return {
-    title: curso ? `${curso.title} | Deva Karuno Terapias` : "Curso não encontrado | Deva Karuno Terapias",
-  };
+  if (!curso) return { title: "Curso não encontrado", robots: { index: false, follow: false } };
+
+  return pageMetadata({
+    title: curso.title,
+    description: curso.text,
+    path: `/cursos-e-vivencias/${curso.slug}`,
+    image: curso.bgImage,
+  });
 }
 
 const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {

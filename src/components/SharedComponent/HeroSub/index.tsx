@@ -18,12 +18,12 @@ const HeroSub: FC<HeroSubProps> = ({ title, bgImage }) => {
 
       {/* Content */}
       <div className="relative z-10 container mx-auto max-w-[var(--breakpoint-xl)] px-4">
-        <h2
+        <h1
           className="text-white md:text-5xl sm:text-4xl text-3xl font-medium"
           data-aos="fade-right"
         >
           {title}
-        </h2>
+        </h1>
       </div>
     </section>
   )

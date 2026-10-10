@@ -30,6 +30,8 @@ const post = {
   content: "Olá **mundo**",
   subtitle: "Um subtítulo",
   tags: ["autoconhecimento"],
+  category: { name: "Autoconhecimento", slug: "autoconhecimento" },
+  updatedAt: "2026-06-12T12:00:00.000Z",
 };
 const params = (slug: string) => Promise.resolve({ slug });
 
@@ -81,9 +83,11 @@ describe("blog/[slug]/page", () => {
 
     const meta = await generateMetadata({ params: params("a") });
 
-    expect(meta.title).toBe("Artigo A | Deva Karuno Terapias");
+    expect(meta.title).toBe("Artigo A");
     expect(meta.description).toBe("Resumo A");
-    expect(meta.openGraph?.images).toEqual(["/capa.jpg"]);
+    expect(meta.alternates?.canonical).toBe("/blog/a");
+    expect(meta.openGraph).toMatchObject({ type: "article", title: "Artigo A | Deva Karuno Terapias", publishedTime: post.date, url: "/blog/a" });
+    expect(meta.openGraph?.images).toEqual([{ url: "/capa.jpg", alt: "Artigo A" }]);
   });
 
   it("marca como noindex quando o artigo não existe", async () => {

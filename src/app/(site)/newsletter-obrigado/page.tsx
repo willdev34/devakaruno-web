@@ -3,13 +3,17 @@
  * Arquivo: page.tsx
  * Descrição: Página de confirmação exibida após a inscrição na Newsletter via formsubmit.co.
  */
+import { pageMetadata } from "@/lib/seo/metadata";
 import Link from "next/link";
 import Logo from "@/components/Layout/Header/Logo";
 import { Metadata } from "next";
 
-export const metadata: Metadata = {
-  title: "Inscrição confirmada | Deva Karuno Terapias",
-};
+export const metadata: Metadata = pageMetadata({
+  title: "Inscrição confirmada",
+  description: "Sua inscrição na newsletter da Deva Karuno Terapias foi confirmada.",
+  path: "/newsletter-obrigado",
+  noindex: true,
+});
 
 const NewsletterObrigadoPage = () => {
   return (

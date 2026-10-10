@@ -17,3 +17,8 @@ export function getCourseBySlug(slug: string) {
     include: { faqs: { orderBy: { order: "asc" } } },
   });
 }
+
+// Slug e última alteração de cada curso, para o sitemap
+export function getSitemapCourses() {
+  return prisma.course.findMany({ select: { slug: true, updatedAt: true }, orderBy: { createdAt: "asc" } });
+}

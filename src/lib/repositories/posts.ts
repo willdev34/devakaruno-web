@@ -69,7 +69,13 @@ export async function getPostBySlug(slug: string) {
     subtitle: post.subtitle,
     tags: post.tags,
     category: post.category,
+    updatedAt: post.updatedAt.toISOString(),
   };
+}
+
+// Artigos no ar com a data da última alteração, para o sitemap
+export function getSitemapPosts() {
+  return prisma.post.findMany({ where: visiblePosts(), select: { slug: true, updatedAt: true }, orderBy: { publishedAt: "desc" } });
 }
 
 // Outros artigos para o fim de um post: mesma categoria e tags em comum primeiro,

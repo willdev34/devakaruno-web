@@ -4,7 +4,7 @@
  * Descrição: Testes do repositório de cursos, com o Prisma mockado: ordenação da lista e busca por slug com FAQs ordenadas.
  */
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { getCourseBySlug, getCourses } from "./courses";
+import { getCourseBySlug, getCourses, getSitemapCourses } from "./courses";
 
 const { findMany, findUnique } = vi.hoisted(() => ({ findMany: vi.fn(), findUnique: vi.fn() }));
 
@@ -41,5 +41,13 @@ describe("repositories/courses", () => {
     findUnique.mockResolvedValue(null);
 
     expect(await getCourseBySlug("nao-existe")).toBeNull();
+  });
+
+  it("o sitemap lê só slug e última alteração", async () => {
+    findMany.mockResolvedValue([{ slug: "curso-a", updatedAt: new Date() }]);
+
+    await getSitemapCourses();
+
+    expect(findMany).toHaveBeenCalledWith({ select: { slug: true, updatedAt: true }, orderBy: { createdAt: "asc" } });
   });
 });

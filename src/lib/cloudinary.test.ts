@@ -4,7 +4,7 @@
  * Descrição: Testes dos helpers de URL do Cloudinary.
  */
 import { describe, expect, it } from "vitest";
-import { cloudinarySrcSet, cloudinaryUrl } from "./cloudinary";
+import { cloudinaryOgUrl, cloudinarySrcSet, cloudinaryUrl } from "./cloudinary";
 
 const URL = "https://res.cloudinary.com/demo/image/upload/v1/foto.jpg";
 
@@ -26,5 +26,15 @@ describe("cloudinarySrcSet", () => {
       "https://res.cloudinary.com/demo/image/upload/f_auto,q_auto,w_640/v1/foto.jpg 640w, " +
         "https://res.cloudinary.com/demo/image/upload/f_auto,q_auto,w_1280/v1/foto.jpg 1280w"
     );
+  });
+});
+
+describe("cloudinaryOgUrl", () => {
+  it("recorta em 1200x630 e entrega em JPG", () => {
+    expect(cloudinaryOgUrl(URL)).toBe("https://res.cloudinary.com/demo/image/upload/f_jpg,q_auto,c_fill,g_auto,w_1200,h_630/v1/foto.jpg");
+  });
+
+  it("mantém URLs que não são do Cloudinary", () => {
+    expect(cloudinaryOgUrl("/images/local.jpg")).toBe("/images/local.jpg");
   });
 });

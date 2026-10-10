@@ -3,6 +3,7 @@
  * Arquivo: page.tsx
  * Descrição: Página de post individual do blog, lendo do banco. Slug inexistente ou fora do ar retorna 404. Traz metadados (descrição e Open Graph), autor, data e outros artigos no final.
  */
+import { pageMetadata } from "@/lib/seo/metadata";
 import AdSlot from "@/components/Ads/AdSlot";
 import LatestBlog from "@/components/Blog/LatestBlog";
 import WhatsAppCTA from "@/components/Home/WhatsAppCTA";
@@ -25,22 +26,25 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
   if (!post) {
     return {
-      title: "Artigo não encontrado | Deva Karuno Terapias",
+      title: "Artigo não encontrado",
       robots: { index: false, follow: false },
     };
   }
 
-  return {
-    title: `${post.title} | Deva Karuno Terapias`,
+  return pageMetadata({
+    title: post.title,
     description: post.excerpt,
-    openGraph: {
-      title: post.title,
-      description: post.excerpt,
-      type: "article",
+    path: `/blog/${post.slug}`,
+    image: post.coverImage,
+    type: "article",
+    article: {
       publishedTime: post.date,
-      images: [post.coverImage],
+      modifiedTime: post.updatedAt,
+      section: post.category?.name,
+      tags: post.tags,
+      authors: [post.author],
     },
-  };
+  });
 }
 
 export default async function Post({ params }: { params: Promise<{ slug: string }> }) {

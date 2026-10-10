@@ -28,6 +28,7 @@ const curso = {
   icon: "/a.svg",
   bgImage: "/bg.jpg",
   title: "Curso A",
+  text: "Resumo do curso.",
   detail: "Detalhe do curso.",
   modalidade: "Individual",
   duracao: "4 horas",
@@ -51,7 +52,9 @@ describe("cursos-e-vivencias/[slug]/page", () => {
     const metadata = await generateMetadata({ params: params("curso-a") });
 
     expect(getCourseBySlug).toHaveBeenCalledWith("curso-a");
-    expect(metadata.title).toBe("Curso A | Deva Karuno Terapias");
+    expect(metadata.title).toBe("Curso A");
+    expect(metadata.alternates?.canonical).toBe("/cursos-e-vivencias/curso-a");
+    expect(metadata.description).toBe(curso.text);
   });
 
   it("usa um título padrão nos metadados quando o curso não existe", async () => {
@@ -59,7 +62,8 @@ describe("cursos-e-vivencias/[slug]/page", () => {
 
     const metadata = await generateMetadata({ params: params("x") });
 
-    expect(metadata.title).toBe("Curso não encontrado | Deva Karuno Terapias");
+    expect(metadata.title).toBe("Curso não encontrado");
+    expect(metadata.robots).toEqual({ index: false, follow: false });
   });
 
   it("renderiza o curso encontrado", async () => {
