@@ -38,6 +38,7 @@ export default defineConfig({
         "src/components/Blog/BlogFilters/index.tsx",
         "src/components/Ads/AdSlot.tsx",
         "src/components/Providers/SiteSettingsProvider.tsx",
+        "src/components/Analytics/index.tsx",
         "src/components/Admin/**/*.{ts,tsx}",
         "src/components/Agenda/*.tsx",
         "src/app/*/agenda/page.tsx",

@@ -10,6 +10,15 @@ const optionalUrl = z
   .trim()
   .refine((value) => value === "" || /^https?:\/\/\S+$/.test(value), "O link precisa começar com http:// ou https://");
 
+// Formatos aceitos de cada código. Exportados para o componente de rastreamento conferir de novo
+// o valor antes de colocá-lo num script (defesa extra caso o banco tenha um valor inesperado).
+export const TRACKING_PATTERNS = {
+  gtmId: /^GTM-[A-Z0-9]{4,10}$/,
+  gaId: /^G-[A-Z0-9]{6,12}$/,
+  metaPixelId: /^\d{8,20}$/,
+  searchConsoleCode: /^[A-Za-z0-9_-]{20,100}$/,
+};
+
 // Aceita vazio (recurso desligado) ou o formato exato do código
 const optionalCode = (pattern: RegExp, message: string) =>
   z.string().trim().refine((value) => value === "" || pattern.test(value), message);
@@ -29,10 +38,10 @@ export const siteSettingsSchema = z.object({
   facebookUrl: optionalUrl,
   xUrl: optionalUrl,
   tiktokUrl: optionalUrl,
-  gtmId: optionalCode(/^GTM-[A-Z0-9]{4,10}$/, "Use o formato GTM-XXXXXXX"),
-  gaId: optionalCode(/^G-[A-Z0-9]{6,12}$/, "Use o formato G-XXXXXXXXXX"),
-  metaPixelId: optionalCode(/^\d{8,20}$/, "O ID do Pixel tem só números (8 a 20 dígitos)"),
-  searchConsoleCode: optionalCode(/^[A-Za-z0-9_-]{20,100}$/, "Cole só o código do content=\"...\" da verificação"),
+  gtmId: optionalCode(TRACKING_PATTERNS.gtmId, "Use o formato GTM-XXXXXXX"),
+  gaId: optionalCode(TRACKING_PATTERNS.gaId, "Use o formato G-XXXXXXXXXX"),
+  metaPixelId: optionalCode(TRACKING_PATTERNS.metaPixelId, "O ID do Pixel tem só números (8 a 20 dígitos)"),
+  searchConsoleCode: optionalCode(TRACKING_PATTERNS.searchConsoleCode, "Cole só o código do content=\"...\" da verificação"),
 });
 
 export type SiteSettingsData = z.infer<typeof siteSettingsSchema>;
