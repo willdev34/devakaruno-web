@@ -48,6 +48,7 @@ const Hero = () => {
       className="relative"
       style={{ "--pan-duration": `${MOBILE_PAN_DURATION_S}s` } as CSSProperties}
     >
+      <h1 className="sr-only">Terapia Tântrica no Rio de Janeiro com Deva Karuno</h1>
       <Slider {...settings}>
         {HerosectionData.map((value, index) => (
           <div key={value.id} className="relative h-screen min-h-[600px]">
@@ -71,9 +72,10 @@ const Hero = () => {
             <div className="absolute inset-0 flex items-center pt-20">
               <div className="container mx-auto lg:max-w-(--breakpoint-xl) px-4">
                 <div className="max-w-xl" data-aos="fade-up">
-                  <h1 className="font-heading text-white text-4xl sm:text-5xl lg:text-6xl leading-tight mb-6">
+                  {/* O h1 da página fica fora do carrossel (uma vez só); aqui é a frase de destaque de cada slide */}
+                  <p className="font-heading text-white text-4xl sm:text-5xl lg:text-6xl leading-tight mb-6">
                     Encontre-se. Conecte-se. Transforme-se.
-                  </h1>
+                  </p>
                   <p className="text-white/80 text-lg mb-8">
                     Terapia Tântrica e Desenvolvimento Pessoal para quem busca profundidade real.
                   </p>

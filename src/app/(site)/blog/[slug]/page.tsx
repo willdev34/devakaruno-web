@@ -3,6 +3,7 @@
  * Arquivo: page.tsx
  * Descrição: Página de post individual do blog, lendo do banco. Slug inexistente ou fora do ar retorna 404. Traz metadados (descrição e Open Graph), autor, data e outros artigos no final.
  */
+import { cloudinaryUrl } from "@/lib/cloudinary";
 import JsonLd from "@/components/Seo/JsonLd";
 import { blogPostingSchema, breadcrumbSchema } from "@/lib/seo/schema";
 import { pageMetadata } from "@/lib/seo/metadata";
@@ -84,12 +85,14 @@ export default async function Post({ params }: { params: Promise<{ slug: string 
                 </div>
               </Link>
               <div className="z-20 h-[500px] overflow-hidden rounded-md">
+                {/* Maior elemento da tela: carrega com prioridade e já no tamanho exibido (LCP) */}
                 <Image
-                  src={post.coverImage}
+                  src={cloudinaryUrl(post.coverImage, 1170)}
                   alt={post.title}
                   width={1170}
                   height={766}
-                  quality={100}
+                  priority
+                  sizes="(min-width: 768px) 768px, 100vw"
                   className="h-full w-full object-cover object-center rounded-md"
                 />
               </div>

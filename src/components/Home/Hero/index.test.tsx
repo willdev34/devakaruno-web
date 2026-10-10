@@ -52,12 +52,18 @@ describe("Home/Hero", () => {
     expect(container.querySelector("section")?.style.getPropertyValue("--pan-duration")).toBe("12s");
   });
 
-  it("mostra o título e os botões de ação em cada slide", () => {
+  it("a página tem um único h1, com a palavra-chave, fora do carrossel", () => {
     render(<Hero />);
 
-    expect(screen.getAllByRole("heading", { name: "Encontre-se. Conecte-se. Transforme-se." })).toHaveLength(
-      HerosectionData.length
-    );
+    const headings = screen.getAllByRole("heading", { level: 1 });
+    expect(headings).toHaveLength(1);
+    expect(headings[0]).toHaveTextContent("Terapia Tântrica no Rio de Janeiro com Deva Karuno");
+  });
+
+  it("mostra a frase de destaque e os botões de ação em cada slide", () => {
+    render(<Hero />);
+
+    expect(screen.getAllByText("Encontre-se. Conecte-se. Transforme-se.")).toHaveLength(HerosectionData.length);
     expect(screen.getAllByRole("link", { name: "Agendar Sessão" })[0]).toHaveAttribute(
       "href",
       siteWhatsappLink(DEFAULT_SETTINGS)
