@@ -3,6 +3,8 @@
  * Arquivo: page.tsx
  * Descrição: Página de listagem de Cursos e Vivências.
  */
+import JsonLd from "@/components/Seo/JsonLd";
+import { breadcrumbSchema } from "@/lib/seo/schema";
 import { pageMetadata } from "@/lib/seo/metadata";
 import HeroSub from "@/components/SharedComponent/HeroSub";
 import CursosList from "@/components/Cursos/CursosList";
@@ -20,6 +22,7 @@ export const metadata: Metadata = pageMetadata({
 const Page = () => {
   return (
     <>
+      <JsonLd data={breadcrumbSchema([{ name: "Cursos e Vivências", path: "/cursos-e-vivencias" }])} />
       <HeroSub title="Cursos e Vivências" bgImage="/images/background/hero-maos.jpg" />
       <CursosList />
     </>

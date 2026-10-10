@@ -3,6 +3,8 @@
  * Arquivo: page.tsx
  * Descrição: Página de detalhe de um curso específico, buscado no banco pelo slug (404 se não existir).
  */
+import JsonLd from "@/components/Seo/JsonLd";
+import { breadcrumbSchema, courseSchema } from "@/lib/seo/schema";
 import { pageMetadata } from "@/lib/seo/metadata";
 import HeroSub from "@/components/SharedComponent/HeroSub";
 import CursosDetail from "@/components/Cursos/CursosDetail";
@@ -41,6 +43,15 @@ const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
 
   return (
     <>
+      <JsonLd
+        data={[
+          courseSchema(curso),
+          breadcrumbSchema([
+            { name: "Cursos e Vivências", path: "/cursos-e-vivencias" },
+            { name: curso.title, path: `/cursos-e-vivencias/${curso.slug}` },
+          ]),
+        ]}
+      />
       <HeroSub title={curso.title} bgImage={curso.bgImage} />
       <CursosDetail curso={{ ...curso, whatsappLink: withWhatsappNumber(curso.whatsappLink, whatsappNumber) }} />
     </>

@@ -3,6 +3,8 @@
  * Arquivo: page.tsx
  * Descrição: Página de post individual do blog, lendo do banco. Slug inexistente ou fora do ar retorna 404. Traz metadados (descrição e Open Graph), autor, data e outros artigos no final.
  */
+import JsonLd from "@/components/Seo/JsonLd";
+import { blogPostingSchema, breadcrumbSchema } from "@/lib/seo/schema";
 import { pageMetadata } from "@/lib/seo/metadata";
 import AdSlot from "@/components/Ads/AdSlot";
 import LatestBlog from "@/components/Blog/LatestBlog";
@@ -58,6 +60,15 @@ export default async function Post({ params }: { params: Promise<{ slug: string 
 
   return (
     <>
+      <JsonLd
+        data={[
+          blogPostingSchema(post),
+          breadcrumbSchema([
+            { name: "Blog", path: "/blog" },
+            { name: post.title, path: `/blog/${post.slug}` },
+          ]),
+        ]}
+      />
       <section className="pt-[calc(var(--header-h,12rem)+2rem)] lg:pb-20 pb-10 dark:bg-dark px-4">
         <div className="container lg:max-w-(--breakpoint-xl) md:max-w-(--breakpoint-md) mx-auto">
           <div className="-mx-4 flex flex-wrap justify-center">

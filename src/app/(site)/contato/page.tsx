@@ -3,6 +3,8 @@
  * Arquivo: page.tsx
  * Descrição: Página de Contato. CTA de WhatsApp em destaque pra clientes, mapa com endereço real, e formulário de parceria pra propostas de colaboração.
  */
+import JsonLd from "@/components/Seo/JsonLd";
+import { breadcrumbSchema } from "@/lib/seo/schema";
 import { pageMetadata } from "@/lib/seo/metadata";
 import HeroSub from "@/components/SharedComponent/HeroSub";
 import ContactInfo from "@/components/Contact/ContactInfo";
@@ -19,6 +21,7 @@ export const metadata: Metadata = pageMetadata({
 const Page = () => {
   return (
     <>
+      <JsonLd data={breadcrumbSchema([{ name: "Contato", path: "/contato" }])} />
       <HeroSub title="Contato" bgImage="/images/background/hero-maos.jpg" />
       <WhatsAppCTA />
       <ContactInfo />

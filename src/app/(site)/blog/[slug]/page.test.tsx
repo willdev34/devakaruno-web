@@ -78,6 +78,17 @@ describe("blog/[slug]/page", () => {
     expect(notFound).toHaveBeenCalled();
   });
 
+  it("inclui os dados estruturados do artigo e a trilha de navegação", async () => {
+    getPostBySlug.mockResolvedValue(post);
+
+    const { container } = render(await Post({ params: params("a") }));
+    const blocks = Array.from(container.querySelectorAll('script[type="application/ld+json"]')).map((s) => JSON.parse(s.textContent ?? ""));
+
+    expect(blocks.map((b) => b["@type"])).toEqual(["BlogPosting", "BreadcrumbList"]);
+    expect(blocks[0]).toMatchObject({ headline: "Artigo A", datePublished: post.date, dateModified: post.updatedAt, articleSection: "Autoconhecimento" });
+    expect(blocks[1].itemListElement.map((i: { name: string }) => i.name)).toEqual(["Início", "Blog", "Artigo A"]);
+  });
+
   it("gera metadados com descrição e Open Graph", async () => {
     getPostBySlug.mockResolvedValue(post);
 

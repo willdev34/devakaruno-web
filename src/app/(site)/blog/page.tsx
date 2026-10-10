@@ -3,6 +3,8 @@
  * Arquivo: page.tsx
  * Descrição: Página de listagem do blog, com CTA de WhatsApp no final no lugar do banner de doação morto.
  */
+import JsonLd from "@/components/Seo/JsonLd";
+import { breadcrumbSchema } from "@/lib/seo/schema";
 import { pageMetadata } from "@/lib/seo/metadata";
 import React from "react";
 import BlogList from "@/components/Blog/BlogList";
@@ -21,6 +23,7 @@ export const metadata: Metadata = pageMetadata({
 const BlogPage = () => {
   return (
     <>
+      <JsonLd data={breadcrumbSchema([{ name: "Blog", path: "/blog" }])} />
       <HeroSub title="Blog" bgImage="/images/background/hero-blog.jpg" />
       <BlogList />
       <WhatsAppCTA />

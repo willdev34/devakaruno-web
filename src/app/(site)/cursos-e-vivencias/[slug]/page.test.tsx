@@ -66,6 +66,16 @@ describe("cursos-e-vivencias/[slug]/page", () => {
     expect(metadata.robots).toEqual({ index: false, follow: false });
   });
 
+  it("inclui os dados estruturados do curso e a trilha de navegação", async () => {
+    getCourseBySlug.mockResolvedValue(curso);
+
+    const { container } = render(await Page({ params: params("curso-a") }));
+    const blocks = Array.from(container.querySelectorAll('script[type="application/ld+json"]')).map((s) => JSON.parse(s.textContent ?? ""));
+
+    expect(blocks.map((b) => b["@type"])).toEqual(["Course", "BreadcrumbList"]);
+    expect(blocks[0]).toMatchObject({ name: "Curso A", description: "Resumo do curso." });
+  });
+
   it("renderiza o curso encontrado", async () => {
     getCourseBySlug.mockResolvedValue(curso);
 

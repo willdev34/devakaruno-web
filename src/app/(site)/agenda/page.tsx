@@ -3,6 +3,8 @@
  * Arquivo: page.tsx
  * Descrição: Página pública Agenda: cidades e datas dos atendimentos fora do Rio de Janeiro, com CTA de reserva pelo WhatsApp.
  */
+import JsonLd from "@/components/Seo/JsonLd";
+import { breadcrumbSchema } from "@/lib/seo/schema";
 import { pageMetadata } from "@/lib/seo/metadata";
 import type { Metadata } from "next";
 import HeroSub from "@/components/SharedComponent/HeroSub";
@@ -24,6 +26,7 @@ export default async function AgendaPage() {
 
   return (
     <>
+      <JsonLd data={breadcrumbSchema([{ name: "Agenda", path: "/agenda" }])} />
       <HeroSub title="Agenda" bgImage="/images/background/hero-maos.jpg" />
       <AgendaSection events={events} whatsappNumber={whatsappNumber} />
       <WhatsAppCTA />

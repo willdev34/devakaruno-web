@@ -1,4 +1,6 @@
 import { Cormorant_Garamond, DM_Sans } from "next/font/google";
+import JsonLd from "@/components/Seo/JsonLd";
+import { siteGraph } from "@/lib/seo/schema";
 import "./globals.css";
 import Header from "@/components/Layout/Header";
 import Footer from "@/components/Layout/Footer";
@@ -62,6 +64,7 @@ export default async function RootLayout({
   return (
     <html lang="pt-BR" suppressHydrationWarning>
       <body className={`${cormorant.variable} ${dmSans.variable} font-body`}>
+      <JsonLd data={siteGraph(settings)} />
       <Analytics gtmId={settings.gtmId} gaId={settings.gaId} metaPixelId={settings.metaPixelId} />
       <CookieBanner enabled={hasTracking(settings)} />
       <NextTopLoader color="#FF4D7E" />

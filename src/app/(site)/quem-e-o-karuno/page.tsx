@@ -3,6 +3,8 @@
  * Arquivo: page.tsx
  * Descrição: Página Quem é o Karuno, com biografia, formação/credenciais, depoimentos e CTA de agendamento.
  */
+import JsonLd from "@/components/Seo/JsonLd";
+import { breadcrumbSchema } from "@/lib/seo/schema";
 import { pageMetadata } from "@/lib/seo/metadata";
 import HeroSub from "@/components/SharedComponent/HeroSub";
 import Bio from "@/components/QuemEOKaruno/Bio";
@@ -23,6 +25,7 @@ export const metadata: Metadata = pageMetadata({
 const Page = () => {
   return (
     <>
+      <JsonLd data={breadcrumbSchema([{ name: "Quem é Deva Karuno", path: "/quem-e-o-karuno" }])} />
       <HeroSub
         title="Quem é o Karuno"
         bgImage="/images/background/hero-maos.jpg"

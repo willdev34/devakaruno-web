@@ -3,6 +3,9 @@
  * Arquivo: page.tsx
  * Descrição: Página completa de Terapia Tântrica: conceito, práticas, benefícios, como funciona, FAQ e início do atendimento (ficha de anamnese).
  */
+import JsonLd from "@/components/Seo/JsonLd";
+import { breadcrumbSchema } from "@/lib/seo/schema";
+import { therapyServiceSchema } from "@/lib/seo/schema";
 import { pageMetadata } from "@/lib/seo/metadata";
 import HeroSub from "@/components/SharedComponent/HeroSub";
 import Conceito from "@/components/TerapiaTantrica/Conceito";
@@ -23,6 +26,8 @@ export const metadata: Metadata = pageMetadata({
 const Page = () => {
   return (
     <>
+      <JsonLd data={breadcrumbSchema([{ name: "Terapia Tântrica", path: "/terapia-tantrica" }])} />
+      <JsonLd data={therapyServiceSchema()} />
       <HeroSub title="Terapia Tântrica" bgImage="/images/background/hero-terapia-tantrica.jpg" />
       <Conceito />
       <RespiracaoConsciente />
