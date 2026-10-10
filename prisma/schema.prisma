@@ -31,24 +31,27 @@ model User {
 }
 
 model Post {
-  id          String    @id @default(cuid())
-  slug        String    @unique
-  title       String
-  subtitle    String?
-  excerpt     String
-  content     String    @db.Text
-  coverImage  String
-  tags        String[]  @default([])
-  featured    Boolean   @default(false)
-  published   Boolean   @default(true)
-  publishedAt DateTime  @default(now())
-  authorId    String
-  author      User      @relation(fields: [authorId], references: [id])
+  id             String    @id @default(cuid())
+  slug           String    @unique
+  title          String
+  subtitle       String?
+  excerpt        String
+  content        String    @db.Text
+  // SEO opcional: título e descrição próprios para o Google (se vazios, valem o título e o resumo)
+  seoTitle       String?
+  seoDescription String?
+  coverImage     String
+  tags           String[]  @default([])
+  featured       Boolean   @default(false)
+  published      Boolean   @default(true)
+  publishedAt    DateTime  @default(now())
+  authorId       String
+  author         User      @relation(fields: [authorId], references: [id])
   // Categoria opcional: ao excluir a categoria, o artigo fica sem categoria
-  categoryId  String?
-  category    Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  categoryId     String?
+  category       Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
 
   @@map("posts")
 }

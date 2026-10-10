@@ -67,6 +67,8 @@ export async function getPostBySlug(slug: string) {
     author: POST_AUTHOR,
     content: post.content,
     subtitle: post.subtitle,
+    seoTitle: post.seoTitle,
+    seoDescription: post.seoDescription,
     tags: post.tags,
     category: post.category,
     updatedAt: post.updatedAt.toISOString(),

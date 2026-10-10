@@ -19,7 +19,7 @@ vi.mock("../Editor/RichEditor", () => ({
 }));
 
 const categories = [{ id: "c1", name: "Autoconhecimento" }, { id: "c2", name: "Relacionamentos" }];
-const empty = { title: "", subtitle: "", slug: "", excerpt: "", content: "", coverImage: "", tags: [], categoryId: "", featured: false, mode: "now" as const };
+const empty = { title: "", subtitle: "", slug: "", excerpt: "", seoTitle: "", seoDescription: "", content: "", coverImage: "", tags: [], categoryId: "", featured: false, mode: "now" as const };
 const filled = {
   ...empty,
   title: "Meu artigo",
@@ -169,5 +169,58 @@ describe("PostForm", () => {
     fireEvent.click(screen.getByRole("button", { name: "Publicar artigo" }));
 
     expect(await screen.findByText("Categoria não encontrada")).toBeInTheDocument();
+  });
+
+  describe("SEO para o Google", () => {
+    it("a prévia usa o título e o resumo do artigo enquanto os campos de SEO estão vazios", () => {
+      render(<PostForm postId="1" categories={categories} initial={filled} />);
+      const preview = screen.getByLabelText("Prévia no Google");
+
+      expect(preview).toHaveTextContent("Meu artigo | Deva Karuno Terapias");
+      expect(preview).toHaveTextContent("Um resumo com tamanho suficiente.");
+      expect(preview).toHaveTextContent("blog › meu-artigo");
+    });
+
+    it("a prévia e os contadores acompanham o que a pessoa digita", () => {
+      render(<PostForm postId="1" categories={categories} initial={filled} />);
+
+      fireEvent.change(screen.getByLabelText(/Título para o Google/), { target: { value: "Terapia Tântrica no Rio" } });
+      fireEvent.change(screen.getByLabelText(/Descrição para o Google/), { target: { value: "Entenda como funciona." } });
+
+      const preview = screen.getByLabelText("Prévia no Google");
+      expect(preview).toHaveTextContent("Terapia Tântrica no Rio | Deva Karuno Terapias");
+      expect(preview).toHaveTextContent("Entenda como funciona.");
+      expect(screen.getByText("(23/60)")).toBeInTheDocument();
+      expect(screen.getByText("(22/160)")).toBeInTheDocument();
+    });
+
+    it("o contador fica vermelho quando passa do tamanho ideal", () => {
+      render(<PostForm postId="1" categories={categories} initial={filled} />);
+
+      fireEvent.change(screen.getByLabelText(/Título para o Google/), { target: { value: "x".repeat(65) } });
+
+      expect(screen.getByText("(65/60)")).toHaveClass("text-error");
+    });
+
+    it("envia título e descrição de SEO ao salvar", async () => {
+      render(<PostForm postId={null} categories={categories} initial={filled} />);
+
+      fireEvent.change(screen.getByLabelText(/Título para o Google/), { target: { value: "Título SEO" } });
+      fireEvent.change(screen.getByLabelText(/Descrição para o Google/), { target: { value: "Descrição SEO" } });
+      fireEvent.click(screen.getByRole("button", { name: "Publicar artigo" }));
+
+      await waitFor(() => expect(savePostAction).toHaveBeenCalled());
+      expect(savePostAction.mock.calls[0][1]).toMatchObject({ seoTitle: "Título SEO", seoDescription: "Descrição SEO" });
+    });
+
+    it("mostra o erro quando passa do limite", async () => {
+      render(<PostForm postId={null} categories={categories} initial={filled} />);
+
+      fireEvent.change(screen.getByLabelText(/Título para o Google/), { target: { value: "x".repeat(71) } });
+      fireEvent.click(screen.getByRole("button", { name: "Publicar artigo" }));
+
+      expect(await screen.findByText("Máximo de 70 caracteres")).toBeInTheDocument();
+      expect(savePostAction).not.toHaveBeenCalled();
+    });
   });
 });

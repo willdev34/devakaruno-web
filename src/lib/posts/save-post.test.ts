@@ -119,4 +119,25 @@ describe("savePost", () => {
       expect(repo.createAdminPost).not.toHaveBeenCalled();
     });
   });
+
+  describe("SEO", () => {
+    it("grava o título e a descrição para o Google quando preenchidos", async () => {
+      await savePost(null, { ...valid, seoTitle: "Título SEO", seoDescription: "Descrição SEO" }, author);
+
+      expect(repo.createAdminPost.mock.calls[0][0]).toMatchObject({ seoTitle: "Título SEO", seoDescription: "Descrição SEO" });
+    });
+
+    it("vazios viram null", async () => {
+      await savePost(null, { ...valid, seoTitle: "", seoDescription: "  " }, author);
+
+      expect(repo.createAdminPost.mock.calls[0][0]).toMatchObject({ seoTitle: null, seoDescription: null });
+    });
+
+    it("recusa título acima de 70 e descrição acima de 170", async () => {
+      const result = await savePost(null, { ...valid, seoTitle: "x".repeat(71), seoDescription: "y".repeat(171) }, author);
+
+      expect(result).toMatchObject({ ok: false, fieldErrors: { seoTitle: "Máximo de 70 caracteres", seoDescription: "Máximo de 170 caracteres" } });
+      expect(repo.createAdminPost).not.toHaveBeenCalled();
+    });
+  });
 });

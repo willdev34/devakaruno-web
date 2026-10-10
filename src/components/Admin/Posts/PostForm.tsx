@@ -1,7 +1,7 @@
 /**
  * Caminho: src/components/Admin/Posts/PostForm.tsx
  * Arquivo: PostForm.tsx
- * Descrição: Formulário de artigo do admin (React Hook Form + Zod): título, subtítulo, slug, resumo, editor, capa, tags e publicação (agora, agendar ou rascunho).
+ * Descrição: Formulário de artigo do admin (React Hook Form + Zod): título, subtítulo, slug, resumo, editor, capa, tags, SEO e publicação (agora, agendar ou rascunho).
  */
 "use client";
 import { useRef, useState, useTransition } from "react";
@@ -16,6 +16,7 @@ import { uploadImageClient } from "@/lib/admin-upload-client";
 import { savePostAction } from "@/app/admin/artigos/actions";
 import RichEditor from "../Editor/RichEditor";
 import CoverUpload from "./CoverUpload";
+import SeoFields from "./SeoFields";
 import TagsInput from "./TagsInput";
 import { btnGhost, btnOutline, btnPrimary, card, cardTitle, errorText, input, label } from "../styles";
 
@@ -213,6 +214,8 @@ export default function PostForm({ postId, initial, categories }: Props) {
             />
             {errors.tags && <p className={errorText}>{errors.tags.message as string}</p>}
           </section>
+
+          <SeoFields register={register} control={control} errors={errors} />
         </div>
       </div>
 

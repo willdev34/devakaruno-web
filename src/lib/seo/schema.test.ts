@@ -119,6 +119,11 @@ describe("blogPostingSchema", () => {
     expect(article.keywords).toBe("calma, respiração");
   });
 
+  it("usa a descrição de SEO quando existe", () => {
+    expect(blogPostingSchema({ ...post, seoDescription: "Descrição SEO" }).description).toBe("Descrição SEO");
+    expect(blogPostingSchema({ ...post, seoDescription: null }).description).toBe("Resumo");
+  });
+
   it("sem categoria e sem tags omite os campos; imagem local vira URL completa; título limitado a 110", () => {
     const article = blogPostingSchema({ ...post, title: "x".repeat(200), category: null, tags: [], coverImage: "/capa.jpg" }) as Record<string, unknown>;
 

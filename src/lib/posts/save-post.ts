@@ -48,6 +48,8 @@ export async function savePost(id: string | null, raw: unknown, author: Author):
     subtitle: input.subtitle || null,
     slug: input.slug,
     excerpt: input.excerpt,
+    seoTitle: input.seoTitle || null,
+    seoDescription: input.seoDescription || null,
     content: input.content,
     coverImage: input.coverImage,
     tags: input.tags,

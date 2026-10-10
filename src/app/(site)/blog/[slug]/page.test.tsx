@@ -101,6 +101,25 @@ describe("blog/[slug]/page", () => {
     expect(meta.openGraph?.images).toEqual([{ url: "/capa.jpg", alt: "Artigo A" }]);
   });
 
+  it("usa o título e a descrição de SEO quando preenchidos", async () => {
+    getPostBySlug.mockResolvedValue({ ...post, seoTitle: "Título para o Google", seoDescription: "Descrição para o Google" });
+
+    const meta = await generateMetadata({ params: params("a") });
+
+    expect(meta.title).toBe("Título para o Google");
+    expect(meta.description).toBe("Descrição para o Google");
+    expect(meta.openGraph?.title).toBe("Título para o Google | Deva Karuno Terapias");
+  });
+
+  it("sem SEO próprio, corta o resumo longo no tamanho de busca", async () => {
+    getPostBySlug.mockResolvedValue({ ...post, excerpt: "palavra ".repeat(60) });
+
+    const meta = await generateMetadata({ params: params("a") });
+
+    expect(String(meta.description).length).toBeLessThanOrEqual(160);
+    expect(meta.description).toMatch(/…$/);
+  });
+
   it("marca como noindex quando o artigo não existe", async () => {
     getPostBySlug.mockResolvedValue(null);
 

@@ -16,6 +16,9 @@ export const postInputSchema = z
       .trim()
       .min(1, "Informe o slug")
       .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, "Use letras minúsculas, números e hífens"),
+    // SEO opcional: vazio = usa o título e o resumo do artigo
+    seoTitle: z.string().trim().max(70, "Máximo de 70 caracteres").optional(),
+    seoDescription: z.string().trim().max(170, "Máximo de 170 caracteres").optional(),
     // Rascunho aceita esses três vazios; para publicar ou agendar eles são exigidos (superRefine)
     excerpt: z.string().trim().max(300, "Máximo de 300 caracteres"),
     content: z.string().trim(),

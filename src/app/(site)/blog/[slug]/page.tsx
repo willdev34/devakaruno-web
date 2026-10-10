@@ -3,6 +3,7 @@
  * Arquivo: page.tsx
  * Descrição: Página de post individual do blog, lendo do banco. Slug inexistente ou fora do ar retorna 404. Traz metadados (descrição e Open Graph), autor, data e outros artigos no final.
  */
+import { toMetaDescription } from "@/lib/seo/text";
 import { cloudinaryUrl } from "@/lib/cloudinary";
 import JsonLd from "@/components/Seo/JsonLd";
 import { blogPostingSchema, breadcrumbSchema } from "@/lib/seo/schema";
@@ -34,9 +35,10 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     };
   }
 
+  // Título e descrição próprios para o Google, quando preenchidos; senão o título e o resumo (cortado no tamanho de busca)
   return pageMetadata({
-    title: post.title,
-    description: post.excerpt,
+    title: post.seoTitle || post.title,
+    description: post.seoDescription || toMetaDescription(post.excerpt),
     path: `/blog/${post.slug}`,
     image: post.coverImage,
     type: "article",

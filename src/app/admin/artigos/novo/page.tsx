@@ -17,7 +17,7 @@ export default async function NewPostPage() {
       <PostForm
         postId={null}
         categories={categories}
-        initial={{ title: "", subtitle: "", slug: "", excerpt: "", content: "", coverImage: "", tags: [], categoryId: "", featured: false, mode: "now" }}
+        initial={{ title: "", subtitle: "", slug: "", excerpt: "", seoTitle: "", seoDescription: "", content: "", coverImage: "", tags: [], categoryId: "", featured: false, mode: "now" }}
       />
     </>
   );

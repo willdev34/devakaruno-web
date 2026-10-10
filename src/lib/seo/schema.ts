@@ -100,6 +100,7 @@ type PostInput = {
   slug: string;
   title: string;
   excerpt: string;
+  seoDescription?: string | null;
   coverImage: string;
   date: string;
   updatedAt: string;
@@ -115,7 +116,7 @@ export function blogPostingSchema(post: PostInput): JsonLdNode {
     "@id": `${url}#article`,
     mainEntityOfPage: { "@type": "WebPage", "@id": url },
     headline: post.title.slice(0, 110),
-    description: post.excerpt,
+    description: post.seoDescription || post.excerpt,
     image: [absoluteUrl(post.coverImage)],
     datePublished: post.date,
     dateModified: post.updatedAt,

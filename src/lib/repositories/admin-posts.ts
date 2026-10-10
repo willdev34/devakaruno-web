@@ -12,6 +12,8 @@ export type PostWriteData = {
   subtitle: string | null;
   slug: string;
   excerpt: string;
+  seoTitle: string | null;
+  seoDescription: string | null;
   content: string;
   coverImage: string;
   tags: string[];
