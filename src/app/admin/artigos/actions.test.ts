@@ -4,17 +4,19 @@
  * Descrição: Testes das Server Actions de artigos: exigem admin, repassam o autor e revalidam as páginas.
  */
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { deletePostAction, savePostAction } from "./actions";
+import { bulkPostsAction, deletePostAction, savePostAction } from "./actions";
 
 const m = vi.hoisted(() => ({
   requireAdmin: vi.fn(),
   savePost: vi.fn(),
   deleteAdminPost: vi.fn(),
+  runBulkAction: vi.fn(),
   revalidatePath: vi.fn(),
 }));
 
 vi.mock("@/lib/admin-session", () => ({ requireAdmin: m.requireAdmin }));
 vi.mock("@/lib/posts/save-post", () => ({ savePost: m.savePost }));
+vi.mock("@/lib/posts/bulk", () => ({ runBulkAction: m.runBulkAction }));
 vi.mock("@/lib/repositories/admin-posts", () => ({ deleteAdminPost: m.deleteAdminPost }));
 vi.mock("next/cache", () => ({ revalidatePath: m.revalidatePath }));
 
@@ -55,5 +57,18 @@ describe("actions de artigos", () => {
 
     await expect(deletePostAction("1")).rejects.toThrow("NEXT_REDIRECT");
     expect(m.deleteAdminPost).not.toHaveBeenCalled();
+  });
+
+  it("ação em lote exige admin e revalida só quando dá certo", async () => {
+    m.runBulkAction.mockResolvedValueOnce({ ok: true, count: 2 });
+    expect(await bulkPostsAction({ action: "delete", ids: ["a", "b"] })).toEqual({ ok: true, count: 2 });
+    expect(m.requireAdmin).toHaveBeenCalled();
+    expect(m.revalidatePath).toHaveBeenCalledWith("/admin/artigos");
+    expect(m.revalidatePath).toHaveBeenCalledWith("/blog", "layout");
+
+    m.revalidatePath.mockClear();
+    m.runBulkAction.mockResolvedValueOnce({ ok: false, error: "x" });
+    await bulkPostsAction({});
+    expect(m.revalidatePath).not.toHaveBeenCalled();
   });
 });

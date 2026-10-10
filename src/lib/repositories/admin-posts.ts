@@ -72,3 +72,21 @@ export function ensureAuthor(email: string, name: string) {
     create: { email, name, role: "ADMIN" },
   });
 }
+
+// Ações em lote da listagem
+export function deleteAdminPosts(ids: string[]) {
+  return prisma.post.deleteMany({ where: { id: { in: ids } } });
+}
+
+// Publica agora os rascunhos e os agendados; quem já está no ar não muda de data
+export function publishAdminPosts(ids: string[], now = new Date()) {
+  return prisma.post.updateMany({
+    where: { id: { in: ids }, OR: [{ published: false }, { publishedAt: { gt: now } }] },
+    data: { published: true, publishedAt: now },
+  });
+}
+
+export function unpublishAdminPosts(ids: string[]) {
+  return prisma.post.updateMany({ where: { id: { in: ids } }, data: { published: false } });
+}
+

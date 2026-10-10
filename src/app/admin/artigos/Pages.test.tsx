@@ -21,7 +21,7 @@ const m = vi.hoisted(() => ({
 vi.mock("@/lib/repositories/admin-posts", () => ({ listAdminPosts: m.listAdminPosts, getAdminPost: m.getAdminPost }));
 vi.mock("@/lib/repositories/admin-categories", () => ({ listCategoryOptions: m.listCategoryOptions }));
 vi.mock("next/navigation", () => ({ notFound: m.notFound, useRouter: () => ({}) }));
-vi.mock("./actions", () => ({ deletePostAction: vi.fn() }));
+vi.mock("./actions", () => ({ deletePostAction: vi.fn(), bulkPostsAction: vi.fn() }));
 vi.mock("@/components/Admin/Posts/PostForm", () => ({
   default: ({
     postId,

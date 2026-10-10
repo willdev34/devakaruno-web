@@ -7,6 +7,9 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import {
   createAdminPost,
   deleteAdminPost,
+  deleteAdminPosts,
+  publishAdminPosts,
+  unpublishAdminPosts,
   ensureAuthor,
   getAdminPost,
   isSlugTaken,
@@ -22,11 +25,13 @@ const db = vi.hoisted(() => ({
   update: vi.fn(),
   delete: vi.fn(),
   upsert: vi.fn(),
+  deleteMany: vi.fn(),
+  updateMany: vi.fn(),
 }));
 
 vi.mock("@/lib/prisma", () => ({
   prisma: {
-    post: { findMany: db.findMany, findUnique: db.findUnique, create: db.create, update: db.update, delete: db.delete },
+    post: { findMany: db.findMany, findUnique: db.findUnique, create: db.create, update: db.update, delete: db.delete, deleteMany: db.deleteMany, updateMany: db.updateMany },
     user: { upsert: db.upsert },
   },
 }));
@@ -87,5 +92,36 @@ describe("repositories/admin-posts", () => {
     expect(db.upsert).toHaveBeenCalledWith(
       expect.objectContaining({ where: { email: "dono@site.com" }, create: expect.objectContaining({ role: "ADMIN" }) }),
     );
+  });
+
+  describe("ações em lote", () => {
+    it("exclui todos os ids", async () => {
+      await deleteAdminPosts(["a", "b"]);
+
+      expect(db.deleteMany).toHaveBeenCalledWith({ where: { id: { in: ["a", "b"] } } });
+    });
+
+    it("publica agora só rascunhos e agendados, sem mexer em quem já está no ar", async () => {
+      const now = new Date("2026-10-10T12:00:00Z");
+
+      await publishAdminPosts(["a", "b"], now);
+
+      expect(db.updateMany).toHaveBeenCalledWith({
+        where: { id: { in: ["a", "b"] }, OR: [{ published: false }, { publishedAt: { gt: now } }] },
+        data: { published: true, publishedAt: now },
+      });
+    });
+
+    it("publish usa a hora atual por padrão", async () => {
+      await publishAdminPosts(["a"]);
+
+      expect(db.updateMany.mock.calls[0][0].data.publishedAt).toBeInstanceOf(Date);
+    });
+
+    it("volta para rascunho sem mexer na data", async () => {
+      await unpublishAdminPosts(["a"]);
+
+      expect(db.updateMany).toHaveBeenCalledWith({ where: { id: { in: ["a"] } }, data: { published: false } });
+    });
   });
 });
