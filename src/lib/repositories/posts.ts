@@ -5,6 +5,7 @@
  */
 import { prisma } from "@/lib/prisma";
 import type { Blog } from "@/types/blog";
+import { rankRelated } from "@/lib/blog/related-score";
 
 // Autor exibido nos artigos enquanto o admin não tem perfil de autor próprio
 export const POST_AUTHOR = "Deva Karuno";
@@ -20,6 +21,7 @@ type PostRow = {
   excerpt: string;
   coverImage: string;
   publishedAt: Date;
+  tags?: string[];
   category?: { name: string; slug: string } | null;
 };
 
@@ -35,7 +37,8 @@ function toBlog(post: PostRow): Blog {
     coverImage: post.coverImage,
     date: post.publishedAt.toISOString(),
     author: POST_AUTHOR,
-    ...(post.category ? { category: post.category.name } : {}),
+    tags: post.tags ?? [],
+    ...(post.category ? { category: post.category.name, categorySlug: post.category.slug } : {}),
   };
 }
 
@@ -69,13 +72,20 @@ export async function getPostBySlug(slug: string) {
   };
 }
 
-// Outros artigos para o fim de um post: os mais recentes, exceto o atual
+// Outros artigos para o fim de um post: mesma categoria e tags em comum primeiro,
+// depois os mais recentes. O artigo atual nunca entra na lista.
 export async function getRelatedPosts(slug: string, limit = 2): Promise<Blog[]> {
-  const posts = await prisma.post.findMany({
-    where: { ...visiblePosts(), slug: { not: slug } },
-    orderBy: { publishedAt: "desc" },
-    include: withCategory,
-    take: limit,
+  const [current, others] = await Promise.all([
+    prisma.post.findFirst({ where: { slug }, select: { tags: true, category: { select: { slug: true } } } }),
+    prisma.post.findMany({
+      where: { ...visiblePosts(), slug: { not: slug } },
+      orderBy: { publishedAt: "desc" },
+      include: withCategory,
+    }),
+  ]);
+  const ranked = rankRelated(others.map(toBlog), {
+    categorySlug: current?.category?.slug,
+    tags: current?.tags ?? [],
   });
-  return posts.map(toBlog);
+  return ranked.slice(0, limit);
 }

@@ -1,7 +1,7 @@
 /**
  * Caminho: src/components/Blog/BlogList/index.test.tsx
  * Arquivo: index.test.tsx
- * Descrição: Testes da listagem do blog: cards com os artigos do banco e mensagem quando ainda não há artigos.
+ * Descrição: Testes da listagem do blog: artigos do banco entregues aos filtros e mensagem quando ainda não há artigos.
  */
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";

@@ -44,6 +44,7 @@ describe("repositories/posts", () => {
       coverImage: "/capa.jpg",
       date: "2026-06-10T00:00:00.000Z",
       author: POST_AUTHOR,
+      tags: ["t"],
     });
   });
 
@@ -71,14 +72,44 @@ describe("repositories/posts", () => {
   });
 
   it("relacionados excluem o post atual e respeitam o limite", async () => {
-    findMany.mockResolvedValue([row]);
+    findFirst.mockResolvedValue({ tags: [], category: null });
+    findMany.mockResolvedValue([row, { ...row, slug: "c" }, { ...row, slug: "d" }]);
 
     const result = await getRelatedPosts("b", 2);
 
-    const args = findMany.mock.calls[0][0];
-    expect(args.where.slug).toEqual({ not: "b" });
-    expect(args.take).toBe(2);
-    expect(result).toHaveLength(1);
+    expect(findMany.mock.calls[0][0].where.slug).toEqual({ not: "b" });
+    expect(result).toHaveLength(2);
+  });
+
+  it("relacionados priorizam mesma categoria e tags em comum", async () => {
+    findFirst.mockResolvedValue({ tags: ["paz"], category: { slug: "autoconhecimento" } });
+    findMany.mockResolvedValue([
+      { ...row, slug: "recente", tags: [], publishedAt: new Date("2026-08-01T00:00:00.000Z") },
+      { ...row, slug: "tag", tags: ["Paz"], publishedAt: new Date("2026-07-01T00:00:00.000Z") },
+      {
+        ...row,
+        slug: "categoria",
+        tags: [],
+        publishedAt: new Date("2026-06-01T00:00:00.000Z"),
+        category: { name: "Autoconhecimento", slug: "autoconhecimento" },
+      },
+    ]);
+
+    const result = await getRelatedPosts("atual", 3);
+
+    expect(result.map((p) => p.slug)).toEqual(["categoria", "tag", "recente"]);
+  });
+
+  it("relacionados caem nos mais recentes quando o artigo atual não é encontrado", async () => {
+    findFirst.mockResolvedValue(null);
+    findMany.mockResolvedValue([
+      { ...row, slug: "antigo", publishedAt: new Date("2026-01-01T00:00:00.000Z") },
+      { ...row, slug: "novo", publishedAt: new Date("2026-09-01T00:00:00.000Z") },
+    ]);
+
+    const result = await getRelatedPosts("x", 1);
+
+    expect(result.map((p) => p.slug)).toEqual(["novo"]);
   });
 
   it("traz a categoria junto e mostra o nome nos cards", async () => {
@@ -88,6 +119,7 @@ describe("repositories/posts", () => {
 
     expect(findMany.mock.calls[0][0].include).toEqual({ category: { select: { name: true, slug: true } } });
     expect(result[0].category).toBe("Autoconhecimento");
+    expect(result[0].categorySlug).toBe("autoconhecimento");
     expect(result[1]).not.toHaveProperty("category");
   });
 
