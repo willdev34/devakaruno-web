@@ -9,6 +9,8 @@ import Aoscompo from "@/utils/aos";
 import SessionProviderComp from "@/components/nextauth/SessionProvider";
 import { AuthDialogProvider } from "./context/AuthDialogContext";
 import Analytics from "@/components/Analytics";
+import CookieBanner from "@/components/Consent/CookieBanner";
+import { hasTracking } from "@/lib/settings/tracking";
 import { SiteSettingsProvider } from "@/components/Providers/SiteSettingsProvider";
 import { getSiteSettings } from "@/lib/repositories/site-settings";
 import { TRACKING_PATTERNS } from "@/lib/settings/schema";
@@ -37,6 +39,7 @@ export default async function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={`${cormorant.variable} ${dmSans.variable} font-body`}>
       <Analytics gtmId={settings.gtmId} gaId={settings.gaId} metaPixelId={settings.metaPixelId} />
+      <CookieBanner enabled={hasTracking(settings)} />
       <NextTopLoader color="#FF4D7E" />
         <SiteSettingsProvider value={settings}>
         <AuthDialogProvider>

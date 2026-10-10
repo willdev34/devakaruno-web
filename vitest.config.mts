@@ -39,6 +39,8 @@ export default defineConfig({
         "src/components/Ads/AdSlot.tsx",
         "src/components/Providers/SiteSettingsProvider.tsx",
         "src/components/Analytics/index.tsx",
+        "src/components/Consent/*.tsx",
+        "src/hooks/*.ts",
         "src/components/Admin/**/*.{ts,tsx}",
         "src/components/Agenda/*.tsx",
         "src/app/*/agenda/page.tsx",
