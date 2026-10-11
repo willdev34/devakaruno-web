@@ -10,6 +10,7 @@ export const headerData: HeaderItem[] = [
   { label: "Terapia Tântrica", href: "/terapia-tantrica" },
   { label: "Serviços", href: "/#servicos" },
   { label: "Cursos e Vivências", href: "/#cursos" },
+  { label: "Agenda", href: "/agenda" },
   { label: "Blog", href: "/blog" },
   { label: "Quem é o Karuno", href: "/quem-e-o-karuno" },
   { label: "Contato", href: "/contato" },

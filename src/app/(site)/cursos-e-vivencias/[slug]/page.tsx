@@ -1,34 +1,59 @@
 /**
  * Caminho: src/app/(site)/cursos-e-vivencias/[slug]/page.tsx
  * Arquivo: page.tsx
- * Descrição: Página de detalhe de um curso específico, buscado pelo slug.
+ * Descrição: Página de detalhe de um curso específico, buscado no banco pelo slug (404 se não existir).
  */
+import JsonLd from "@/components/Seo/JsonLd";
+import { breadcrumbSchema, courseSchema } from "@/lib/seo/schema";
+import { pageMetadata } from "@/lib/seo/metadata";
 import HeroSub from "@/components/SharedComponent/HeroSub";
 import CursosDetail from "@/components/Cursos/CursosDetail";
-import { CursosData } from "@/app/api/data";
+import { getCourseBySlug } from "@/lib/repositories/courses";
+import { getSiteSettings } from "@/lib/repositories/site-settings";
+import { withWhatsappNumber } from "@/lib/whatsapp";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
 
+// Revalida a cada 60s para refletir mudanças nos cursos do banco
+export const revalidate = 60;
+
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
-  const curso = CursosData.find((item) => item.slug === slug);
-  return {
-    title: curso ? `${curso.title} | Deva Karuno Terapias` : "Curso não encontrado | Deva Karuno Terapias",
-  };
+  const curso = await getCourseBySlug(slug);
+  if (!curso) return { title: "Curso não encontrado", robots: { index: false, follow: false } };
+
+  return pageMetadata({
+    title: curso.title,
+    description: curso.text,
+    path: `/cursos-e-vivencias/${curso.slug}`,
+    image: curso.bgImage,
+  });
 }
 
 const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const { slug } = await params;
-  const curso = CursosData.find((item) => item.slug === slug);
+  const curso = await getCourseBySlug(slug);
 
   if (!curso) {
     notFound();
   }
 
+  // O número vem das configurações do site; o link do curso só guarda a mensagem
+  const { whatsappNumber } = await getSiteSettings();
+
   return (
     <>
+      <JsonLd
+        data={[
+          courseSchema(curso),
+          breadcrumbSchema([
+            { name: "Cursos e Vivências", path: "/cursos-e-vivencias" },
+            { name: curso.title, path: `/cursos-e-vivencias/${curso.slug}` },
+          ]),
+        ]}
+      />
       <HeroSub title={curso.title} bgImage={curso.bgImage} />
-      <CursosDetail curso={curso} />
+      <CursosDetail curso={{ ...curso, whatsappLink: withWhatsappNumber(curso.whatsappLink, whatsappNumber) }} />
     </>
   );
 };

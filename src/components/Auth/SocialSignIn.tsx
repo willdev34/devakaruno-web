@@ -3,7 +3,7 @@ import { signIn } from 'next-auth/react'
 
 const SocialSignIn = () => {
   const handleGoogleSignIn = async () => {
-    await signIn('google')
+    await signIn('google', { callbackUrl: '/admin' })
   }
   return (
     <>

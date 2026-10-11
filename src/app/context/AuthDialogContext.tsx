@@ -6,10 +6,8 @@ import React, { createContext, useState, ReactNode, Dispatch, SetStateAction } f
 interface AuthDialogContextType {
   isSuccessDialogOpen: boolean;
   isFailedDialogOpen: boolean;
-  isUserRegistered: boolean;
   setIsSuccessDialogOpen: Dispatch<SetStateAction<boolean>>;
   setIsFailedDialogOpen: Dispatch<SetStateAction<boolean>>;
-  setIsUserRegistered: Dispatch<SetStateAction<boolean>>;
 }
 
 // Create context with type or null
@@ -24,10 +22,9 @@ interface AuthDialogProviderProps {
 export const AuthDialogProvider: React.FC<AuthDialogProviderProps> = ({ children }) => {
   const [isSuccessDialogOpen , setIsSuccessDialogOpen] = useState<boolean>(false);
   const [isFailedDialogOpen , setIsFailedDialogOpen] = useState<boolean>(false);
-  const [isUserRegistered , setIsUserRegistered] = useState<boolean>(false);
 
   return (
-    <AuthDialogContext.Provider value={{ isSuccessDialogOpen ,isFailedDialogOpen, setIsSuccessDialogOpen, setIsFailedDialogOpen,isUserRegistered,setIsUserRegistered }}>
+    <AuthDialogContext.Provider value={{ isSuccessDialogOpen ,isFailedDialogOpen, setIsSuccessDialogOpen, setIsFailedDialogOpen }}>
       {children}
     </AuthDialogContext.Provider>
   );

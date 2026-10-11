@@ -1,9 +1,13 @@
+import { pageMetadata } from "@/lib/seo/metadata";
 import Signin from '@/components/Auth/SignIn'
 import { Metadata } from 'next'
 
-export const metadata: Metadata = {
-  title: 'Entrar | Deva Karuno Terapias',
-}
+export const metadata: Metadata = pageMetadata({
+  title: "Entrar",
+  description: "Acesso à área restrita do site.",
+  path: "/signin",
+  noindex: true,
+})
 
 const SigninPage = () => {
   return (

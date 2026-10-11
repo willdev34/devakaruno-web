@@ -21,7 +21,7 @@ describe("isMaintenanceEnabled", () => {
 });
 
 describe("isPathAllowedInMaintenance", () => {
-  it.each(["/em-construcao", "/admin", "/admin/posts", "/api/auth/signin", "/signin"])(
+  it.each(["/em-construcao", "/admin", "/admin/posts", "/api/admin/upload", "/api/auth/signin", "/signin"])(
     "libera %s",
     (path) => {
       expect(isPathAllowedInMaintenance(path)).toBe(true);

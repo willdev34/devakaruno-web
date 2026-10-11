@@ -1,14 +1,13 @@
 /**
  * Caminho: src/proxy.ts
  * Arquivo: proxy.ts
- * Descrição: Proxy do Next 16. Aplica o modo "Em construção" e redireciona usuário logado para fora das telas de login.
+ * Descrição: Proxy do Next 16. Aplica o modo "Em construção" e protege o painel admin e as telas de login.
  */
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import { getToken } from 'next-auth/jwt'
 import { MAINTENANCE_PATH, shouldShowMaintenance } from '@/lib/maintenance'
-
-const AUTH_PATHS = ['/signin', '/signup', '/forgot-password']
+import { decideAccess } from '@/lib/admin-access'
 
 export async function proxy(request: NextRequest) {
     const { pathname } = request.nextUrl
@@ -21,12 +20,14 @@ export async function proxy(request: NextRequest) {
         })
     }
 
-    // Usuário logado não volta para as telas de login
-    if (AUTH_PATHS.some((path) => pathname.startsWith(path))) {
-        const token = await getToken({ req: request })
-        if (token) {
-            return NextResponse.redirect(new URL('/', request.url))
-        }
+    // Painel e API do admin só para o dono; quem já é admin não volta ao login
+    const token = await getToken({ req: request })
+    const decision = decideAccess(pathname, token?.email)
+    if (decision.action === 'redirect') {
+        return NextResponse.redirect(new URL(decision.to, request.url))
+    }
+    if (decision.action === 'unauthorized') {
+        return NextResponse.json({ error: 'Não autorizado' }, { status: 401 })
     }
 
     return NextResponse.next()

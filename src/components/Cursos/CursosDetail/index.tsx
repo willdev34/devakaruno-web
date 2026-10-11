@@ -15,7 +15,7 @@ interface Curso {
   local: string;
   price: string;
   whatsappLink: string;
-  faq: { question: string; answer: string }[];
+  faqs: { question: string; answer: string }[];
 }
 
 const CursosDetail = ({ curso }: { curso: Curso }) => {
@@ -62,7 +62,7 @@ const CursosDetail = ({ curso }: { curso: Curso }) => {
         <div>
           <h2 className="text-2xl font-medium mb-6 text-center">Perguntas frequentes</h2>
           <div className="space-y-6">
-            {curso.faq.map((item, index) => (
+            {curso.faqs.map((item, index) => (
               <div key={index} className="border-b border-border dark:border-dark_border pb-6">
                 <h4 className="font-medium mb-2">{item.question}</h4>
                 <p className="text-dustGray dark:text-white/60 text-base leading-relaxed">{item.answer}</p>

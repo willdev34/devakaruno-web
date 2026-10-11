@@ -11,6 +11,8 @@ import Causes from "./index";
 const { findMany } = vi.hoisted(() => ({ findMany: vi.fn() }));
 
 vi.mock("@/lib/prisma", () => ({ prisma: { service: { findMany } } }));
+// Número do WhatsApp vindo das configurações do site
+vi.mock("@/lib/repositories/site-settings", () => ({ getSiteSettings: async () => ({ whatsappNumber: "5511999999999" }) }));
 
 const services: Service[] = [
   { id: "1", icon: "/images/services/icon-individual.svg", title: "Individual", text: "Sessões 1:1.", whatsappLink: "https://wa.me/5500000000001", order: 1 },
@@ -31,6 +33,14 @@ describe("Home/Causes", () => {
     expect(findMany).toHaveBeenCalledWith({ orderBy: { order: "asc" } });
   });
 
+  it("troca o número do link e mantém a mensagem do serviço", async () => {
+    findMany.mockResolvedValue([{ ...services[0], whatsappLink: "https://wa.me/5500000000001?text=Ol%C3%A1" }]);
+
+    render(await Causes());
+
+    expect(screen.getByRole("link")).toHaveAttribute("href", "https://wa.me/5511999999999?text=Ol%C3%A1");
+  });
+
   it("renderiza um card por serviço com título, texto e link do WhatsApp", async () => {
     findMany.mockResolvedValue(services);
 
@@ -43,7 +53,8 @@ describe("Home/Causes", () => {
       const card = cards[index];
       expect(within(card).getByRole("heading", { name: service.title })).toBeInTheDocument();
       expect(within(card).getByText(service.text)).toBeInTheDocument();
-      expect(card).toHaveAttribute("href", service.whatsappLink);
+      // O número vem das configurações; o link do serviço só contribui com a mensagem
+      expect(card).toHaveAttribute("href", "https://wa.me/5511999999999");
       expect(card).toHaveAttribute("target", "_blank");
       expect(card).toHaveAttribute("rel", "noopener noreferrer");
     });

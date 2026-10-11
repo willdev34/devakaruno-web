@@ -3,6 +3,9 @@
  * Arquivo: page.tsx
  * Descrição: Página Quem é o Karuno, com biografia, formação/credenciais, depoimentos e CTA de agendamento.
  */
+import JsonLd from "@/components/Seo/JsonLd";
+import { breadcrumbSchema } from "@/lib/seo/schema";
+import { pageMetadata } from "@/lib/seo/metadata";
 import HeroSub from "@/components/SharedComponent/HeroSub";
 import Bio from "@/components/QuemEOKaruno/Bio";
 import Formacao from "@/components/QuemEOKaruno/Formacao";
@@ -10,13 +13,19 @@ import Depoimentos from "@/components/QuemEOKaruno/Depoimentos";
 import WhatsAppCTA from "@/components/Home/WhatsAppCTA";
 import { Metadata } from "next";
 
-export const metadata: Metadata = {
-  title: "Quem é o Karuno | Deva Karuno Terapias",
-};
+// Revalida a cada 60s para refletir mudanças nos depoimentos do banco
+export const revalidate = 60;
+
+export const metadata: Metadata = pageMetadata({
+  title: "Quem é Deva Karuno",
+  description: "Conheça a trajetória, a formação e a forma de atender de Deva Karuno, terapeuta tântrico no Rio de Janeiro: ética, respeito e acolhimento.",
+  path: "/quem-e-o-karuno",
+});
 
 const Page = () => {
   return (
     <>
+      <JsonLd data={breadcrumbSchema([{ name: "Quem é Deva Karuno", path: "/quem-e-o-karuno" }])} />
       <HeroSub
         title="Quem é o Karuno"
         bgImage="/images/background/hero-maos.jpg"

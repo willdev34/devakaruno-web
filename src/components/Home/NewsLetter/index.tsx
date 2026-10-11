@@ -4,12 +4,13 @@
  * Descrição: Bloco de Newsletter da Home, com formulário de inscrição real (via formsubmit.co, em NewsletterForm.tsx) e preview dos últimos posts do blog.
  */
 import Link from "next/link";
-import { getAllPosts } from "@/utils/markdown";
+import { getPublishedPosts } from "@/lib/repositories/posts";
 import BlogCard from "./blogCard";
 import NewsletterForm from "./NewsletterForm";
 
-const Newsletter = () => {
-    const posts = getAllPosts(["title", "date", "excerpt", "coverImage", "slug", "author"]);
+const Newsletter = async () => {
+    // Últimos artigos exibidos ao lado do formulário
+    const posts = await getPublishedPosts(3);
     return (
         <section className="lg:py-28 py-16 dark:bg-dark">
             <div className="container mx-auto lg:max-w-(--breakpoint-xl) px-4">
@@ -37,7 +38,7 @@ const Newsletter = () => {
                                 Ver todos
                             </Link>
                         </div>
-                        {posts.slice(0, 3).map((blog, i) => (
+                        {posts.map((blog, i) => (
                             <div key={i} className="lg:mb-10 mb-6" data-aos="fade-up" data-aos-delay="200" data-aos-duration="1000">
                                 <BlogCard blog={blog} />
                             </div>

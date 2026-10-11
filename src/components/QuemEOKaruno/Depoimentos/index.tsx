@@ -1,11 +1,16 @@
 /**
  * Caminho: src/components/QuemEOKaruno/Depoimentos/index.tsx
  * Arquivo: index.tsx
- * Descrição: Seção de depoimentos da página Quem é o Karuno, em grid estático (sem carrossel).
+ * Descrição: Seção de depoimentos da página Quem é o Karuno (Server Component), em grid estático lido do banco.
  */
-import { SobreTestimonials } from "@/app/api/data";
+import { getMoreTestimonials } from "@/lib/repositories/testimonials";
 
-const Depoimentos = () => {
+const Depoimentos = async () => {
+  const testimonials = await getMoreTestimonials();
+
+  // Sem depoimentos, a seção não aparece
+  if (testimonials.length === 0) return null;
+
   return (
     <section className="lg:py-28 py-16 bg-white dark:bg-dark">
       <div className="container mx-auto lg:max-w-(--breakpoint-xl) px-4">
@@ -17,7 +22,7 @@ const Depoimentos = () => {
         </div>
 
         <div className="grid lg:grid-cols-2 grid-cols-1 gap-8 items-start">
-          {SobreTestimonials.map((item, index) => (
+          {testimonials.map((item, index) => (
             <div
               key={index}
               className="bg-grey dark:bg-darkmode p-10 rounded-md h-full"

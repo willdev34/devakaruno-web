@@ -1,0 +1,26 @@
+/**
+ * Caminho: src/components/Admin/nav.ts
+ * Arquivo: nav.ts
+ * Descrição: Itens do menu do painel admin. Itens com ready=false aparecem como "em breve" até a tela existir.
+ */
+export type AdminNavItem = { label: string; href: string; icon: string; ready: boolean };
+
+export const ADMIN_NAV: AdminNavItem[] = [
+  { label: "Dashboard", href: "/admin", icon: "solar:widget-2-linear", ready: true },
+  { label: "Artigos", href: "/admin/artigos", icon: "solar:document-text-linear", ready: true },
+  { label: "Categorias", href: "/admin/categorias", icon: "solar:folder-linear", ready: true },
+  { label: "Tags", href: "/admin/tags", icon: "solar:hashtag-linear", ready: true },
+  { label: "Agenda", href: "/admin/agenda", icon: "solar:calendar-linear", ready: true },
+  { label: "Depoimentos", href: "/admin/depoimentos", icon: "solar:chat-round-like-linear", ready: true },
+  { label: "Cursos", href: "/admin/cursos", icon: "solar:book-2-linear", ready: true },
+  { label: "Serviços", href: "/admin/servicos", icon: "solar:heart-linear", ready: true },
+  { label: "Banners", href: "/admin/banners", icon: "solar:gallery-wide-linear", ready: true },
+  { label: "Imagens", href: "/admin/imagens", icon: "solar:gallery-linear", ready: true },
+  { label: "Configurações", href: "/admin/configuracoes", icon: "solar:settings-linear", ready: true },
+];
+
+// Marca o item ativo: o Dashboard só na raiz, os demais também nas subrotas
+export function isNavActive(href: string, pathname: string): boolean {
+  if (href === "/admin") return pathname === "/admin";
+  return pathname === href || pathname.startsWith(`${href}/`);
+}

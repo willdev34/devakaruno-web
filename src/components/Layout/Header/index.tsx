@@ -11,11 +11,13 @@ import { useTheme } from 'next-themes'
 import { SuccessfullLogin } from '@/components/Auth/AuthDialog/SuccessfulLogin'
 import AuthDialogContext from '@/app/context/AuthDialogContext'
 import { FailedLogin } from '@/components/Auth/AuthDialog/FailedLogin'
-import { UserRegistered } from '@/components/Auth/AuthDialog/UserRegistered'
 import { signOut, useSession } from 'next-auth/react'
+import { useSiteSettings } from '@/components/Providers/SiteSettingsProvider'
+import { siteWhatsappLink } from '@/lib/whatsapp'
 
 const Header: React.FC = () => {
   const { data: session } = useSession();
+  const siteSettings = useSiteSettings()
   const pathUrl = usePathname()
   const { theme, setTheme } = useTheme()
   const [user, setUser] = useState<{ user: string } | null>(null);
@@ -31,6 +33,20 @@ const Header: React.FC = () => {
   const signInRef = useRef<HTMLDivElement>(null)
   const signUpRef = useRef<HTMLDivElement>(null)
   const mobileMenuRef = useRef<HTMLDivElement>(null)
+  const headerRef = useRef<HTMLElement>(null)
+
+  // Publica a altura real do cabeçalho fixo em --header-h
+  // As páginas usam essa variável para não ficarem escondidas atrás dele
+  useEffect(() => {
+    const el = headerRef.current
+    if (!el) return
+    const publish = () =>
+      document.documentElement.style.setProperty('--header-h', `${el.offsetHeight}px`)
+    publish()
+    const observer = new ResizeObserver(publish)
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
 
   const handleScroll = () => {
     setSticky(window.scrollY >= 80)
@@ -104,6 +120,7 @@ const Header: React.FC = () => {
 
   return (
     <header
+      ref={headerRef}
       className={`fixed top-0 z-50 w-full transition-all duration-300 bg-white dark:bg-dark ${sticky ? 'shadow-lg dark:shadow-darkmd' : 'shadow-none'}`}
       style={!sticky && mounted && isHomePage ? { backgroundColor: theme === 'dark' ? 'rgba(24,15,46,0.3)' : 'rgba(255,255,255,0.3)' } : undefined}
     >
@@ -139,14 +156,17 @@ const Header: React.FC = () => {
             {user?.user || session?.user ? (
               <>
                 <div className="relative group flex items-center justify-center">
-                  <Image
-                    src="/images/avatar/avatar_1.jpg"
-                    alt="Image"
-                    width={35}
-                    height={35}
-                    quality={100}
-                    className="rounded-full cursor-pointer"
-                  />
+                  {/* Foto da Deva Karuno, ampliada no rosto para caber no círculo */}
+                  <div className="h-10 w-10 overflow-hidden rounded-full cursor-pointer">
+                    <Image
+                      src="/images/sobre/perfil-deva-karuno-2026.jpg"
+                      alt="Deva Karuno"
+                      width={120}
+                      height={120}
+                      className="h-full w-full scale-[1.9] object-cover"
+                      style={{ transformOrigin: "52% 24%" }}
+                    />
+                  </div>
                   <p
                     className="absolute w-fit text-sm font-medium text-center z-10 invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-opacity duration-200 bg-secondary text-white py-1 px-3 min-w-28 rounded-md shadow-2xl top-full left-1/2 transform -translate-x-1/2 mt-3"
                   >
@@ -157,17 +177,10 @@ const Header: React.FC = () => {
                   onClick={() => handleSignOut()}
                   className='hidden lg:block bg-error text-sm hover:bg-error/90 text-white px-4 py-3.5 leading-none rounded-lg font-medium text-nowrap cursor-pointer'
                 >
-                  Sign Out
+                  Sair
                 </button>
               </>
-            ) : (
-              <Link
-                href={'./signin'}
-                className='hidden lg:block bg-error text-sm hover:bg-error/90 text-white px-4 py-3.5 leading-none rounded-lg font-medium text-nowrap'
-              >
-                Sign In
-              </Link>
-            )}
+            ) : null}
             <button
               onClick={() => setNavbarOpen(!navbarOpen)}
               className='block lg:hidden p-2 rounded-lg'
@@ -222,19 +235,10 @@ const Header: React.FC = () => {
                       setNavbarOpen(false)
                       handleSignOut()
                     }}>
-                    Sign Out
+                    Sair
                   </button>
                 </>
-              ) : (
-                <Link
-                  href={'./signin'}
-                  className='bg-transparent border border-primary text-primary px-4 py-2 text-nowrap rounded-lg hover:bg-darkprimary hover:text-white'
-                  onClick={() => {
-                    setNavbarOpen(false)
-                  }}>
-                  Sign In
-                </Link>
-              )}
+              ) : null}
             </div>
           </nav>
         </div>
@@ -246,7 +250,7 @@ const Header: React.FC = () => {
           </div>
           <div className="flex items-center">
             <Link
-              href="https://wa.me/5521984121612?text=Ol%C3%A1%21%20Vi%20o%20site%20do%20Deva%20Karuno%20Terapias%20e%20gostaria%20de%20agendar%20uma%20sess%C3%A3o."
+              href={siteWhatsappLink(siteSettings)}
               target="_blank"
               className="text-white bg-primary text-base font-semibold py-4 px-7 rounded-md hover:bg-primary/90 transition-colors cursor-pointer"
             >
@@ -267,12 +271,6 @@ const Header: React.FC = () => {
         className={`fixed top-6 end-1/2 translate-x-1/2 z-50 ${authDialog?.isFailedDialogOpen == true ? 'block' : 'hidden'
           }`}>
         <FailedLogin />
-      </div>
-      {/* User registration Alert */}
-      <div
-        className={`fixed top-6 end-1/2 translate-x-1/2 z-50 ${authDialog?.isUserRegistered == true ? 'block' : 'hidden'
-          }`}>
-        <UserRegistered />
       </div>
     </header>
   )

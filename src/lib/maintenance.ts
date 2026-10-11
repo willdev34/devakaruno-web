@@ -6,7 +6,7 @@
 export const MAINTENANCE_PATH = "/em-construcao";
 
 // Rotas que continuam acessíveis com o site fechado (login e painel)
-const ALLOWED_PREFIXES = [MAINTENANCE_PATH, "/admin", "/api/auth", "/signin"];
+const ALLOWED_PREFIXES = [MAINTENANCE_PATH, "/admin", "/api/admin", "/api/auth", "/signin"];
 
 // Só o valor exato "true" liga o modo; qualquer outro valor mantém o site aberto
 export function isMaintenanceEnabled(
