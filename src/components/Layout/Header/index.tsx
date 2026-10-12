@@ -224,7 +224,7 @@ const Header: React.FC = () => {
           </div>
           <nav className='flex flex-col items-start p-4'>
             {headerData.map((item, index) => (
-              <MobileHeaderLink key={index} item={item} />
+              <MobileHeaderLink key={index} item={item} onNavigate={() => setNavbarOpen(false)} />
             ))}
             <div className='mt-4 flex flex-col space-y-4 w-full'>
               {user?.user || session?.user ? (
